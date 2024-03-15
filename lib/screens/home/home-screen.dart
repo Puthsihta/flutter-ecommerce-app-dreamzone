@@ -54,7 +54,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-          )
+          ),
+          Container(
+              margin: const EdgeInsets.fromLTRB(15, 20, 15, 10),
+              child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Best Selling",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "More",
+                      style: TextStyle(fontSize: 18, color: Colors.greenAccent),
+                    ),
+                  ]))
         ],
       ),
     );
