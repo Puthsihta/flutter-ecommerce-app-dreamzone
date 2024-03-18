@@ -54,6 +54,7 @@ Color inProgressColor = _colorFromHex('#0B68F5');
 Color payoutColor = _colorFromHex('#FF641B');
 Color unsuccessfulColor = _colorFromHex('#2BB36E');
 Color delivery = _colorFromHex('#810CA8');
+Color greenColor = _colorFromHex('#00BF2D');
 
 Color _colorFromHex(String hexColor) {
   final hexCode = hexColor.replaceAll('#', '');
