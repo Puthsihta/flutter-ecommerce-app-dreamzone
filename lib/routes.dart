@@ -1,7 +1,8 @@
-import 'package:dreamzone/screens/home/cart-screen.dart';
+import 'package:dreamzone/screens/cart/cart-screen.dart';
 import 'package:dreamzone/screens/home/home-screen.dart';
-import 'package:dreamzone/screens/home/setting-screen.dart';
-import 'package:dreamzone/screens/home/shp-screen.dart';
+import 'package:dreamzone/screens/settings/setting-screen.dart';
+import 'package:dreamzone/screens/shop/shop-screen.dart';
+import 'package:dreamzone/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class TabNavigationBar extends StatefulWidget {
@@ -53,7 +54,7 @@ class _TabNavigationBarState extends State<TabNavigationBar> {
         ],
         currentIndex: _selectedIndex,
         elevation: 1,
-        backgroundColor: Colors.amber,
+        backgroundColor: baseColor,
         type: BottomNavigationBarType.fixed,
         fixedColor: Colors.redAccent,
         onTap: _onItemTapped,

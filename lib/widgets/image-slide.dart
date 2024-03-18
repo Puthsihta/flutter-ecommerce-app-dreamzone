@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dreamzone/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class ImageSlide extends StatelessWidget {
@@ -37,8 +38,7 @@ class ImageSlide extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                    color: Colors.amber,
-                    borderRadius: BorderRadius.circular(12)),
+                    color: baseColor, borderRadius: BorderRadius.circular(12)),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: Image.network(

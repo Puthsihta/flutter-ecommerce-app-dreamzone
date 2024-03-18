@@ -223,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   AppBar appBar() {
     return AppBar(
-      backgroundColor: const Color.fromRGBO(255, 193, 7, 1),
+      backgroundColor: baseColor,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
