@@ -9,13 +9,17 @@ import 'package:dreamzone/widgets/render-product.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({
+    super.key,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final ScrollController scrollController = ScrollController();
+
   final List<String> _images = [
     'https://dreamzone.phsartech.com/uploads/slide/1682340854-telegram-cloud-document-5-6210643450136628041.png',
     'https://dreamzone.phsartech.com/uploads/slide/1682340976-telegram-cloud-document-5-6210643450136628042.png',
@@ -84,6 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: whiteSmoke,
       appBar: appBar(),
       body: CustomScrollView(
+        controller: scrollController,
         slivers: <Widget>[
           SliverList(
             delegate: SliverChildListDelegate(

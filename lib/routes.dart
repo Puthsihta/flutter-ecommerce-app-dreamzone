@@ -14,6 +14,8 @@ class TabNavigationBar extends StatefulWidget {
 
 class _TabNavigationBarState extends State<TabNavigationBar> {
   int _selectedIndex = 0;
+  final ScrollController scrollController = ScrollController();
+
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     ShopScreen(),
@@ -22,9 +24,17 @@ class _TabNavigationBarState extends State<TabNavigationBar> {
   ];
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (_selectedIndex == index) {
+      // scrollController.animateTo(
+      //   0,
+      //   duration: const Duration(milliseconds: 500),
+      //   curve: Curves.easeInOut,
+      // );
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 
   @override
@@ -44,7 +54,10 @@ class _TabNavigationBarState extends State<TabNavigationBar> {
             label: 'Shop',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.card_travel),
+            icon: Badge(
+              label: Text('2'),
+              child: Icon(Icons.shopping_cart),
+            ),
             label: 'Cart',
           ),
           BottomNavigationBarItem(
@@ -56,7 +69,7 @@ class _TabNavigationBarState extends State<TabNavigationBar> {
         elevation: 1,
         backgroundColor: baseColor,
         type: BottomNavigationBarType.fixed,
-        fixedColor: Colors.redAccent,
+        selectedItemColor: secondColor,
         onTap: _onItemTapped,
       ),
     );
