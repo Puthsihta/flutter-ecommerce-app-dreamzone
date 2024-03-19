@@ -1,3 +1,4 @@
+import 'package:dreamzone/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -6,8 +7,10 @@ class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: whiteSmoke,
       appBar: AppBar(
-        title: Text('Setting Screen'),
+        backgroundColor: baseColor,
+        title: Text('Setting'),
       ),
     );
   }

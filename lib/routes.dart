@@ -1,5 +1,6 @@
 import 'package:dreamzone/screens/cart/cart-screen.dart';
 import 'package:dreamzone/screens/home/home-screen.dart';
+import 'package:dreamzone/screens/settings/profile-screen.dart';
 import 'package:dreamzone/screens/settings/setting-screen.dart';
 import 'package:dreamzone/screens/shop/shop-screen.dart';
 import 'package:dreamzone/theme/colors.dart';
@@ -20,7 +21,7 @@ class _TabNavigationBarState extends State<TabNavigationBar> {
     HomeScreen(),
     ShopScreen(),
     CartScreen(),
-    SettingScreen()
+    ProfileScreen()
   ];
 
   void _onItemTapped(int index) {
