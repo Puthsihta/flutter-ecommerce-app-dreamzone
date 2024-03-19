@@ -23,6 +23,7 @@ class _CartScreenState extends State<CartScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: whiteSmoke,
       appBar: AppBar(
         backgroundColor: baseColor,
         title: const Text('Carts'),
@@ -37,8 +38,18 @@ class _CartScreenState extends State<CartScreen>
               unselectedLabelColor: descriptionColor,
               labelColor: baseColor,
               tabs: const <Widget>[
-                Tab(text: 'My Carts'),
-                Tab(text: 'My Orders'),
+                Tab(
+                  child: Text(
+                    "My Carts",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    "My Orders",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
               ],
             ),
           ),
