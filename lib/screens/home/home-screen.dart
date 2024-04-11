@@ -1,12 +1,15 @@
 import 'package:dreamzone/models/products.model.dart';
 import 'package:dreamzone/models/shop.model.dart';
+import 'package:dreamzone/screens/shop/shop-screen.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/widgets/home-icon.dart';
 import 'package:dreamzone/widgets/image-slide.dart';
+import 'package:dreamzone/widgets/lang-title.dart';
 import 'package:dreamzone/widgets/render-best-selling.dart';
 import 'package:dreamzone/widgets/render-feature-shop.dart';
 import 'package:dreamzone/widgets/render-product.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -19,6 +22,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final ScrollController scrollController = ScrollController();
+
+  var language = "Dart";
+  late String selectedValue = "English";
 
   final List<String> _images = [
     'https://dreamzone.phsartech.com/uploads/slide/1682340854-telegram-cloud-document-5-6210643450136628041.png',
@@ -188,7 +194,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget renderProduct(BuildContext context, int index) {
-    return RenderProduct(products: products, index: index);
+    return RenderProduct(
+      products: products,
+      index: index,
+      onTap: () {
+        Navigator.pushNamed(context, '/product/detail');
+      },
+    );
   }
 
   Widget renderFeatureShop(BuildContext context, int index) {
@@ -196,30 +208,57 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget renderBestSelling(BuildContext context, int index) {
-    return RenderBestSelling(products: products, index: index);
+    return RenderBestSelling(
+      products: products,
+      index: index,
+      onTap: () {
+        Navigator.pushNamed(context, '/product/detail');
+      },
+    );
   }
 
   Container categories() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 15),
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           HomeIcon(
             image: 'assets/images/home/categories.png',
             title: "Categories",
+            onTap: () {
+              Navigator.pushNamed(context, '/categories');
+            },
           ),
           HomeIcon(
             image: 'assets/images/home/shop.png',
             title: "Shops",
+            onTap: () {
+              // Navigator.pushNamed(context, '/product/all');
+              Navigator.pushNamed(
+                context,
+                '/',
+                arguments: 1,
+              );
+            },
           ),
           HomeIcon(
             image: 'assets/images/home/offer.png',
             title: "Specials",
+            onTap: () {
+              Navigator.pushNamed(context, '/product/special');
+            },
           ),
           HomeIcon(
             image: 'assets/images/home/data.png',
             title: "Collections",
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                '/product/all',
+                arguments: 'Cellections',
+              );
+            },
           ),
         ],
       ),
@@ -237,26 +276,123 @@ class _HomeScreenState extends State<HomeScreen> {
             fit: BoxFit.contain,
             height: 32,
           ),
-          Row(
-            children: [
-              Image.asset(
-                'assets/images/flags/uk.png',
-                fit: BoxFit.cover,
-                height: 25,
-              ),
-              IconButton(
-                icon: const Icon(Icons.qr_code_2_outlined),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: const Icon(Icons.search),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: const Icon(Icons.notifications_outlined),
-                onPressed: () {},
-              ),
-            ],
+          Container(
+            width: 200,
+            // color: Colors.red,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(right: 15),
+                  child: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        builder: (context) => AlertDialog(
+                          title: const Text(
+                            'Languages!',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          content: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                LangeTitle(
+                                  language: 'English',
+                                  image: 'assets/images/flags/uk.png',
+                                  onTap: () {
+                                    setState(() {
+                                      selectedValue = "English";
+                                    });
+                                  },
+                                  selectedLanuage: selectedValue,
+                                ),
+                                LangeTitle(
+                                  language: 'Khmer',
+                                  image: 'assets/images/flags/km.png',
+                                  onTap: () {
+                                    setState(() {
+                                      selectedValue = "Khmer";
+                                    });
+                                  },
+                                  selectedLanuage: selectedValue,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        context: context,
+                      );
+                    },
+                    child: Image.asset(
+                      'assets/images/flags/uk.png',
+                      fit: BoxFit.cover,
+                      height: 25,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.qr_code_2_outlined),
+                  onPressed: () {
+                    showDialog(
+                      builder: (context) => AlertDialog(
+                        title: Text(
+                          'This is the App QR Code!',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        content: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                width:
+                                    200.0, // Adjust width and height as needed
+                                height: 200.0,
+                                child: Stack(
+                                  children: [
+                                    QrImageView(
+                                      data: '1234567890',
+                                      version: QrVersions.auto,
+                                      size: 200.0,
+                                      embeddedImage:
+                                          AssetImage('assets/images/logo.png'),
+                                      embeddedImageStyle: QrEmbeddedImageStyle(
+                                        size: Size(30, 30),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 20.0),
+                              Text(
+                                'scan here installing application',
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      context: context,
+                    );
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.search),
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/product/all',
+                      arguments: 'Search',
+                    );
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.notifications_outlined),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/notification');
+                  },
+                ),
+              ],
+            ),
           )
         ],
       ),

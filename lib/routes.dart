@@ -40,6 +40,8 @@ class _TabNavigationBarState extends State<TabNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
+    final int? params = ModalRoute.of(context)?.settings.arguments as int?;
+    _selectedIndex = params ?? _selectedIndex;
     return Scaffold(
       body: Container(
         child: _widgetOptions.elementAt(_selectedIndex),
