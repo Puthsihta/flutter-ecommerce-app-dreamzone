@@ -280,7 +280,7 @@ class _ShopScreenState extends State<ShopScreen> {
       shop: shop,
       index: index,
       onTap: () {
-        Navigator.pushNamed(context, '/shop/detail');
+        Navigator.pushNamed(context, '/shop/detail', arguments: shop[index]);
       },
     );
   }
@@ -290,7 +290,7 @@ class _ShopScreenState extends State<ShopScreen> {
       shop: shop,
       index: index,
       onTap: () {
-        Navigator.pushNamed(context, '/shop/detail');
+        Navigator.pushNamed(context, '/shop/detail', arguments: shop[index]);
       },
     );
   }

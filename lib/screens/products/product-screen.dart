@@ -252,7 +252,8 @@ class _ProductScreenState extends State<ProductScreen> {
       products: products,
       index: index,
       onTap: () {
-        Navigator.pushNamed(context, '/product/detail');
+        Navigator.pushNamed(context, '/product/detail',
+            arguments: products[index]);
       },
     );
   }

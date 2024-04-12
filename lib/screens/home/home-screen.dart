@@ -217,7 +217,8 @@ class _HomeScreenState extends State<HomeScreen> {
       products: products,
       index: index,
       onTap: () {
-        Navigator.pushNamed(context, '/product/detail');
+        Navigator.pushNamed(context, '/product/detail',
+            arguments: products[index]);
       },
     );
   }
@@ -227,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
       shop: shop,
       index: index,
       onTap: () {
-        Navigator.pushNamed(context, '/shop/detail');
+        Navigator.pushNamed(context, '/shop/detail', arguments: shop[index]);
       },
     );
   }
@@ -237,7 +238,8 @@ class _HomeScreenState extends State<HomeScreen> {
       products: products,
       index: index,
       onTap: () {
-        Navigator.pushNamed(context, '/product/detail');
+        Navigator.pushNamed(context, '/product/detail',
+            arguments: products[index]);
       },
     );
   }

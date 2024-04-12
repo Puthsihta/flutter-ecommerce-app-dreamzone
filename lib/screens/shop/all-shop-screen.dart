@@ -203,7 +203,7 @@ class _AllShopScreenState extends State<AllShopScreen> {
       shop: shop,
       index: index,
       onTap: () {
-        Navigator.pushNamed(context, '/shop/detail');
+        Navigator.pushNamed(context, '/shop/detail', arguments: shop[index]);
       },
     );
   }
