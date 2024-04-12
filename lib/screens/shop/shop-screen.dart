@@ -5,6 +5,7 @@ import 'package:dreamzone/widgets/image-slide.dart';
 import 'package:dreamzone/widgets/render-provices.dart';
 import 'package:dreamzone/widgets/render-shops.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class ShopScreen extends StatefulWidget {
   const ShopScreen({super.key});
@@ -121,7 +122,13 @@ class _ShopScreenState extends State<ShopScreen> {
               Icons.search,
               size: 27,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                '/shop/all',
+                arguments: "Search",
+              );
+            },
           ),
         ],
       ),
@@ -207,7 +214,7 @@ class _ShopScreenState extends State<ShopScreen> {
               ),
               Container(
                   margin: const EdgeInsets.only(left: 15, right: 15, top: 15),
-                  child: const Row(
+                  child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -217,9 +224,17 @@ class _ShopScreenState extends State<ShopScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Text(
-                          "More",
-                          style: TextStyle(fontSize: 18, color: Colors.green),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              '/shop/all',
+                            );
+                          },
+                          child: Text(
+                            "More",
+                            style: TextStyle(fontSize: 18, color: Colors.green),
+                          ),
                         ),
                       ])),
             ]),
@@ -247,14 +262,36 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 
   Widget renderProvices(BuildContext context, int index) {
-    return RenderProvices(provices: provices, index: index);
+    return RenderProvices(
+      provices: provices,
+      index: index,
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          '/shop/all',
+          arguments: provices[index].name,
+        );
+      },
+    );
   }
 
   Widget renderFeaturShop(BuildContext context, int index) {
-    return RenderShops(shop: shop, index: index);
+    return RenderShops(
+      shop: shop,
+      index: index,
+      onTap: () {
+        Navigator.pushNamed(context, '/shop/detail');
+      },
+    );
   }
 
   Widget renderShop(BuildContext context, int index) {
-    return RenderShops(shop: shop, index: index);
+    return RenderShops(
+      shop: shop,
+      index: index,
+      onTap: () {
+        Navigator.pushNamed(context, '/shop/detail');
+      },
+    );
   }
 }

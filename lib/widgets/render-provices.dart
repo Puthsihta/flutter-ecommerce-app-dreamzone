@@ -5,42 +5,51 @@ import 'package:flutter/material.dart';
 class RenderProvices extends StatelessWidget {
   final List<Provices> provices;
   final int index;
+  final Function onTap;
 
   const RenderProvices(
-      {super.key, required this.provices, required this.index});
+      {super.key,
+      required this.provices,
+      required this.index,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: grayColor, borderRadius: BorderRadius.circular(12)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundColor: whiteSmoke,
-            backgroundImage: NetworkImage(provices[index].url),
-          ),
-          SizedBox(height: 10),
-          Container(
-            width: 100,
-            child: Flexible(
-              child: Text(
-                provices[index].name,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.clip,
-                maxLines: 2,
-                softWrap: true,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: titleColor,
+    return GestureDetector(
+      onTap: () {
+        onTap();
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            color: grayColor, borderRadius: BorderRadius.circular(12)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 30,
+              backgroundColor: whiteSmoke,
+              backgroundImage: NetworkImage(provices[index].url),
+            ),
+            SizedBox(height: 10),
+            Container(
+              width: 100,
+              child: Flexible(
+                child: Text(
+                  provices[index].name,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.clip,
+                  maxLines: 2,
+                  softWrap: true,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: titleColor,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

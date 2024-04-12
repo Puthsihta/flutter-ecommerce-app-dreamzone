@@ -70,7 +70,7 @@ class _SepecialProductScreenState extends State<SepecialProductScreen> {
                                 width: 10,
                               ),
                               Container(
-                                width: 220,
+                                width: 160,
                                 child: Flexible(
                                   child: Text(
                                     "Shop Name Placeholder",
@@ -89,7 +89,7 @@ class _SepecialProductScreenState extends State<SepecialProductScreen> {
                           ),
                           Container(
                             padding: EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 5),
+                                vertical: 5, horizontal: 15),
                             decoration: BoxDecoration(
                               color: baseColor,
                               borderRadius: BorderRadius.only(

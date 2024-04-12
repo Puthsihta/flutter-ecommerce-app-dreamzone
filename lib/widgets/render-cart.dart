@@ -43,7 +43,7 @@ class RenderCartItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: 250,
+                width: 200,
                 child: Flexible(
                   child: Text(
                     cart[index].name,
@@ -89,7 +89,7 @@ class RenderCartItem extends StatelessWidget {
                 ],
               ),
               Container(
-                width: 250,
+                width: 200,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -111,14 +111,12 @@ class RenderCartItem extends StatelessWidget {
                           Container(
                             height: 40,
                             width: 50,
-                            child: Center(
-                              child: TextField(
-                                controller: TextEditingController(text: '1'),
-                                textAlign: TextAlign.center,
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: '1',
+                            child: const Center(
+                              child: Text(
+                                '1',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
                                 ),
                               ),
                             ),

@@ -18,7 +18,6 @@ class RenderProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print("IN");
         onTap();
       },
       child: Container(
@@ -49,7 +48,7 @@ class RenderProduct extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(10),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
                     width: 200,
@@ -69,6 +68,7 @@ class RenderProduct extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
@@ -76,19 +76,19 @@ class RenderProduct extends StatelessWidget {
                                 currencyFormatter
                                     .format(products[index].prices),
                                 style: TextStyle(
-                                  fontSize: 12,
+                                  fontSize: 10,
                                   color: placeHolderColor,
                                   decoration: TextDecoration.lineThrough,
                                 ),
                               ),
                               SizedBox(
-                                width: 10,
+                                width: 5,
                               ),
                               Text(
                                 currencyFormatter
                                     .format(products[index].prices),
                                 style: TextStyle(
-                                    fontSize: 14,
+                                    fontSize: 13,
                                     color: baseColor,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -99,7 +99,7 @@ class RenderProduct extends StatelessWidget {
                               Text(
                                 "Discout : ",
                                 style: TextStyle(
-                                    fontSize: 12, color: descriptionColor),
+                                    fontSize: 10, color: descriptionColor),
                               ),
                               Text(
                                 // products[index].discount.toString(),
@@ -113,11 +113,12 @@ class RenderProduct extends StatelessWidget {
                         ],
                       ),
                       IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.add_shopping_cart,
-                            color: secondColor,
-                          ))
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.add_shopping_cart,
+                          color: secondColor,
+                        ),
+                      )
                     ],
                   ),
                 ],

@@ -63,7 +63,12 @@ class _CategorieScreenState extends State<CategorieScreen> {
                 itemCount: items.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/product/all',
+                      );
+                    },
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -91,6 +96,10 @@ class _CategorieScreenState extends State<CategorieScreen> {
                           Text(
                             "Category $index",
                             textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: titleColor,
+                              fontSize: 12,
+                            ),
                           ),
                         ],
                       ),

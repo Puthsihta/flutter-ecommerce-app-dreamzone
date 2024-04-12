@@ -54,7 +54,7 @@ class _MyCartState extends State<MyCart> {
           SliverList(
             delegate: SliverChildListDelegate([
               Container(
-                height: MediaQuery.of(context).size.height * (1.5 / 3),
+                height: MediaQuery.of(context).size.height * (1.5 / 3.4),
                 child: ListView.builder(
                     itemCount: carts.length,
                     itemBuilder: (context, index) {

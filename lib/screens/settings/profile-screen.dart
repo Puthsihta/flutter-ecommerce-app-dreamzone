@@ -109,6 +109,7 @@ class ProfileScreen extends StatelessWidget {
           Row(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CircleAvatar(
                     radius: 30,
@@ -168,8 +169,7 @@ class ProfileScreen extends StatelessWidget {
                         size: 30,
                       )),
                   Container(
-                    width: 100,
-                    height: 25,
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: rejectedColor,
@@ -182,7 +182,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   )
                 ],
-              )
+              ),
             ],
           ),
           Container(

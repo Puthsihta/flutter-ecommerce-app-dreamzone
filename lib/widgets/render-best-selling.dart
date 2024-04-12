@@ -45,14 +45,14 @@ class RenderBestSelling extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              width: 10,
+              width: 5,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  width: 85,
+                  width: 65,
                   child: Flexible(
                     child: Text(
                       products[index].name,
@@ -68,12 +68,12 @@ class RenderBestSelling extends StatelessWidget {
                   children: [
                     Text(
                       "Discout : ",
-                      style: TextStyle(fontSize: 10, color: descriptionColor),
+                      style: TextStyle(fontSize: 9, color: descriptionColor),
                     ),
                     Text(
                       // products[index].discount.toString(),
                       currencyFormatter.format(products[index].discount),
-                      style: TextStyle(fontSize: 13, color: greenColor),
+                      style: TextStyle(fontSize: 10, color: greenColor),
                     ),
                   ],
                 ),

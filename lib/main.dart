@@ -25,6 +25,8 @@ import 'package:dreamzone/screens/settings/setting-screen.dart';
 import 'package:dreamzone/screens/settings/setup-password-screen.dart';
 import 'package:dreamzone/screens/settings/transaction-screen.dart';
 import 'package:dreamzone/screens/settings/withdraw-screen.dart';
+import 'package:dreamzone/screens/shop/all-shop-screen.dart';
+import 'package:dreamzone/screens/shop/shop-detail-screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -56,6 +58,8 @@ class DreamzoneApp extends StatelessWidget {
         '/product/favorite': (context) => const ProductFavoriteScreen(),
         '/product/all': (context) => const ProductScreen(),
         '/product/special': (context) => const SepecialProductScreen(),
+        '/shop/all': (context) => const AllShopScreen(),
+        '/shop/detail': (context) => const ShopDetailScreen(),
         '/setting/aboutus': (context) => const AboutUsScreen(),
         '/setting/change-password': (context) => const ChangePasswordScreen(),
         '/setting/contact-us': (context) => const ContactUsScreen(),

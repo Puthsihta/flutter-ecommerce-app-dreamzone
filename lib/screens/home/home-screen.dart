@@ -8,7 +8,9 @@ import 'package:dreamzone/widgets/lang-title.dart';
 import 'package:dreamzone/widgets/render-best-selling.dart';
 import 'package:dreamzone/widgets/render-feature-shop.dart';
 import 'package:dreamzone/widgets/render-product.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -105,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 categories(),
                 Container(
                     margin: const EdgeInsets.fromLTRB(15, 20, 15, 10),
-                    child: const Row(
+                    child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -115,9 +117,18 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(
-                            "More",
-                            style: TextStyle(fontSize: 18, color: Colors.green),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                '/product/all',
+                              );
+                            },
+                            child: Text(
+                              "More",
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.green),
+                            ),
                           ),
                         ])),
               ],
@@ -156,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Container(
                   margin: const EdgeInsets.fromLTRB(15, 20, 15, 10),
-                  child: const Row(
+                  child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -166,9 +177,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Text(
-                          "More",
-                          style: TextStyle(fontSize: 18, color: Colors.green),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              '/product/all',
+                            );
+                          },
+                          child: Text(
+                            "More",
+                            style: TextStyle(fontSize: 18, color: Colors.green),
+                          ),
                         ),
                       ])),
             ]),
@@ -204,7 +223,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget renderFeatureShop(BuildContext context, int index) {
-    return RenderFeatureShops(shop: shop, index: index);
+    return RenderFeatureShops(
+      shop: shop,
+      index: index,
+      onTap: () {
+        Navigator.pushNamed(context, '/shop/detail');
+      },
+    );
   }
 
   Widget renderBestSelling(BuildContext context, int index) {
@@ -234,7 +259,6 @@ class _HomeScreenState extends State<HomeScreen> {
             image: 'assets/images/home/shop.png',
             title: "Shops",
             onTap: () {
-              // Navigator.pushNamed(context, '/product/all');
               Navigator.pushNamed(
                 context,
                 '/',
@@ -287,38 +311,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: GestureDetector(
                     onTap: () {
                       showDialog(
-                        builder: (context) => AlertDialog(
-                          title: const Text(
-                            'Languages!',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          content: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                LangeTitle(
-                                  language: 'English',
-                                  image: 'assets/images/flags/uk.png',
-                                  onTap: () {
-                                    setState(() {
-                                      selectedValue = "English";
-                                    });
-                                  },
-                                  selectedLanuage: selectedValue,
-                                ),
-                                LangeTitle(
-                                  language: 'Khmer',
-                                  image: 'assets/images/flags/km.png',
-                                  onTap: () {
-                                    setState(() {
-                                      selectedValue = "Khmer";
-                                    });
-                                  },
-                                  selectedLanuage: selectedValue,
-                                ),
-                              ],
-                            ),
-                          ),
+                        builder: (context) => LangeTitle(
+                          langValue: selectedValue,
+                          onChangeLanguage: (value) {
+                            selectedValue = value;
+                          },
                         ),
                         context: context,
                       );

@@ -8,22 +8,18 @@ class ProductDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteSmoke,
-      appBar: AppBar(
-        backgroundColor: baseColor,
-        title: Text("Details"),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Icon(
-              Icons.notifications,
+              Icons.no_adult_content,
               size: 80,
               color: descriptionColor,
             ),
             SizedBox(height: 10),
             Text(
-              "Not Notifications",
+              "Not Products",
               style: TextStyle(
                 color: titleColor,
                 fontSize: 18,
