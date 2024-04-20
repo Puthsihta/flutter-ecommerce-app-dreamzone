@@ -3,8 +3,11 @@ import 'package:intl/intl.dart';
 
 const bodyPadding = EdgeInsets.all(16);
 
-const paddingHorizontal = EdgeInsets.symmetric(horizontal: 16);
-const paddingVertical = EdgeInsets.symmetric(vertical: 16);
+const paddingHorizontal = EdgeInsets.symmetric(horizontal: 10);
+const marginAll = EdgeInsets.all(10);
+const marginVerticail = EdgeInsets.symmetric(vertical: 10);
+const marginHorizontal = EdgeInsets.symmetric(horizontal: 10);
+const paddingVertical = EdgeInsets.symmetric(vertical: 10);
 
 /// The standard body padding for the app.
 const kBodyPadding = EdgeInsets.symmetric(horizontal: 20);

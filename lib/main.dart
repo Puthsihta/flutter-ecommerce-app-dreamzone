@@ -51,7 +51,7 @@ class DreamzoneApp extends StatelessWidget {
         '/auth/reset-password': (context) => const ResetPasswordScreen(),
         '/cart/order': (context) => const OrderProductScreen(),
         '/order/detail': (context) => const OrderDetailScreen(),
-        '/cart/payment-success': (context) => const PaymentSuccesScreen(),
+        '/order/payment-success': (context) => const PaymentSuccesScreen(),
         '/categories': (context) => const CategorieScreen(),
         '/notification': (context) => const NotificationScreen(),
         '/product/detail': (context) => const ProductDetailScreen(),

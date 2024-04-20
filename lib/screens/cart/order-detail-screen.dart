@@ -35,86 +35,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                 child: ListView(
                   children: [
                     if (propData?.status != OrderStatus.cancel)
-                      Container(
-                        padding: EdgeInsets.all(12),
-                        margin: EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                StatusTitle(
-                                  isCheck:
-                                      propData?.status == OrderStatus.pending ||
-                                              propData?.status ==
-                                                  OrderStatus.confirm ||
-                                              propData?.status ==
-                                                  OrderStatus.delivery ||
-                                              propData?.status ==
-                                                  OrderStatus.complete
-                                          ? true
-                                          : false,
-                                  title: "Pending",
-                                ),
-                                VerticalLine(),
-                                StatusTitle(
-                                  isCheck:
-                                      propData?.status == OrderStatus.confirm ||
-                                              propData?.status ==
-                                                  OrderStatus.delivery ||
-                                              propData?.status ==
-                                                  OrderStatus.complete
-                                          ? true
-                                          : false,
-                                  title: "Confirm",
-                                ),
-                                VerticalLine(),
-                                StatusTitle(
-                                  isCheck: propData?.status ==
-                                              OrderStatus.delivery ||
-                                          propData?.status ==
-                                              OrderStatus.complete
-                                      ? true
-                                      : false,
-                                  title: "Delivery",
-                                ),
-                                VerticalLine(),
-                                StatusTitle(
-                                  isCheck:
-                                      propData?.status == OrderStatus.complete
-                                          ? true
-                                          : false,
-                                  title: "Completed",
-                                ),
-                              ],
-                            ),
-                            Center(
-                              child: Lottie.asset(
-                                checkOrderStatusLottie(propData?.status ?? ''),
-                                width: propData?.status ==
-                                            OrderStatus.complete ||
-                                        propData?.status == OrderStatus.pending
-                                    ? 200
-                                    : propData?.status == OrderStatus.delivery
-                                        ? 165
-                                        : 140,
-                                height: propData?.status ==
-                                            OrderStatus.complete ||
-                                        propData?.status == OrderStatus.pending
-                                    ? 200
-                                    : propData?.status == OrderStatus.delivery
-                                        ? 165
-                                        : 140,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      OrderTacking(propData),
                     OrderInfo(),
                     OrderProduct(),
                   ],
@@ -133,6 +54,75 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
             ),
           ],
         ));
+  }
+
+  Container OrderTacking(Order? propData) {
+    return Container(
+      padding: EdgeInsets.all(12),
+      margin: EdgeInsets.all(12),
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(10)),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              StatusTitle(
+                isCheck: propData?.status == OrderStatus.pending ||
+                        propData?.status == OrderStatus.confirm ||
+                        propData?.status == OrderStatus.delivery ||
+                        propData?.status == OrderStatus.complete
+                    ? true
+                    : false,
+                title: "Pending",
+              ),
+              VerticalLine(),
+              StatusTitle(
+                isCheck: propData?.status == OrderStatus.confirm ||
+                        propData?.status == OrderStatus.delivery ||
+                        propData?.status == OrderStatus.complete
+                    ? true
+                    : false,
+                title: "Confirm",
+              ),
+              VerticalLine(),
+              StatusTitle(
+                isCheck: propData?.status == OrderStatus.delivery ||
+                        propData?.status == OrderStatus.complete
+                    ? true
+                    : false,
+                title: "Delivery",
+              ),
+              VerticalLine(),
+              StatusTitle(
+                isCheck:
+                    propData?.status == OrderStatus.complete ? true : false,
+                title: "Completed",
+              ),
+            ],
+          ),
+          Center(
+            child: Lottie.asset(
+              checkOrderStatusLottie(propData?.status ?? ''),
+              width: propData?.status == OrderStatus.complete ||
+                      propData?.status == OrderStatus.pending
+                  ? 200
+                  : propData?.status == OrderStatus.delivery
+                      ? 165
+                      : 140,
+              height: propData?.status == OrderStatus.complete ||
+                      propData?.status == OrderStatus.pending
+                  ? 200
+                  : propData?.status == OrderStatus.delivery
+                      ? 165
+                      : 140,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Container VerticalLine() {
