@@ -21,7 +21,7 @@ Color deleteColor = _colorFromHex('#D10000');
 Color numberColor = _colorFromHex('#EB903F');
 Color notificationColor = _colorFromHex('#F84F31');
 Color activeColor = _colorFromHex('#BD3C4B');
-Color pedingColor = _colorFromHex('#BD3C4B');
+Color pendingColor = _colorFromHex('#FFC000');
 Color accepteColor = _colorFromHex('#0081BC');
 Color blueRGBcolor = _colorFromHex('rgba(34, 142, 242,0.3)');
 Color confrimColor = _colorFromHex('#44C4A1');
@@ -53,10 +53,27 @@ Color placeholderColor = _colorFromHex('#979797');
 Color inProgressColor = _colorFromHex('#0B68F5');
 Color payoutColor = _colorFromHex('#FF641B');
 Color unsuccessfulColor = _colorFromHex('#2BB36E');
-Color delivery = _colorFromHex('#810CA8');
+Color deliveryColor = _colorFromHex('#810CA8');
 Color greenColor = _colorFromHex('#00BF2D');
 
 Color _colorFromHex(String hexColor) {
   final hexCode = hexColor.replaceAll('#', '');
   return Color(int.parse('FF$hexCode', radix: 16));
+}
+
+Color statusColor(String colorCounter) {
+  switch (colorCounter) {
+    case "Pending":
+      return pendingColor;
+    case "Confirm":
+      return confrimColor;
+    case "Delivery":
+      return deliveryColor;
+    case "Complete":
+      return completeTextColor;
+    case "Cancel":
+      return voidTextColor;
+    default:
+      return Colors.amber; // when no color match
+  }
 }

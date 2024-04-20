@@ -48,74 +48,78 @@ class _MyCartState extends State<MyCart> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: CustomScrollView(
-        slivers: [
-          SliverList(
-            delegate: SliverChildListDelegate([
-              Container(
-                height: MediaQuery.of(context).size.height * (1.5 / 3.4),
-                child: ListView.builder(
-                    itemCount: carts.length,
-                    itemBuilder: (context, index) {
-                      return renderCartItem(context, index);
-                    }),
+    return Column(
+      children: [
+        Expanded(
+          child: Container(
+            // height: MediaQuery.of(context).size.height * (1.5 / 3.4),
+            child: ListView.builder(
+                itemCount: carts.length,
+                itemBuilder: (context, index) {
+                  return renderCartItem(context, index);
+                }),
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.all(15),
+          padding: EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Subtotal"),
+                  Text(currencyFormatter.format(136)),
+                ],
               ),
-              Container(
-                margin: EdgeInsets.all(15),
-                padding: EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Subtotal"),
-                        Text(currencyFormatter.format(136)),
-                      ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Discount"),
+                  Text(currencyFormatter.format(10)),
+                ],
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Divider(),
+              SizedBox(
+                height: 5,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Total Amount"),
+                  Text(
+                    currencyFormatter.format(126),
+                    style: TextStyle(
+                      color: greenColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Discount"),
-                        Text(currencyFormatter.format(10)),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Divider(),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Total Amount"),
-                        Text(
-                          currencyFormatter.format(126),
-                          style: TextStyle(
-                            color: greenColor,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    CustomButton(text: "Checkout", onPressed: () {})
-                  ],
-                ),
-              )
-            ]),
-          )
-        ],
-      ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              CustomButton(
+                text: "Checkout",
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/cart/order',
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 

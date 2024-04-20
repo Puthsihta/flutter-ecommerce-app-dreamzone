@@ -1,4 +1,5 @@
 import 'package:dreamzone/models/products.model.dart';
+import 'package:dreamzone/models/shop.model.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/utils/index.dart';
 import 'package:dreamzone/widgets/render-product.dart';
@@ -278,7 +279,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 whiteSmoke,
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/shop/detail',
+                                  arguments: Shop(
+                                      name: "Japan Store",
+                                      id: 1,
+                                      shopCover:
+                                          "https://dreamzone.phsartech.com/uploads/uploads/shop/1683017650-best-shopping-in-japan-akihabara.jpg",
+                                      shopLogo:
+                                          "https://dreamzone.phsartech.com/uploads/uploads/shop/1683016085-%20.jpeg"));
+                            },
                             child: Text(
                               "More",
                               style: TextStyle(

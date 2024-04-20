@@ -1,3 +1,4 @@
+import 'package:dreamzone/constants/constants.dart';
 import 'package:dreamzone/models/order.model.dart';
 import 'package:dreamzone/widgets/render-order-item.dart';
 import 'package:flutter/material.dart';
@@ -16,14 +17,35 @@ class _MyOrdersState extends State<MyOrders> {
         invoiceNumber: "Nº-0055",
         totalItem: 3,
         totalPrice: 120,
-        status: "Cancel",
+        status: OrderStatus.pending,
+        orderDate: "2024-03-18 21:49:17"),
+    Order(
+        id: 1,
+        invoiceNumber: "Nº-0055",
+        totalItem: 3,
+        totalPrice: 120,
+        status: OrderStatus.confirm,
+        orderDate: "2024-03-18 21:49:17"),
+    Order(
+        id: 1,
+        invoiceNumber: "Nº-0055",
+        totalItem: 3,
+        totalPrice: 120,
+        status: OrderStatus.delivery,
+        orderDate: "2024-03-18 21:49:17"),
+    Order(
+        id: 1,
+        invoiceNumber: "Nº-0055",
+        totalItem: 3,
+        totalPrice: 120,
+        status: OrderStatus.complete,
         orderDate: "2024-03-18 21:49:17"),
     Order(
         id: 2,
         invoiceNumber: "Nº-0055",
         totalItem: 3,
         totalPrice: 120,
-        status: "Cancel",
+        status: OrderStatus.cancel,
         orderDate: "2024-03-18 21:49:17"),
   ];
   @override
@@ -36,6 +58,12 @@ class _MyOrdersState extends State<MyOrders> {
   }
 
   Widget renderOrderItem(BuildContext context, int index) {
-    return RenderOrderItem(order: orders, index: index);
+    return RenderOrderItem(
+      order: orders,
+      index: index,
+      onTap: () {
+        Navigator.pushNamed(context, '/order/detail', arguments: orders[index]);
+      },
+    );
   }
 }
