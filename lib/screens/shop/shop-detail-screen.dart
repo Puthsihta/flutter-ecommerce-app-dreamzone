@@ -265,6 +265,7 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
         Navigator.pushNamed(context, '/product/detail',
             arguments: products[index]);
       },
+      isFav: false,
     );
   }
 }

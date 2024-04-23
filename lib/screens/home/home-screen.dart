@@ -1,6 +1,5 @@
 import 'package:dreamzone/models/products.model.dart';
 import 'package:dreamzone/models/shop.model.dart';
-import 'package:dreamzone/screens/shop/shop-screen.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/widgets/home-icon.dart';
 import 'package:dreamzone/widgets/image-slide.dart';
@@ -8,9 +7,7 @@ import 'package:dreamzone/widgets/lang-title.dart';
 import 'package:dreamzone/widgets/render-best-selling.dart';
 import 'package:dreamzone/widgets/render-feature-shop.dart';
 import 'package:dreamzone/widgets/render-product.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -220,6 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Navigator.pushNamed(context, '/product/detail',
             arguments: products[index]);
       },
+      isFav: false,
     );
   }
 

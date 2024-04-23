@@ -23,24 +23,25 @@ class ListItem extends StatelessWidget {
       ),
       padding: EdgeInsets.all(5),
       child: ListTile(
-        leading: Icon(
-          icon,
-          color: baseColor,
-        ), // Icon at the left
-        title: Text(
-          title,
-          style: TextStyle(
-            color: titleColor,
-            fontSize: 15,
+          leading: Icon(
+            icon,
+            color: baseColor,
+          ), // Icon at the left
+          title: Text(
+            title,
+            style: TextStyle(
+              color: titleColor,
+              fontSize: 15,
+            ),
           ),
-        ),
-        trailing: Icon(
-          Icons.arrow_forward_ios,
-          color: placeHolderColor,
-          size: 20,
-        ), // Arrow icon at the right
-        onTap: onTap(),
-      ),
+          trailing: Icon(
+            Icons.arrow_forward_ios,
+            color: placeHolderColor,
+            size: 20,
+          ), // Arrow icon at the right
+          onTap: () {
+            onTap();
+          }),
     );
   }
 }

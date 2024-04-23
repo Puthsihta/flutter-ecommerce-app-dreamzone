@@ -7,12 +7,15 @@ class RenderProduct extends StatelessWidget {
   final List<Product> products;
   final int index;
   final Function onTap;
+  final bool isFav;
 
-  const RenderProduct(
-      {super.key,
-      required this.products,
-      required this.index,
-      required this.onTap});
+  const RenderProduct({
+    super.key,
+    required this.products,
+    required this.index,
+    required this.onTap,
+    required this.isFav,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +118,7 @@ class RenderProduct extends StatelessWidget {
                       IconButton(
                         onPressed: () {},
                         icon: Icon(
-                          Icons.add_shopping_cart,
+                          isFav ? Icons.favorite : Icons.add_shopping_cart,
                           color: secondColor,
                         ),
                       )

@@ -114,7 +114,6 @@ class _ShopScreenState extends State<ShopScreen> {
         backgroundColor: baseColor,
         title: Text(
           'Shops',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         actions: [
           IconButton(

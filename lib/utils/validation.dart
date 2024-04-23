@@ -39,3 +39,14 @@ class TextFieldValidate {
     return 'Please enter a valid phone number';
   }
 }
+
+String validateInputPassword(String input) {
+  // Your validation logic here
+  String errorMessage = "";
+  if (input.isEmpty) {
+    errorMessage = "Invalid password";
+  } else if (input.length < 6) {
+    errorMessage = "Password must be at least 6 characters";
+  }
+  return errorMessage;
+}

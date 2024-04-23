@@ -2,8 +2,6 @@ import 'package:dreamzone/models/products.model.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/widgets/render-product.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:get/route_manager.dart';
 
 class ProductScreen extends StatefulWidget {
   const ProductScreen({super.key});
@@ -255,6 +253,7 @@ class _ProductScreenState extends State<ProductScreen> {
         Navigator.pushNamed(context, '/product/detail',
             arguments: products[index]);
       },
+      isFav: false,
     );
   }
 }

@@ -70,7 +70,7 @@ class _OrderProductScreenState extends State<OrderProductScreen> {
                             ),
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: baseColor,
+                                color: Colors.lightBlue,
                               ),
                             ),
                             prefixIcon: Icon(
@@ -94,7 +94,7 @@ class _OrderProductScreenState extends State<OrderProductScreen> {
                             ),
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: baseColor,
+                                color: Colors.lightBlue,
                               ),
                             ),
                             prefixIcon: Icon(
@@ -135,7 +135,7 @@ class _OrderProductScreenState extends State<OrderProductScreen> {
                             ),
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: baseColor,
+                                color: Colors.lightBlue,
                               ),
                             ),
                             prefixIcon: Icon(
@@ -177,7 +177,7 @@ class _OrderProductScreenState extends State<OrderProductScreen> {
                             ),
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: baseColor,
+                                color: Colors.lightBlue,
                               ),
                             ),
                             prefixIcon: Icon(
@@ -446,6 +446,7 @@ class _OrderProductScreenState extends State<OrderProductScreen> {
       paymentMethod: paymentMethod,
       index: index,
       onTap: () {},
+      disable: false,
     );
   }
 }

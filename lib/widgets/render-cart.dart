@@ -132,32 +132,33 @@ class RenderCartItem extends StatelessWidget {
                     IconButton(
                         onPressed: () {
                           showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return CupertinoAlertDialog(
-                                  title: Text("Delete Cart?"),
-                                  actions: [
-                                    CupertinoDialogAction(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return CupertinoAlertDialog(
+                                title: Text("Delete Cart?"),
+                                actions: [
+                                  CupertinoDialogAction(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text(
+                                      "Cancel",
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                  ),
+                                  CupertinoDialogAction(
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                       },
                                       child: Text(
-                                        "Cancel",
-                                        style: TextStyle(color: Colors.red),
-                                      ),
-                                    ),
-                                    CupertinoDialogAction(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: Text(
-                                          "Delete",
-                                          style: TextStyle(color: Colors.blue),
-                                        )),
-                                  ],
-                                  content: Text("You can add more cart!"),
-                                );
-                              });
+                                        "Delete",
+                                        style: TextStyle(color: Colors.blue),
+                                      )),
+                                ],
+                                content: Text("You can add more cart!"),
+                              );
+                            },
+                          );
                         },
                         icon: Icon(Icons.delete_outline, color: secondColor))
                   ],

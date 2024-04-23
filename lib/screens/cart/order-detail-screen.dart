@@ -4,10 +4,7 @@ import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/utils/index.dart';
 import 'package:dreamzone/utils/validation.dart';
 import 'package:dreamzone/widgets/custom-button.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 
 class OrderDetailScreen extends StatefulWidget {
@@ -42,24 +39,25 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                 ),
               ),
             ),
-            Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: 25,
-                vertical: 20,
+            if (propData?.status == OrderStatus.pending)
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 25,
+                  vertical: 20,
+                ),
+                child: CustomButton(
+                  text: "Cancel Order",
+                  onPressed: () {},
+                ),
               ),
-              child: CustomButton(
-                text: "Cancel Order",
-                onPressed: () {},
-              ),
-            ),
           ],
         ));
   }
 
   Container OrderTacking(Order? propData) {
     return Container(
-      padding: EdgeInsets.all(12),
-      margin: EdgeInsets.all(12),
+      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.all(12),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(10)),
       child: Row(
@@ -129,7 +127,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     return Container(
       height: 30,
       // color: Colors.red,
-      margin: EdgeInsets.only(left: 3),
+      margin: EdgeInsets.only(left: 5),
       child: VerticalDivider(
         thickness: 2,
       ),

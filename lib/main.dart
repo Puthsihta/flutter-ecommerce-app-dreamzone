@@ -17,14 +17,8 @@ import 'package:dreamzone/screens/settings/change-password-screen.dart';
 import 'package:dreamzone/screens/settings/contact-us-screen.dart';
 import 'package:dreamzone/screens/settings/delete-account-screen.dart';
 import 'package:dreamzone/screens/settings/edit-profile-screen.dart';
-import 'package:dreamzone/screens/settings/membership-plan-screen.dart';
-import 'package:dreamzone/screens/settings/membership-screen.dart';
-import 'package:dreamzone/screens/settings/parnership-privacy-screen.dart';
-import 'package:dreamzone/screens/settings/request-withdraw-screen.dart';
+import 'package:dreamzone/screens/settings/privacy-policy-screen.dart';
 import 'package:dreamzone/screens/settings/setting-screen.dart';
-import 'package:dreamzone/screens/settings/setup-password-screen.dart';
-import 'package:dreamzone/screens/settings/transaction-screen.dart';
-import 'package:dreamzone/screens/settings/withdraw-screen.dart';
 import 'package:dreamzone/screens/shop/all-shop-screen.dart';
 import 'package:dreamzone/screens/shop/shop-detail-screen.dart';
 import 'package:flutter/material.dart';
@@ -60,20 +54,13 @@ class DreamzoneApp extends StatelessWidget {
         '/product/special': (context) => const SepecialProductScreen(),
         '/shop/all': (context) => const AllShopScreen(),
         '/shop/detail': (context) => const ShopDetailScreen(),
-        '/setting/aboutus': (context) => const AboutUsScreen(),
+        '/profile/aboutus': (context) => const AboutUsScreen(),
+        '/profile/privacy': (context) => const PrivacyPolicyScreen(),
         '/setting/change-password': (context) => const ChangePasswordScreen(),
-        '/setting/contact-us': (context) => const ContactUsScreen(),
-        '/setting/delete-accouont': (context) => const DeleteAccountScreen(),
-        '/setting/edit-profile': (context) => const EditProfileScreen(),
-        '/setting/membership-plan': (context) => const MemberShipPlanScreen(),
-        '/setting/membership': (context) => const MemberShipScreen(),
-        '/setting/parnership-privacy': (context) =>
-            const ParnerShipPrivacyScreen(),
-        '/setting/request-withdraw': (context) => const RequestWithDrawScreen(),
-        '/setting/setting': (context) => const SettingScreen(),
-        '/setting/setup-passcode': (context) => const SetupPasswordScreen(),
-        '/setting/transaction': (context) => const TransactionScreen(),
-        '/setting/withdraw': (context) => const WithDrawScreen(),
+        '/profile/contactus': (context) => const ContactUsScreen(),
+        '/profile/delete-accouont': (context) => const DeleteAccountScreen(),
+        '/profile/edit-profile': (context) => const EditProfileScreen(),
+        '/profile/setting': (context) => const SettingScreen(),
       },
     );
   }

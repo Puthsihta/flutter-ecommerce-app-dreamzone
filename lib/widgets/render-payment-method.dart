@@ -7,12 +7,15 @@ class RenderPaymentMethod extends StatelessWidget {
   final List<PaymentMethod> paymentMethod;
   final int index;
   final Function onTap;
+  final bool disable;
 
-  const RenderPaymentMethod(
-      {super.key,
-      required this.paymentMethod,
-      required this.index,
-      required this.onTap});
+  const RenderPaymentMethod({
+    super.key,
+    required this.paymentMethod,
+    required this.index,
+    required this.onTap,
+    required this.disable,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -57,13 +60,14 @@ class RenderPaymentMethod extends StatelessWidget {
                 ),
               ],
             ),
-            IconButton(
-              icon: Icon(
-                Icons.circle_outlined,
-                color: inActiveColor,
+            if (!disable)
+              IconButton(
+                icon: Icon(
+                  Icons.circle_outlined,
+                  color: inActiveColor,
+                ),
+                onPressed: () {},
               ),
-              onPressed: () {},
-            ),
           ],
         ),
       ),

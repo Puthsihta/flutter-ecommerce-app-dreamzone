@@ -1,13 +1,17 @@
 import 'package:dreamzone/theme/colors.dart';
-import 'package:dreamzone/utils/index.dart';
-import 'package:dreamzone/widgets/custom-button.dart';
 import 'package:dreamzone/widgets/list-item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/utils.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,85 +20,145 @@ class ProfileScreen extends StatelessWidget {
         backgroundColor: baseColor,
         title: Text(
           'Profile',
-          style: TextStyle(
-            color: titleColor,
-            fontWeight: FontWeight.bold,
-          ),
         ),
         actions: [
-          IconButton(
-            icon: Icon(
-              Icons.qr_code,
-              size: 27,
-            ),
-            onPressed: () {},
-          ),
+          profileQRCode(context),
         ],
       ),
       body: ListView(
         children: [
-          headerProfile(),
-          ListItem(
-            title: 'Member',
-            icon: Icons.people,
-            onTap: () {},
-          ),
+          headerProfile(context),
           ListItem(
             title: 'Favorite',
             icon: Icons.favorite,
-            onTap: () {},
-          ),
-          ListItem(
-            title: 'Withdraw',
-            icon: Icons.monetization_on,
-            onTap: () {},
-          ),
-          ListItem(
-            title: 'Transaction',
-            icon: Icons.send_and_archive,
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/product/favorite');
+            },
           ),
           ListItem(
             title: 'Settings',
             icon: Icons.settings,
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/profile/setting');
+            },
           ),
           ListItem(
             title: 'Privacy & Policy',
             icon: Icons.expand_circle_down,
-            onTap: () {},
-          ),
-          ListItem(
-            title: 'Parnership Privacy',
-            icon: Icons.card_membership,
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/profile/privacy');
+            },
           ),
           ListItem(
             title: 'About Us',
             icon: Icons.person_pin,
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/profile/aboutus');
+            },
           ),
           ListItem(
             title: 'Contact Us',
             icon: Icons.contact_support,
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/profile/contactus');
+            },
           ),
-          ListItem(
-            title: 'Delete Accout',
-            icon: Icons.person_remove,
-            onTap: () {},
-          ),
+          // ListItem(
+          //   title: 'Delete Accout',
+          //   icon: Icons.person_remove,
+          //   onTap: () {
+          //     Navigator.pushNamed(context, '/profile/delete-accouont');
+          //   },
+          // ),
           ListItem(
             title: 'Logout',
             icon: Icons.logout,
-            onTap: () {},
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return CupertinoAlertDialog(
+                    title: Text("Logout"),
+                    actions: [
+                      CupertinoDialogAction(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text(
+                          "Cancel",
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                      CupertinoDialogAction(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            "Logout",
+                            style: TextStyle(color: Colors.blue),
+                          )),
+                    ],
+                    content: Text("Are you sure, you want to logout?"),
+                  );
+                },
+              );
+            },
           ),
         ],
       ),
     );
   }
 
-  Container headerProfile() {
+  IconButton profileQRCode(BuildContext context) {
+    return IconButton(
+      icon: Icon(
+        Icons.qr_code,
+        size: 27,
+      ),
+      onPressed: () {
+        showDialog(
+          builder: (context) => AlertDialog(
+            title: Text(
+              'This your profile QR!',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            content: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: 200.0, // Adjust width and height as needed
+                    height: 200.0,
+                    child: Stack(
+                      children: [
+                        QrImageView(
+                          data: '1234567890',
+                          version: QrVersions.auto,
+                          size: 200.0,
+                          embeddedImage: AssetImage('assets/images/logo.png'),
+                          embeddedImageStyle: QrEmbeddedImageStyle(
+                            size: Size(30, 30),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20.0),
+                  Text(
+                    'scan here share your referail code to your friends',
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          context: context,
+        );
+      },
+    );
+  }
+
+  Container headerProfile(context) {
     return Container(
       margin: EdgeInsets.all(15),
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -139,21 +203,6 @@ class ProfileScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            "invative",
-                            style: TextStyle(color: baseColor),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Icon(
-                            Icons.cancel,
-                            color: secondColor,
-                          )
-                        ],
-                      )
                     ],
                   )
                 ],
@@ -162,126 +211,19 @@ class ProfileScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.edit,
-                        color: baseColor,
-                        size: 30,
-                      )),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: rejectedColor,
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/profile/edit-profile');
+                    },
+                    icon: Icon(
+                      Icons.edit,
+                      color: baseColor,
+                      size: 30,
                     ),
-                    child: Center(
-                      child: Text(
-                        "Active",
-                        style: TextStyle(fontSize: 13, color: accInactive),
-                      ),
-                    ),
-                  )
+                  ),
                 ],
               ),
             ],
           ),
-          Container(
-            margin: EdgeInsets.symmetric(
-              vertical: 5,
-            ),
-            child: Divider(),
-          ),
-          IntrinsicHeight(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    Text(
-                      "Personal PV",
-                      style: TextStyle(fontSize: 15, color: titleColor),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          width: 50,
-                          height: 50,
-                          child: Image.asset(
-                            "assets/images/coin.png",
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          currencyFormatter.format(0),
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: baseColor,
-                              fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-                VerticalDivider(
-                  indent: 30,
-                  endIndent: 20,
-                ),
-                Column(
-                  children: [
-                    Text(
-                      "Commission",
-                      style: TextStyle(fontSize: 15, color: titleColor),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          width: 50,
-                          height: 50,
-                          child: Image.asset(
-                            "assets/images/coin.png",
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          currencyFormatter.format(0),
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: baseColor,
-                              fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Row(children: [
-            Text(
-              "My Code: 92374304",
-              style: TextStyle(fontSize: 14, color: titleColor),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.copy,
-                color: baseColor,
-                size: 20,
-              ),
-            )
-          ])
         ],
       ),
     );

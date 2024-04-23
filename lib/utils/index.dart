@@ -1,3 +1,4 @@
+import 'package:dreamzone/models/membership-plan.model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -18,3 +19,16 @@ final currencyFormatter = NumberFormat.currency(
 //     }
 //     return '';
 //   }
+
+List<dynamic> objectToArray(object) {
+  List<dynamic> array = [];
+
+  object.forEach((
+    key,
+    value,
+  ) {
+    array.add({});
+  });
+
+  return array;
+}
