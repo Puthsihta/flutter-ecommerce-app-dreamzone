@@ -1,6 +1,5 @@
 import 'package:dreamzone/theme/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class CustomTextInput extends StatelessWidget {
   final String label;
@@ -8,8 +7,8 @@ class CustomTextInput extends StatelessWidget {
   final bool? enable;
   final TextInputType keyboardType;
   final TextEditingController controller;
-  final Icon prefixIcon;
-  final IconButton? suffixIcon;
+  final Icon? prefixIcon;
+  final Widget? suffixIcon;
   final bool? obscureText;
   final FocusNode? focusNode;
   final TextInputAction? textInputAction;
@@ -23,7 +22,7 @@ class CustomTextInput extends StatelessWidget {
     this.enable,
     required this.controller,
     required this.hintText,
-    required this.prefixIcon,
+    this.prefixIcon,
     required this.keyboardType,
     this.suffixIcon,
     this.obscureText,

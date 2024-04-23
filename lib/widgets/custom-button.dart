@@ -13,7 +13,13 @@ class CustomButton extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         onPressed: onPressed,
-        child: Text(text),
+        child: Text(
+          text,
+          style: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(
               onPressed != null ? baseColor : placeholderColor),

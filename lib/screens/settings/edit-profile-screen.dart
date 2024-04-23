@@ -44,7 +44,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   void initState() {
     // TODO: implement initState
     setState(() {
-      phone.text = "+85592389497";
+      phone.text = "092389497";
     });
   }
 

@@ -24,20 +24,6 @@ class TextFieldValidate {
     }
     return null;
   }
-
-  static String? validateDescription(String? value) {
-    if (value != null && value.isNotEmpty) {
-      return null;
-    }
-    return 'lease tell us so we can make improvements';
-  }
-
-  static String? validatePhoneNumber(String? value) {
-    if (value != null && value.isNotEmpty) {
-      return null;
-    }
-    return 'Please enter a valid phone number';
-  }
 }
 
 String validateInputPassword(String input) {
@@ -47,6 +33,17 @@ String validateInputPassword(String input) {
     errorMessage = "Invalid password";
   } else if (input.length < 6) {
     errorMessage = "Password must be at least 6 characters";
+  }
+  return errorMessage;
+}
+
+String validateInputPhone(String input) {
+  // Your validation logic here
+  String errorMessage = "";
+  if (input.isEmpty) {
+    errorMessage = "Required";
+  } else if (input.length < 8) {
+    errorMessage = "Invalid phone number";
   }
   return errorMessage;
 }

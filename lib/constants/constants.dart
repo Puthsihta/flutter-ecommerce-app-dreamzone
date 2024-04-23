@@ -201,6 +201,11 @@ class ABALinkedOption {
   static const cof = 'ABA_COF';
 }
 
+class AuthType {
+  static const retister = 'Register';
+  static const forgetPassword = 'ForgotPassword';
+}
+
 class OrderStatus {
   static const pending = 'Pending';
   static const confirm = 'Confirm';

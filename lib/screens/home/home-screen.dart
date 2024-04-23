@@ -385,7 +385,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 IconButton(
                   icon: const Icon(Icons.notifications_outlined),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/notification');
+                    // Navigator.pushNamed(context, '/notification');
+                    Navigator.pushNamed(context, '/auth/signin');
                   },
                 ),
               ],
