@@ -1,9 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dreamzone/models/home.model.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class ImageSlide extends StatelessWidget {
-  final List<String> images;
+  final List<Slides> images;
 
   const ImageSlide({
     super.key,
@@ -42,7 +43,7 @@ class ImageSlide extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: Image.network(
-                    i,
+                    i.imageUrl ?? "",
                     fit: BoxFit.cover,
                   ),
                 ));

@@ -1,6 +1,5 @@
-import 'package:dreamzone/models/shop.model.dart';
+import 'package:dreamzone/models/home.model.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 
 class RenderFeatureShops extends StatelessWidget {
   final List<Shop> shop;
@@ -27,7 +26,7 @@ class RenderFeatureShops extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.network(
-                shop[index].shopCover,
+                shop[index].imageBannerUrl ?? "",
                 fit: BoxFit.cover,
                 width: 300,
               ),
@@ -48,7 +47,7 @@ class RenderFeatureShops extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    shop[index].name,
+                    shop[index].name ?? "",
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -66,7 +65,7 @@ class RenderFeatureShops extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(
-                        shop[index].shopLogo,
+                        shop[index].imageUrl ?? "",
                         width: 50,
                         height: 50,
                         fit: BoxFit.cover,

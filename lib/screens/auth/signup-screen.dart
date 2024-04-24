@@ -6,14 +6,15 @@ import 'package:dreamzone/widgets/custom-text-input.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+  final String? phoneNumber;
+
+  const SignUpScreen({super.key, this.phoneNumber});
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  TextEditingController phone = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
 
@@ -30,9 +31,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      phone.text = "092389497";
-    });
     refPass = FocusNode();
     refConfirmPass = FocusNode();
   }
@@ -89,7 +87,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     CustomTextInput(
                       label: 'Phone Number',
                       hintText: 'Enter your phone number',
-                      controller: phone,
+                      controller:
+                          TextEditingController(text: widget.phoneNumber ?? ""),
                       prefixIcon: Icon(
                         Icons.phone,
                         color: placeHolderColor,

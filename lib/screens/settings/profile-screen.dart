@@ -190,17 +190,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       Container(
                         width: 200,
-                        child: Flexible(
-                          child: Text(
-                            "Puthsitha Moeurn",
-                            overflow: TextOverflow.clip,
-                            maxLines: 2,
-                            softWrap: true,
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: titleColor,
-                                fontWeight: FontWeight.bold),
-                          ),
+                        child: Text(
+                          "Puthsitha Moeurn",
+                          overflow: TextOverflow.clip,
+                          maxLines: 2,
+                          softWrap: true,
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: titleColor,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],

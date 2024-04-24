@@ -34,17 +34,15 @@ class RenderProvices extends StatelessWidget {
             SizedBox(height: 10),
             Container(
               width: 100,
-              child: Flexible(
-                child: Text(
-                  provices[index].name,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.clip,
-                  maxLines: 2,
-                  softWrap: true,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: titleColor,
-                  ),
+              child: Text(
+                provices[index].name,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.clip,
+                maxLines: 2,
+                softWrap: true,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: titleColor,
                 ),
               ),
             ),

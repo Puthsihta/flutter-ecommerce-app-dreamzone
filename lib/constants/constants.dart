@@ -213,3 +213,7 @@ class OrderStatus {
   static const complete = 'Complete';
   static const cancel = 'Cancel';
 }
+
+//API
+
+const baseUrl = "https://www.dreamzonekh.com/api/";

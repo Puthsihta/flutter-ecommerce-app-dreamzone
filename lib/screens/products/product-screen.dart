@@ -234,7 +234,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   crossAxisCount: 2, mainAxisSpacing: 15, mainAxisExtent: 290),
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-                  return renderProduct(context, index);
+                  // return renderProduct(context, index);
                 },
                 childCount: products.length,
               ),
@@ -245,15 +245,15 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
-  Widget renderProduct(BuildContext context, int index) {
-    return RenderProduct(
-      products: products,
-      index: index,
-      onTap: () {
-        Navigator.pushNamed(context, '/product/detail',
-            arguments: products[index]);
-      },
-      isFav: false,
-    );
-  }
+  // Widget renderProduct(BuildContext context, int index) {
+  //   return RenderProduct(
+  //     products: products,
+  //     index: index,
+  //     onTap: () {
+  //       Navigator.pushNamed(context, '/product/detail',
+  //           arguments: products[index]);
+  //     },
+  //     isFav: false,
+  //   );
+  // }
 }

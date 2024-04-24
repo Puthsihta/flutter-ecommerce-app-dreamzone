@@ -50,14 +50,12 @@ class RenderShops extends StatelessWidget {
             ),
             Container(
               width: 100,
-              child: Flexible(
-                child: Text(
-                  shop[index].name,
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: false,
-                  maxLines: 1,
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                ),
+              child: Text(
+                shop[index].name,
+                overflow: TextOverflow.ellipsis,
+                softWrap: false,
+                maxLines: 1,
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               ),
             ),
           ],

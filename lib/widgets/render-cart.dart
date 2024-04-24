@@ -44,14 +44,12 @@ class RenderCartItem extends StatelessWidget {
             children: [
               Container(
                 width: 200,
-                child: Flexible(
-                  child: Text(
-                    cart[index].name,
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: false,
-                    maxLines: 1,
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                  ),
+                child: Text(
+                  cart[index].name,
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: false,
+                  maxLines: 1,
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                 ),
               ),
               Row(

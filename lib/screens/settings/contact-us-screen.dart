@@ -108,16 +108,14 @@ class ContactUsScreen extends StatelessWidget {
                             ),
                             Container(
                               width: MediaQuery.of(context).size.width / 1.3,
-                              child: Flexible(
-                                child: Text(
-                                  "#17K SongKat Jom Chao1 Khan Po SenChey ,Phnom Penh",
-                                  overflow: TextOverflow.ellipsis,
-                                  softWrap: false,
-                                  maxLines: 2,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: descriptionColor,
-                                  ),
+                              child: Text(
+                                "#17K SongKat Jom Chao1 Khan Po SenChey ,Phnom Penh",
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: false,
+                                maxLines: 2,
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: descriptionColor,
                                 ),
                               ),
                             ),

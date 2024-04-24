@@ -185,16 +185,14 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                 children: [
                   Container(
                     width: 230,
-                    child: Flexible(
-                      child: Text(
-                        "HYDRATING CLEANSING BALM ជួយសម្អាត Make Up",
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: false,
-                        maxLines: 2,
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: titleColor,
-                        ),
+                    child: Text(
+                      "HYDRATING CLEANSING BALM ជួយសម្អាត Make Up",
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      maxLines: 2,
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: titleColor,
                       ),
                     ),
                   ),

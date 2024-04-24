@@ -136,11 +136,11 @@ class _ShopScreenState extends State<ShopScreen> {
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                Container(
-                  child: ImageSlide(
-                    images: _images,
-                  ),
-                ),
+                // Container(
+                //   child: ImageSlide(
+                //     images: _images,
+                //   ),
+                // ),
                 Container(
                   padding: const EdgeInsets.only(top: 15, left: 15, right: 15),
                   child: const Text(

@@ -1,4 +1,4 @@
-import 'package:dreamzone/models/products.model.dart';
+import 'package:dreamzone/models/home.model.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/utils/index.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +42,7 @@ class RenderProduct extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.network(
-                products[index].image,
+                products[index].imageUrl ?? "",
                 fit: BoxFit.cover,
                 height: 200,
                 width: 200,
@@ -55,15 +55,13 @@ class RenderProduct extends StatelessWidget {
                 children: [
                   Container(
                     width: 200,
-                    child: Flexible(
-                      child: Text(
-                        products[index].name,
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: false,
-                        maxLines: 1,
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.bold),
-                      ),
+                    child: Text(
+                      products[index].name ?? "",
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      maxLines: 1,
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Row(
@@ -75,44 +73,48 @@ class RenderProduct extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Text(
-                                currencyFormatter
-                                    .format(products[index].prices),
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  color: placeHolderColor,
-                                  decoration: TextDecoration.lineThrough,
+                              if (products[index].discount != 0)
+                                Text(
+                                  currencyFormatter.format(
+                                    products[index].price,
+                                  ),
+                                  style: TextStyle(
+                                    fontSize: 9,
+                                    color: placeHolderColor,
+                                    decoration: TextDecoration.lineThrough,
+                                  ),
                                 ),
-                              ),
                               SizedBox(
                                 width: 5,
                               ),
                               Text(
-                                currencyFormatter
-                                    .format(products[index].prices),
+                                currencyFormatter.format(products[index].price),
                                 style: TextStyle(
-                                    fontSize: 13,
-                                    color: baseColor,
-                                    fontWeight: FontWeight.bold),
+                                  fontSize:
+                                      products[index].discount != 0 ? 12 : 16,
+                                  color: baseColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ],
                           ),
-                          Row(
-                            children: [
-                              Text(
-                                "Discout : ",
-                                style: TextStyle(
-                                    fontSize: 10, color: descriptionColor),
-                              ),
-                              Text(
-                                // products[index].discount.toString(),
-                                currencyFormatter
-                                    .format(products[index].discount),
-                                style:
-                                    TextStyle(fontSize: 13, color: greenColor),
-                              ),
-                            ],
-                          ),
+                          if (products[index].discount != 0)
+                            Row(
+                              children: [
+                                Text(
+                                  "Discout : ",
+                                  style: TextStyle(
+                                      fontSize: 10, color: descriptionColor),
+                                ),
+                                Text(
+                                  // products[index].discount.toString(),
+                                  currencyFormatter
+                                      .format(products[index].discount),
+                                  style: TextStyle(
+                                      fontSize: 13, color: greenColor),
+                                ),
+                              ],
+                            ),
                         ],
                       ),
                       IconButton(
@@ -120,6 +122,7 @@ class RenderProduct extends StatelessWidget {
                         icon: Icon(
                           isFav ? Icons.favorite : Icons.add_shopping_cart,
                           color: secondColor,
+                          size: 20,
                         ),
                       )
                     ],

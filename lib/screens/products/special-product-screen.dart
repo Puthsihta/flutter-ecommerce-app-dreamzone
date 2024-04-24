@@ -71,17 +71,15 @@ class _SepecialProductScreenState extends State<SepecialProductScreen> {
                               ),
                               Container(
                                 width: 160,
-                                child: Flexible(
-                                  child: Text(
-                                    "Shop Name Placeholder",
-                                    overflow: TextOverflow.ellipsis,
-                                    softWrap: false,
-                                    maxLines: 2,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                child: Text(
+                                  "Shop Name Placeholder",
+                                  overflow: TextOverflow.ellipsis,
+                                  softWrap: false,
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),

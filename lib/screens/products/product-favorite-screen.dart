@@ -55,21 +55,21 @@ class _ProductFavoriteScreenState extends State<ProductFavoriteScreen> {
         ),
         itemBuilder: (BuildContext context, int index) {
           // itemBuilder function for building each grid item
-          return renderProduct(context, index);
+          // return renderProduct(context, index);
         },
       ),
     );
   }
 
-  Widget renderProduct(BuildContext context, int index) {
-    return RenderProduct(
-      products: products,
-      index: index,
-      onTap: () {
-        Navigator.pushNamed(context, '/product/detail',
-            arguments: products[index]);
-      },
-      isFav: true,
-    );
-  }
+  // Widget renderProduct(BuildContext context, int index) {
+  //   return RenderProduct(
+  //     products: products,
+  //     index: index,
+  //     onTap: () {
+  //       Navigator.pushNamed(context, '/product/detail',
+  //           arguments: products[index]);
+  //     },
+  //     isFav: true,
+  //   );
+  // }
 }

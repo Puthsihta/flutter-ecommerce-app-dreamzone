@@ -1,18 +1,20 @@
-import 'package:dreamzone/models/products.model.dart';
+import 'package:dreamzone/models/home.model.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/utils/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class RenderBestSelling extends StatelessWidget {
-  final List<Product> products;
+  final List<BestSeller> products;
   final int index;
   final Function onTap;
 
-  const RenderBestSelling(
-      {super.key,
-      required this.products,
-      required this.index,
-      required this.onTap});
+  const RenderBestSelling({
+    super.key,
+    required this.products,
+    required this.index,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +39,16 @@ class RenderBestSelling extends StatelessWidget {
         ),
         child: Row(
           children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                products[index].image,
-                fit: BoxFit.cover,
+            Container(
+              width: 70,
+              height: 100,
+              color: grayColor,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(
+                  products[index].imageUrl ?? "",
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             const SizedBox(
@@ -53,15 +60,12 @@ class RenderBestSelling extends StatelessWidget {
               children: [
                 Container(
                   width: 65,
-                  child: Flexible(
-                    child: Text(
-                      products[index].name,
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: false,
-                      maxLines: 1,
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                    ),
+                  child: Text(
+                    products[index].name ?? "",
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,
+                    maxLines: 1,
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Row(
@@ -71,19 +75,19 @@ class RenderBestSelling extends StatelessWidget {
                       style: TextStyle(fontSize: 9, color: descriptionColor),
                     ),
                     Text(
-                      // products[index].discount.toString(),
                       currencyFormatter.format(products[index].discount),
                       style: TextStyle(fontSize: 10, color: greenColor),
                     ),
                   ],
                 ),
                 Text(
-                  currencyFormatter.format(products[index].prices),
+                  currencyFormatter.format(products[index].price ?? ""),
                   style: TextStyle(
-                      fontSize: 14,
-                      color: baseColor,
-                      fontWeight: FontWeight.bold),
-                )
+                    fontSize: 14,
+                    color: baseColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             ),
           ],

@@ -1,4 +1,5 @@
 import 'package:dreamzone/constants/constants.dart';
+import 'package:dreamzone/screens/auth/signup-screen.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/utils/validation.dart';
 import 'package:dreamzone/widgets/custom-text-input.dart';
@@ -132,10 +133,18 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                               // arguments: "ForgetPassword",
                             );
                           } else if (lable == AuthType.retister) {
-                            Navigator.pushNamed(
+                            // Navigator.pushNamed(
+                            //   context,
+                            //   '/auth/signup',
+                            //   arguments: "092389497",
+                            // );
+                            Navigator.push(
                               context,
-                              '/auth/signup',
-                              // arguments: "ForgetPassword",
+                              MaterialPageRoute(
+                                builder: (context) => SignUpScreen(
+                                  phoneNumber: "092389497",
+                                ),
+                              ),
                             );
                           }
                           // Handle onPressed event here
