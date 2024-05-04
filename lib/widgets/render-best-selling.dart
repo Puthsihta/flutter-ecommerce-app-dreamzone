@@ -1,0 +1,98 @@
+import 'package:dreamzone/models/home.model.dart';
+import 'package:dreamzone/theme/colors.dart';
+import 'package:dreamzone/utils/index.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+
+class RenderBestSelling extends StatelessWidget {
+  final List<BestSeller> products;
+  final int index;
+  final Function onTap;
+
+  const RenderBestSelling({
+    super.key,
+    required this.products,
+    required this.index,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        onTap();
+      },
+      child: Container(
+        margin: EdgeInsets.only(left: 15, right: index % 2 != 0 ? 15 : 0),
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              spreadRadius: 1,
+              blurRadius: 1,
+              offset: const Offset(0, 1), // changes position of shadow
+            ),
+          ],
+        ),
+        child: Row(
+          children: <Widget>[
+            Container(
+              width: 70,
+              height: 100,
+              color: grayColor,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(
+                  products[index].imageUrl ?? "",
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 65,
+                  child: Text(
+                    products[index].name ?? "",
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,
+                    maxLines: 1,
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "Discout : ",
+                      style: TextStyle(fontSize: 9, color: descriptionColor),
+                    ),
+                    Text(
+                      currencyFormatter.format(products[index].discount),
+                      style: TextStyle(fontSize: 10, color: greenColor),
+                    ),
+                  ],
+                ),
+                Text(
+                  currencyFormatter.format(products[index].price ?? ""),
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: baseColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
