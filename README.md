@@ -1,6 +1,6 @@
 # dreamzone
 
-(assets/app.png)
+![AppPhoto](assets/app.png)
 
 A new Flutter project.
 
