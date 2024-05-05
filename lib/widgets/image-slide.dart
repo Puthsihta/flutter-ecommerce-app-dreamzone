@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dreamzone/models/home.model.dart';
 import 'package:dreamzone/theme/colors.dart';
@@ -36,17 +37,26 @@ class ImageSlide extends StatelessWidget {
         return Builder(
           builder: (BuildContext context) {
             return Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                    color: baseColor, borderRadius: BorderRadius.circular(12)),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(
-                    i.imageUrl ?? "",
-                    fit: BoxFit.cover,
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                // color: baseColor,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: CachedNetworkImage(
+                  progressIndicatorBuilder: (context, url, progress) => Center(
+                    child: CircularProgressIndicator(
+                      value: progress.progress,
+                      color: baseColor,
+                    ),
                   ),
-                ));
+                  imageUrl: i.imageUrl ?? "",
+                  fit: BoxFit.cover,
+                ),
+              ),
+            );
           },
         );
       }).toList(),

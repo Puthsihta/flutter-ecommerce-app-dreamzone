@@ -15,16 +15,14 @@ class TabNavigationBar extends StatefulWidget {
 class _TabNavigationBarState extends State<TabNavigationBar> {
   int _selectedIndex = 0;
   final ScrollController scrollController = ScrollController();
+  final ScrollController homeScrollController = ScrollController();
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),
-    ShopScreen(),
-    CartScreen(),
-    ProfileScreen()
-  ];
+  late final List<Widget> _widgetOptions;
 
   void _onItemTapped(int index) {
-    if (_selectedIndex == index) {
+    if (index == 0) {
+      homeScrollController.animateTo(0,
+          duration: Duration(milliseconds: 300), curve: Curves.bounceIn);
       // scrollController.animateTo(
       //   0,
       //   duration: const Duration(milliseconds: 500),
@@ -35,6 +33,17 @@ class _TabNavigationBarState extends State<TabNavigationBar> {
         _selectedIndex = index;
       });
     }
+  }
+
+  @override
+  void initState() {
+    _widgetOptions = <Widget>[
+      HomeScreen(scrollController: homeScrollController),
+      const ShopScreen(),
+      const CartScreen(),
+      const ProfileScreen()
+    ];
+    super.initState();
   }
 
   @override

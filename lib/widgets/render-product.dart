@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dreamzone/models/home.model.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/utils/index.dart';
@@ -41,8 +42,14 @@ class RenderProduct extends StatelessWidget {
           children: <Widget>[
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                products[index].imageUrl ?? "",
+              child: CachedNetworkImage(
+                progressIndicatorBuilder: (context, url, progress) => Center(
+                  child: CircularProgressIndicator(
+                    value: progress.progress,
+                    color: baseColor,
+                  ),
+                ),
+                imageUrl: products[index].imageUrl ?? "",
                 fit: BoxFit.cover,
                 height: 200,
                 width: 200,
