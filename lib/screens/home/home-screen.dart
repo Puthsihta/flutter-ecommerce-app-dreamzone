@@ -12,8 +12,10 @@ import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
+  final ScrollController scrollController;
   const HomeScreen({
     super.key,
+    required this.scrollController,
   });
 
   @override
@@ -21,8 +23,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final ScrollController scrollController = ScrollController();
-
   var language = "Dart";
   late String selectedValue = "English";
 
@@ -36,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    print('HomeScreen HomeScreen');
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<HomeProvider>(context, listen: false).getHome();
@@ -59,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
           return RefreshIndicator(
             onRefresh: onRefresh,
             child: CustomScrollView(
-              controller: scrollController,
+              controller: widget.scrollController,
               slivers: <Widget>[
                 SliverList(
                   delegate: SliverChildListDelegate(

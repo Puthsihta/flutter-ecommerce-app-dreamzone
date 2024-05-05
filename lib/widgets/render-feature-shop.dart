@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dreamzone/models/home.model.dart';
+import 'package:dreamzone/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class RenderFeatureShops extends StatelessWidget {
@@ -25,8 +27,14 @@ class RenderFeatureShops extends StatelessWidget {
             // Background image
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                shop[index].imageBannerUrl ?? "",
+              child: CachedNetworkImage(
+                progressIndicatorBuilder: (context, url, progress) => Center(
+                  child: CircularProgressIndicator(
+                    value: progress.progress,
+                    color: baseColor,
+                  ),
+                ),
+                imageUrl: shop[index].imageBannerUrl ?? "",
                 fit: BoxFit.cover,
                 width: 300,
               ),
@@ -64,8 +72,15 @@ class RenderFeatureShops extends StatelessWidget {
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        shop[index].imageUrl ?? "",
+                      child: CachedNetworkImage(
+                        progressIndicatorBuilder: (context, url, progress) =>
+                            Center(
+                          child: CircularProgressIndicator(
+                            value: progress.progress,
+                            color: baseColor,
+                          ),
+                        ),
+                        imageUrl: shop[index].imageUrl ?? "",
                         width: 50,
                         height: 50,
                         fit: BoxFit.cover,
