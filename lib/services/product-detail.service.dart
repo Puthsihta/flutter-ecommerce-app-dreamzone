@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dreamzone/models/product-detail.model.dart';
+import 'package:dreamzone/models/product_detail.dart';
 import 'package:http/http.dart' as http;
 
 class ProductDetailService {
@@ -9,9 +10,11 @@ class ProductDetailService {
     final response = await http.get(uri);
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
-      // print(json);
-      final data = ProductDetail.fromJson(json);
-      return data;
+      print("ProductDetailService $json");
+      final data = ProductData.fromJson(json['data']);
+
+      print("ProductDetailService data ${data.product!.toJson()}");
+      // return data;
       // return json;
     }
     throw "Something went wrong";

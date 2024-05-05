@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 class ProductDetailProvider extends ChangeNotifier {
   ProductDetailService productDetailService = ProductDetailService();
   bool isLoading = false;
-  Product? productDetail;
-  List<RelatedProduct> relatedProduct = [];
+  // Product? productDetail;
+  // List<RelatedProduct> relatedProduct = [];
 
   Future<void> getProductDetail(int id) async {
     isLoading = true;

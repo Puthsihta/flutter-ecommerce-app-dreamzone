@@ -46,6 +46,9 @@ dependencies:
   logger: any
   http:
   cached_network_image: ^3.3.1
+  json_annotation: ^4.9.0
+  injectable: ^2.4.1
+  get_it: ^7.7.0
 
 dev_dependencies:
   flutter_test:
@@ -57,6 +60,9 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
+  build_runner: ^2.4.9
+  json_serializable: ^6.8.0
+  injectable_generator: ^2.6.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
