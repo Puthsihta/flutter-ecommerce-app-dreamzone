@@ -28,6 +28,9 @@ class _TabNavigationBarState extends State<TabNavigationBar> {
       //   duration: const Duration(milliseconds: 500),
       //   curve: Curves.easeInOut,
       // );
+      setState(() {
+        _selectedIndex = index;
+      });
     } else {
       setState(() {
         _selectedIndex = index;
