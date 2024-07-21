@@ -1,6 +1,5 @@
 import 'package:dreamzone/models/shop.model.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 
 class RenderFeatureShops extends StatelessWidget {
   final List<Shop> shop;
@@ -42,7 +41,7 @@ class RenderFeatureShops extends StatelessWidget {
             ),
 
             Container(
-              margin: EdgeInsets.only(left: 15),
+              margin: const EdgeInsets.only(left: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,

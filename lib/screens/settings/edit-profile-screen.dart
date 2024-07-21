@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
+  static const routeName = "/profile/edit-profile";
   const EditProfileScreen({super.key});
 
   @override
@@ -42,7 +43,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    super.initState();
     setState(() {
       phone.text = "092389497";
     });
@@ -54,11 +55,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       backgroundColor: whiteSmoke,
       appBar: AppBar(
         backgroundColor: baseColor,
-        title: Text("Edit Profile"),
+        title: const Text("Edit Profile"),
       ),
       body: ListView(
         children: [
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Center(
             child: Column(
               children: [
@@ -71,7 +72,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     children: [
                       CircleAvatar(
                           backgroundImage: (_image == null)
-                              ? AssetImage('assets/images/logo.png')
+                              ? const AssetImage('assets/images/logo.png')
                               : FileImage(_image!) as ImageProvider),
                       Positioned(
                         bottom: 0,
@@ -94,7 +95,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   child: Wrap(
                                     children: <Widget>[
                                       Container(
-                                        padding: EdgeInsets.all(15),
+                                        padding: const EdgeInsets.all(15),
                                         child: Text(
                                           "Select Options",
                                           style: TextStyle(
@@ -137,20 +138,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             );
                           },
                           elevation: 2.0,
-                          fillColor: Color(0xFFF5F6F9),
+                          fillColor: const Color(0xFFF5F6F9),
+                          padding: const EdgeInsets.all(5),
+                          shape: const CircleBorder(),
                           child: Icon(
                             Icons.camera_alt,
                             color: iconColor,
                             size: 20,
                           ),
-                          padding: EdgeInsets.all(5),
-                          shape: CircleBorder(),
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text("Puthsitha Mouern",
@@ -162,7 +163,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ],
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Container(
             padding: paddingHorizontal,
             child: Column(

@@ -1,9 +1,12 @@
+import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/models/products.model.dart';
+import 'package:dreamzone/screens/products/product-detail-screen.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/widgets/render-product.dart';
 import 'package:flutter/material.dart';
 
 class ProductFavoriteScreen extends StatefulWidget {
+  static const routeName = "/product/favorite";
   const ProductFavoriteScreen({super.key});
 
   @override
@@ -43,10 +46,10 @@ class _ProductFavoriteScreenState extends State<ProductFavoriteScreen> {
       backgroundColor: whiteSmoke,
       appBar: AppBar(
         backgroundColor: baseColor,
-        title: Text("Favorite"),
+        title: const Text("Favorite"),
       ),
       body: GridView.builder(
-        padding: EdgeInsets.only(top: 15),
+        padding: const EdgeInsets.only(top: 15),
         itemCount: products.length, // Number of items in the grid
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -66,8 +69,12 @@ class _ProductFavoriteScreenState extends State<ProductFavoriteScreen> {
       products: products,
       index: index,
       onTap: () {
-        Navigator.pushNamed(context, '/product/detail',
-            arguments: products[index]);
+        Navigator.of(context).pushNamed(
+          ProductDetailScreen.routeName,
+          arguments: ProductDetailArgument(
+            product: products[index],
+          ),
+        );
       },
       isFav: true,
     );

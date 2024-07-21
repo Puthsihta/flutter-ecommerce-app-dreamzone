@@ -2,6 +2,7 @@ import 'package:dreamzone/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class DeleteAccountScreen extends StatelessWidget {
+  static const routeName = "/profile/delete-accouont";
   const DeleteAccountScreen({super.key});
 
   @override
@@ -10,7 +11,7 @@ class DeleteAccountScreen extends StatelessWidget {
       backgroundColor: whiteSmoke,
       appBar: AppBar(
         backgroundColor: baseColor,
-        title: Text("Delete Account"),
+        title: const Text("Delete Account"),
       ),
       body: Center(
         child: Column(
@@ -21,7 +22,7 @@ class DeleteAccountScreen extends StatelessWidget {
               size: 80,
               color: descriptionColor,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               "Not Notifications",
               style: TextStyle(

@@ -49,20 +49,20 @@ class RenderProduct extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 200,
-                    child: Flexible(
-                      child: Text(
-                        products[index].name,
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: false,
-                        maxLines: 1,
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.bold),
+                    child: Text(
+                      products[index].name,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      maxLines: 1,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -84,7 +84,7 @@ class RenderProduct extends StatelessWidget {
                                   decoration: TextDecoration.lineThrough,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5,
                               ),
                               Text(

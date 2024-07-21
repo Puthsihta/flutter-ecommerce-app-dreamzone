@@ -1,3 +1,4 @@
+import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/constants/constants.dart';
 import 'package:dreamzone/models/order.model.dart';
 import 'package:dreamzone/theme/colors.dart';
@@ -8,7 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class OrderDetailScreen extends StatefulWidget {
-  const OrderDetailScreen({super.key});
+  static const routeName = "/order/detail";
+
+  final OrderDetailArgument argument;
+  const OrderDetailScreen({super.key, required this.argument});
 
   @override
   State<OrderDetailScreen> createState() => _OrderDetailScreenState();
@@ -17,31 +21,27 @@ class OrderDetailScreen extends StatefulWidget {
 class _OrderDetailScreenState extends State<OrderDetailScreen> {
   @override
   Widget build(BuildContext context) {
-    final Order? propData =
-        ModalRoute.of(context)?.settings.arguments as Order?;
     return Scaffold(
         backgroundColor: whiteSmoke,
         appBar: AppBar(
           backgroundColor: baseColor,
-          title: Text("Order Detail"),
+          title: const Text("Order Detail"),
         ),
         body: Column(
           children: [
             Expanded(
-              child: Container(
-                child: ListView(
-                  children: [
-                    if (propData?.status != OrderStatus.cancel)
-                      OrderTacking(propData),
-                    OrderInfo(),
-                    OrderProduct(),
-                  ],
-                ),
+              child: ListView(
+                children: [
+                  if (widget.argument.order.status != OrderStatus.cancel)
+                    OrderTacking(widget.argument.order),
+                  OrderInfo(),
+                  OrderProduct(),
+                ],
               ),
             ),
-            if (propData?.status == OrderStatus.pending)
+            if (widget.argument.order.status == OrderStatus.pending)
               Container(
-                margin: EdgeInsets.symmetric(
+                margin: const EdgeInsets.symmetric(
                   horizontal: 25,
                   vertical: 20,
                 ),
@@ -54,6 +54,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
         ));
   }
 
+  // ignore: non_constant_identifier_names
   Container OrderTacking(Order? propData) {
     return Container(
       padding: const EdgeInsets.all(12),
@@ -67,52 +68,53 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               StatusTitle(
-                isCheck: propData?.status == OrderStatus.pending ||
-                        propData?.status == OrderStatus.confirm ||
-                        propData?.status == OrderStatus.delivery ||
-                        propData?.status == OrderStatus.complete
+                isCheck: widget.argument.order.status == OrderStatus.pending ||
+                        widget.argument.order.status == OrderStatus.confirm ||
+                        widget.argument.order.status == OrderStatus.delivery ||
+                        widget.argument.order.status == OrderStatus.complete
                     ? true
                     : false,
                 title: "Pending",
               ),
               VerticalLine(),
               StatusTitle(
-                isCheck: propData?.status == OrderStatus.confirm ||
-                        propData?.status == OrderStatus.delivery ||
-                        propData?.status == OrderStatus.complete
+                isCheck: widget.argument.order.status == OrderStatus.confirm ||
+                        widget.argument.order.status == OrderStatus.delivery ||
+                        widget.argument.order.status == OrderStatus.complete
                     ? true
                     : false,
                 title: "Confirm",
               ),
               VerticalLine(),
               StatusTitle(
-                isCheck: propData?.status == OrderStatus.delivery ||
-                        propData?.status == OrderStatus.complete
+                isCheck: widget.argument.order.status == OrderStatus.delivery ||
+                        widget.argument.order.status == OrderStatus.complete
                     ? true
                     : false,
                 title: "Delivery",
               ),
               VerticalLine(),
               StatusTitle(
-                isCheck:
-                    propData?.status == OrderStatus.complete ? true : false,
+                isCheck: widget.argument.order.status == OrderStatus.complete
+                    ? true
+                    : false,
                 title: "Completed",
               ),
             ],
           ),
           Center(
             child: Lottie.asset(
-              checkOrderStatusLottie(propData?.status ?? ''),
-              width: propData?.status == OrderStatus.complete ||
-                      propData?.status == OrderStatus.pending
+              checkOrderStatusLottie(widget.argument.order.status),
+              width: widget.argument.order.status == OrderStatus.complete ||
+                      widget.argument.order.status == OrderStatus.pending
                   ? 200
-                  : propData?.status == OrderStatus.delivery
+                  : widget.argument.order.status == OrderStatus.delivery
                       ? 165
                       : 140,
-              height: propData?.status == OrderStatus.complete ||
-                      propData?.status == OrderStatus.pending
+              height: widget.argument.order.status == OrderStatus.complete ||
+                      widget.argument.order.status == OrderStatus.pending
                   ? 200
-                  : propData?.status == OrderStatus.delivery
+                  : widget.argument.order.status == OrderStatus.delivery
                       ? 165
                       : 140,
               fit: BoxFit.cover,
@@ -123,21 +125,23 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Container VerticalLine() {
     return Container(
       height: 30,
       // color: Colors.red,
-      margin: EdgeInsets.only(left: 5),
-      child: VerticalDivider(
+      margin: const EdgeInsets.only(left: 5),
+      child: const VerticalDivider(
         thickness: 2,
       ),
     );
   }
 
+  // ignore: non_constant_identifier_names
   Container OrderProduct() {
     return Container(
-      padding: EdgeInsets.all(12),
-      margin: EdgeInsets.all(12),
+      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.all(12),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(10)),
       child: Column(
@@ -162,7 +166,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
               ),
             ],
           ),
-          Divider(
+          const Divider(
             height: 20,
           ),
           Row(
@@ -177,31 +181,29 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                   fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 230,
-                    child: Flexible(
-                      child: Text(
-                        "HYDRATING CLEANSING BALM ជួយសម្អាត Make Up",
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: false,
-                        maxLines: 2,
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: titleColor,
-                        ),
+                    child: Text(
+                      "HYDRATING CLEANSING BALM ជួយសម្អាត Make Up",
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      maxLines: 2,
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: titleColor,
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
-                  Container(
+                  SizedBox(
                     width: 230,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -227,7 +229,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
               )
             ],
           ),
-          Divider(
+          const Divider(
             height: 20,
             indent: 100,
           ),
@@ -294,10 +296,11 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Container OrderInfo() {
     return Container(
-      padding: EdgeInsets.all(12),
-      margin: EdgeInsets.all(12),
+      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.all(12),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(10)),
       child: Column(
@@ -311,7 +314,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
               color: titleColor,
             ),
           ),
-          Divider(),
+          const Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -430,7 +433,7 @@ class StatusTitle extends StatelessWidget {
           color: isCheck ? secondColor : descriptionColor,
           isCheck ? Icons.check_circle : Icons.check_circle_outline,
         ),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         Text(
           title,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(

@@ -1,9 +1,12 @@
+import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/models/shop.model.dart';
+import 'package:dreamzone/screens/shop/shop-detail-screen.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/widgets/render-shops.dart';
 import 'package:flutter/material.dart';
 
 class AllShopScreen extends StatefulWidget {
+  static const routeName = "/shop/all";
   const AllShopScreen({super.key});
 
   @override
@@ -95,7 +98,7 @@ class _AllShopScreenState extends State<AllShopScreen> {
           title: Text(title ?? "All Shop"),
           actions: [
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.search,
                 size: 27,
               ),
@@ -116,7 +119,7 @@ class _AllShopScreenState extends State<AllShopScreen> {
                 expandedHeight: 70.0,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Container(
-                    padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                    padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                     child: TextField(
                       controller: searchCotroller,
                       autofocus:
@@ -132,8 +135,8 @@ class _AllShopScreenState extends State<AllShopScreen> {
                             color: whiteSmoke,
                           ),
                         ),
-                        contentPadding: EdgeInsets.all(10),
-                        prefixIcon: Icon(Icons.search),
+                        contentPadding: const EdgeInsets.all(10),
+                        prefixIcon: const Icon(Icons.search),
                         suffixIcon: GestureDetector(
                           onTap: () {
                             if (searchCotroller.text.isEmpty) {
@@ -157,7 +160,7 @@ class _AllShopScreenState extends State<AllShopScreen> {
                         hintText: 'Search...',
                         filled: true,
                         fillColor: Colors.white,
-                        border: OutlineInputBorder(),
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                   ),
@@ -203,7 +206,12 @@ class _AllShopScreenState extends State<AllShopScreen> {
       shop: shop,
       index: index,
       onTap: () {
-        Navigator.pushNamed(context, '/shop/detail', arguments: shop[index]);
+        Navigator.of(context).pushNamed(
+          ShopDetailScreen.routeName,
+          arguments: ShopDetailArgument(
+            shop: shop[index],
+          ),
+        );
       },
     );
   }

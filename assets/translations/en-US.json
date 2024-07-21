@@ -1,0 +1,25 @@
+{
+  "hello_world": "Hello World",
+  "sale": "Sale",
+  "report": "Report",
+  "order_list": "Order List",
+  "logout": "Logout",
+  "total_sales_today": "Total Sales Today",
+  "yesterday":"Yesterday",
+  "confirm": "Confirm",
+  "cancel":"Cancel",
+  "order": "Order",
+  "discount":"Discount",
+  "subtotal":"SubTotal",
+  "total": "Total",
+  "received":"Received",
+  "returned": "Returned",
+  "all_orders": "All Order",
+  "total_payment": "Total Payment",
+  "detail": "Detail",
+  "all": "All",
+  "today": "Today",
+  "past_7_days": "Past 7 days",
+  "past_30_days": "Past 30 days"
+
+}

@@ -6,6 +6,7 @@ import 'package:dreamzone/widgets/custom-text-input.dart';
 import 'package:flutter/material.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
+  static const routeName = "/setting/change-password";
   const ChangePasswordScreen({super.key});
 
   @override
@@ -48,12 +49,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         backgroundColor: whiteSmoke,
         appBar: AppBar(
           backgroundColor: baseColor,
-          title: Text("Change Password"),
+          title: const Text("Change Password"),
         ),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Center(
@@ -67,7 +68,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
@@ -110,7 +111,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         },
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     CustomTextInput(
                       label: 'New Password',
                       hintText: 'Enter your new password',
@@ -147,7 +148,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         },
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     CustomTextInput(
                       label: 'Confirm Password',
                       hintText: 'Enter your confim password',

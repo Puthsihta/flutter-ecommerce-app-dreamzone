@@ -5,6 +5,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import '../../constants/constants.dart';
 
 class AboutUsScreen extends StatelessWidget {
+  static const routeName = "/profile/aboutus";
   const AboutUsScreen({super.key});
 
   @override
@@ -13,7 +14,7 @@ class AboutUsScreen extends StatelessWidget {
       backgroundColor: whiteSmoke,
       appBar: AppBar(
         backgroundColor: baseColor,
-        title: Text("About Us"),
+        title: const Text("About Us"),
       ),
       body: SingleChildScrollView(
         child: Container(

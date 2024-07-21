@@ -1,13 +1,15 @@
+import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/models/products.model.dart';
-import 'package:dreamzone/models/shop.model.dart';
+import 'package:dreamzone/screens/products/product-detail-screen.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/widgets/render-product.dart';
 import 'package:dreamzone/widgets/webview.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ShopDetailScreen extends StatefulWidget {
-  const ShopDetailScreen({super.key});
+  static const routeName = "/shop/detail";
+  final ShopDetailArgument argument;
+  const ShopDetailScreen({super.key, required this.argument});
 
   @override
   State<ShopDetailScreen> createState() => _ShopDetailScreenState();
@@ -48,7 +50,6 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Shop? propData = ModalRoute.of(context)?.settings.arguments as Shop?;
     return Scaffold(
       backgroundColor: whiteSmoke,
       body: CustomScrollView(
@@ -59,7 +60,7 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               background: Image.network(
-                propData!.shopCover,
+                widget.argument.shop.shopCover,
                 fit: BoxFit.cover,
               ),
             ),
@@ -69,7 +70,7 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
             delegate: SliverChildListDelegate(
               [
                 Container(
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   color: Colors.white,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,11 +80,12 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                           CircleAvatar(
                             radius: 30,
                             backgroundColor: whiteSmoke,
-                            backgroundImage: NetworkImage(propData!.shopLogo),
+                            backgroundImage:
+                                NetworkImage(widget.argument.shop.shopLogo),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Text(
-                            propData!.name,
+                            widget.argument.shop.name,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -92,7 +94,7 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                           )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
@@ -115,7 +117,7 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                                     color: whiteSmoke,
                                     size: 20,
                                   ),
-                                  SizedBox(width: 10),
+                                  const SizedBox(width: 10),
                                   Text(
                                     "Call Now",
                                     style: TextStyle(
@@ -138,10 +140,10 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                                     color: whiteSmoke,
                                     borderRadius: BorderRadius.circular(5),
                                   ),
-                                  child: Icon(Icons.wordpress_outlined),
+                                  child: const Icon(Icons.wordpress_outlined),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               GestureDetector(
@@ -153,7 +155,7 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                                     color: whiteSmoke,
                                     borderRadius: BorderRadius.circular(5),
                                   ),
-                                  child: Icon(Icons.home_outlined),
+                                  child: const Icon(Icons.home_outlined),
                                 ),
                               ),
                             ],
@@ -187,7 +189,7 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                             color: inActiveColor,
                             size: 18,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Text(
@@ -262,8 +264,12 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
       products: products,
       index: index,
       onTap: () {
-        Navigator.pushNamed(context, '/product/detail',
-            arguments: products[index]);
+        Navigator.of(context).pushNamed(
+          ProductDetailScreen.routeName,
+          arguments: ProductDetailArgument(
+            product: products[index],
+          ),
+        );
       },
       isFav: false,
     );

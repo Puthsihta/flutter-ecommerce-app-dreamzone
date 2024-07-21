@@ -1,67 +1,117 @@
-import 'package:dreamzone/routes.dart';
-import 'package:dreamzone/screens/auth/reset-pasword-screen.dart';
-import 'package:dreamzone/screens/auth/signin-screen.dart';
-import 'package:dreamzone/screens/auth/signup-screen.dart';
-import 'package:dreamzone/screens/auth/verify-otp-screen.dart';
-import 'package:dreamzone/screens/cart/order-detail-screen.dart';
-import 'package:dreamzone/screens/cart/order-product-screen.dart';
-import 'package:dreamzone/screens/cart/payment-sucess-screen.dart';
-import 'package:dreamzone/screens/categories/categories-screen.dart';
-import 'package:dreamzone/screens/notifications/notification-screen.dart';
-import 'package:dreamzone/screens/products/product-detail-screen.dart';
-import 'package:dreamzone/screens/products/product-favorite-screen.dart';
-import 'package:dreamzone/screens/products/product-screen.dart';
-import 'package:dreamzone/screens/products/special-product-screen.dart';
-import 'package:dreamzone/screens/settings/about-us-screen.dart';
-import 'package:dreamzone/screens/settings/change-password-screen.dart';
-import 'package:dreamzone/screens/settings/contact-us-screen.dart';
-import 'package:dreamzone/screens/settings/delete-account-screen.dart';
-import 'package:dreamzone/screens/settings/edit-profile-screen.dart';
-import 'package:dreamzone/screens/settings/privacy-policy-screen.dart';
-import 'package:dreamzone/screens/settings/setting-screen.dart';
-import 'package:dreamzone/screens/shop/all-shop-screen.dart';
-import 'package:dreamzone/screens/shop/shop-detail-screen.dart';
+import 'package:dreamzone/app_container.dart';
+import 'package:dreamzone/constants/locales.dart';
+import 'package:dreamzone/data/repos/auth_repo.dart';
+import 'package:dreamzone/data/repos/user_repo.dart';
+import 'package:dreamzone/locator.dart';
+import 'package:dreamzone/providers/auth_provider.dart';
+import 'package:dreamzone/providers/cart_provider.dart';
+import 'package:dreamzone/providers/shop_provider.dart';
+import 'package:dreamzone/providers/theme_provider.dart';
+import 'package:dreamzone/providers/user_provider.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const DreamzoneApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
+  await dotenv.load(fileName: ".env");
+
+  setupLocator();
+
+  runApp(
+    EasyLocalization(
+      path: 'assets/translations',
+      fallbackLocale: Locales.en,
+      supportedLocales: const [Locales.en, Locales.km],
+      child: const DreamzoneApp(),
+    ),
+  );
 }
 
-class DreamzoneApp extends StatelessWidget {
+class DreamzoneApp extends StatefulWidget {
   const DreamzoneApp({super.key});
+
+  @override
+  State<DreamzoneApp> createState() => _DreamzoneAppState();
+}
+
+class _DreamzoneAppState extends State<DreamzoneApp> {
+  @override
+  void initState() {
+    double width = (PlatformDispatcher.instance.views.first.physicalSize.width /
+        PlatformDispatcher.instance.views.first.devicePixelRatio);
+
+    if (width >= 481) {
+      SystemChrome.setPreferredOrientations(
+        [
+          DeviceOrientation.landscapeLeft,
+          DeviceOrientation.landscapeRight,
+        ],
+      );
+    }
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    double width = (PlatformDispatcher.instance.views.first.physicalSize.width /
+        PlatformDispatcher.instance.views.first.devicePixelRatio);
+    if (width >= 481) {
+      SystemChrome.setPreferredOrientations(
+        [
+          DeviceOrientation.landscapeLeft,
+          DeviceOrientation.landscapeRight,
+        ],
+      );
+    }
+
+    super.dispose();
+  }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'DreamZone App',
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const TabNavigationBar(),
-        '/auth/signin': (context) => const SignInScreen(),
-        '/auth/signup': (context) => const SignUpScreen(),
-        '/auth/verify-otp': (context) => const VerifyOtpScreen(),
-        '/auth/reset-password': (context) => const ResetPasswordScreen(),
-        '/cart/order': (context) => const OrderProductScreen(),
-        '/order/detail': (context) => const OrderDetailScreen(),
-        '/order/payment-success': (context) => const PaymentSuccesScreen(),
-        '/categories': (context) => const CategorieScreen(),
-        '/notification': (context) => const NotificationScreen(),
-        '/product/detail': (context) => const ProductDetailScreen(),
-        '/product/favorite': (context) => const ProductFavoriteScreen(),
-        '/product/all': (context) => const ProductScreen(),
-        '/product/special': (context) => const SepecialProductScreen(),
-        '/shop/all': (context) => const AllShopScreen(),
-        '/shop/detail': (context) => const ShopDetailScreen(),
-        '/profile/aboutus': (context) => const AboutUsScreen(),
-        '/profile/privacy': (context) => const PrivacyPolicyScreen(),
-        '/setting/change-password': (context) => const ChangePasswordScreen(),
-        '/profile/contactus': (context) => const ContactUsScreen(),
-        '/profile/delete-accouont': (context) => const DeleteAccountScreen(),
-        '/profile/edit-profile': (context) => const EditProfileScreen(),
-        '/profile/setting': (context) => const SettingScreen(),
+    return GestureDetector(
+      onTap: () {
+        WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
       },
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (_) => ThemeProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => AuthProvider(
+              onTokenChanged: (token) {
+                // print("on token changed : ${token}");
+              },
+              authRepo: locator<AuthRepo>(),
+            ),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => ShopProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => UserProvider(
+              userRepo: locator<UserRepo>(),
+            ),
+          ),
+          ChangeNotifierProxyProvider<ShopProvider, CartProvider>(
+            create: (context) => CartProvider(
+              shopProvider: context.read<ShopProvider>(),
+            ),
+            update: (context, shopProvider, cartProvider) =>
+                cartProvider!..update(shopProvider),
+          ),
+        ],
+        child: const AppContainer(),
+      ),
     );
   }
 }

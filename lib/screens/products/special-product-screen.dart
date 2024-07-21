@@ -1,8 +1,8 @@
 import 'package:dreamzone/theme/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class SepecialProductScreen extends StatefulWidget {
+  static const routeName = "/product/special";
   const SepecialProductScreen({super.key});
 
   @override
@@ -18,7 +18,7 @@ class _SepecialProductScreenState extends State<SepecialProductScreen> {
       backgroundColor: whiteSmoke,
       appBar: AppBar(
         backgroundColor: baseColor,
-        title: Text("Sepecial Products"),
+        title: const Text("Sepecial Products"),
       ),
       body: ListView.builder(
         itemCount: items.length,
@@ -48,7 +48,7 @@ class _SepecialProductScreenState extends State<SepecialProductScreen> {
                       height: 70,
                       width: MediaQuery.of(context).size.width / 1.07,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(10),
                         ),
                         color: Colors.black.withOpacity(0.4),
@@ -59,44 +59,42 @@ class _SepecialProductScreenState extends State<SepecialProductScreen> {
                           Row(
                             children: [
                               Container(
-                                margin: EdgeInsets.only(left: 15),
-                                child: CircleAvatar(
+                                margin: const EdgeInsets.only(left: 15),
+                                child: const CircleAvatar(
                                   backgroundImage: NetworkImage(
                                       "https://dreamzone.phsartech.com/uploads/uploads/shop/1683016085-%20.jpeg"),
                                   radius: 25,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
-                              Container(
+                              const SizedBox(
                                 width: 160,
-                                child: Flexible(
-                                  child: Text(
-                                    "Shop Name Placeholder",
-                                    overflow: TextOverflow.ellipsis,
-                                    softWrap: false,
-                                    maxLines: 2,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                child: Text(
+                                  "Shop Name Placeholder",
+                                  overflow: TextOverflow.ellipsis,
+                                  softWrap: false,
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
                             ],
                           ),
                           Container(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 5, horizontal: 15),
                             decoration: BoxDecoration(
                               color: baseColor,
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(12),
                                   bottomLeft: Radius.circular(12)),
                             ),
-                            child: Text(
+                            child: const Text(
                               "10% OFF",
                               style: TextStyle(
                                   color: Colors.white,

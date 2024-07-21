@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ContactUsScreen extends StatelessWidget {
+  static const routeName = "/profile/contactus";
   const ContactUsScreen({super.key});
 
   @override
@@ -12,7 +13,7 @@ class ContactUsScreen extends StatelessWidget {
       backgroundColor: whiteSmoke,
       appBar: AppBar(
         backgroundColor: baseColor,
-        title: Text("Contact Us"),
+        title: const Text("Contact Us"),
       ),
       body: SafeArea(
         child: Column(
@@ -21,7 +22,7 @@ class ContactUsScreen extends StatelessWidget {
             Expanded(
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Center(
@@ -35,7 +36,7 @@ class ContactUsScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Container(
@@ -52,7 +53,7 @@ class ContactUsScreen extends StatelessWidget {
                             color: titleColor,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
@@ -61,7 +62,7 @@ class ContactUsScreen extends StatelessWidget {
                               CupertinoIcons.phone,
                               color: descriptionColor,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             Text(
@@ -73,7 +74,7 @@ class ContactUsScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Row(
@@ -82,7 +83,7 @@ class ContactUsScreen extends StatelessWidget {
                               CupertinoIcons.mail,
                               color: descriptionColor,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             Text(
@@ -94,7 +95,7 @@ class ContactUsScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Row(
@@ -103,27 +104,25 @@ class ContactUsScreen extends StatelessWidget {
                               CupertinoIcons.map_pin,
                               color: descriptionColor,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
-                            Container(
+                            SizedBox(
                               width: MediaQuery.of(context).size.width / 1.3,
-                              child: Flexible(
-                                child: Text(
-                                  "#17K SongKat Jom Chao1 Khan Po SenChey ,Phnom Penh",
-                                  overflow: TextOverflow.ellipsis,
-                                  softWrap: false,
-                                  maxLines: 2,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: descriptionColor,
-                                  ),
+                              child: Text(
+                                "#17K SongKat Jom Chao1 Khan Po SenChey ,Phnom Penh",
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: false,
+                                maxLines: 2,
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: descriptionColor,
                                 ),
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(
@@ -135,7 +134,7 @@ class ContactUsScreen extends StatelessWidget {
                             color: titleColor,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
@@ -144,7 +143,7 @@ class ContactUsScreen extends StatelessWidget {
                           children: [
                             IconButton(
                               onPressed: () {},
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.facebook,
                                 color: Colors.blueAccent,
                                 size: 40,
@@ -152,7 +151,7 @@ class ContactUsScreen extends StatelessWidget {
                             ),
                             IconButton(
                               onPressed: () {},
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.play_circle,
                                 color: Colors.redAccent,
                                 size: 40,
@@ -160,7 +159,7 @@ class ContactUsScreen extends StatelessWidget {
                             ),
                             IconButton(
                               onPressed: () {},
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.telegram,
                                 color: Colors.lightBlue,
                                 size: 40,
@@ -168,7 +167,7 @@ class ContactUsScreen extends StatelessWidget {
                             ),
                             IconButton(
                               onPressed: () {},
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.public,
                                 color: Colors.lightBlueAccent,
                                 size: 40,
@@ -183,11 +182,9 @@ class ContactUsScreen extends StatelessWidget {
               ),
             ),
             // Text at the bottom of the screen
-            Container(
-              child: Text(
-                '©️ Copyright Dreamzone',
-                style: TextStyle(fontSize: 16.0),
-              ),
+            const Text(
+              '©️ Copyright Dreamzone',
+              style: TextStyle(fontSize: 16.0),
             ),
           ],
         ),

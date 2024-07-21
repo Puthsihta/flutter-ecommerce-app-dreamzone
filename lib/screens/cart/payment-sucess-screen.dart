@@ -1,10 +1,10 @@
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/widgets/custom-button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:lottie/lottie.dart';
 
 class PaymentSuccesScreen extends StatelessWidget {
+  static const routeName = "/order/payment-success";
   const PaymentSuccesScreen({super.key});
 
   @override
@@ -19,7 +19,7 @@ class PaymentSuccesScreen extends StatelessWidget {
               'assets/jsons/success.json',
               fit: BoxFit.cover,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               "Congratulations",
               style: TextStyle(
@@ -34,11 +34,11 @@ class PaymentSuccesScreen extends StatelessWidget {
                 fontSize: 15,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             Container(
-              margin: EdgeInsets.symmetric(
+              margin: const EdgeInsets.symmetric(
                 horizontal: 15,
               ),
               child: CustomButton(

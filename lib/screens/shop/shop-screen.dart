@@ -1,15 +1,17 @@
+import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/models/provices.model.dart';
 import 'package:dreamzone/models/shop.model.dart';
+import 'package:dreamzone/screens/shop/shop-detail-screen.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/widgets/image-slide.dart';
 import 'package:dreamzone/widgets/render-provices.dart';
 import 'package:dreamzone/widgets/render-shops.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ShopScreen extends StatefulWidget {
-  const ShopScreen({super.key});
+  static const routeName = "/shop";
 
+  const ShopScreen({super.key});
   @override
   State<ShopScreen> createState() => _ShopScreenState();
 }
@@ -112,12 +114,12 @@ class _ShopScreenState extends State<ShopScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: baseColor,
-        title: Text(
+        title: const Text(
           'Shops',
         ),
         actions: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.search,
               size: 27,
             ),
@@ -136,10 +138,8 @@ class _ShopScreenState extends State<ShopScreen> {
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                Container(
-                  child: ImageSlide(
-                    images: _images,
-                  ),
+                ImageSlide(
+                  images: _images,
                 ),
                 Container(
                   padding: const EdgeInsets.only(top: 15, left: 15, right: 15),
@@ -155,7 +155,7 @@ class _ShopScreenState extends State<ShopScreen> {
             ),
           ),
           SliverPadding(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             sliver: SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
@@ -189,7 +189,7 @@ class _ShopScreenState extends State<ShopScreen> {
             ]),
           ),
           SliverPadding(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             sliver: SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,
@@ -216,7 +216,7 @@ class _ShopScreenState extends State<ShopScreen> {
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           "Shops",
                           style: TextStyle(
                             fontSize: 18,
@@ -230,7 +230,7 @@ class _ShopScreenState extends State<ShopScreen> {
                               '/shop/all',
                             );
                           },
-                          child: Text(
+                          child: const Text(
                             "More",
                             style: TextStyle(fontSize: 18, color: Colors.green),
                           ),
@@ -239,7 +239,7 @@ class _ShopScreenState extends State<ShopScreen> {
             ]),
           ),
           SliverPadding(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             sliver: SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,
@@ -279,7 +279,12 @@ class _ShopScreenState extends State<ShopScreen> {
       shop: shop,
       index: index,
       onTap: () {
-        Navigator.pushNamed(context, '/shop/detail', arguments: shop[index]);
+        Navigator.of(context).pushNamed(
+          ShopDetailScreen.routeName,
+          arguments: ShopDetailArgument(
+            shop: shop[index],
+          ),
+        );
       },
     );
   }
@@ -289,7 +294,12 @@ class _ShopScreenState extends State<ShopScreen> {
       shop: shop,
       index: index,
       onTap: () {
-        Navigator.pushNamed(context, '/shop/detail', arguments: shop[index]);
+        Navigator.of(context).pushNamed(
+          ShopDetailScreen.routeName,
+          arguments: ShopDetailArgument(
+            shop: shop[index],
+          ),
+        );
       },
     );
   }

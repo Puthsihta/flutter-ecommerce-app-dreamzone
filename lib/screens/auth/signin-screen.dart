@@ -3,11 +3,10 @@ import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/utils/validation.dart';
 import 'package:dreamzone/widgets/custom-button.dart';
 import 'package:dreamzone/widgets/custom-text-input.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class SignInScreen extends StatefulWidget {
+  static const routeName = "/auth/signin";
   const SignInScreen({super.key});
 
   @override

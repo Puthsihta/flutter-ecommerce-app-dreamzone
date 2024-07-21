@@ -1,9 +1,8 @@
 import 'package:dreamzone/theme/colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class SettingScreen extends StatefulWidget {
+  static const routeName = "/profile/setting";
   const SettingScreen({super.key});
 
   @override
@@ -18,7 +17,7 @@ class _SettingScreenState extends State<SettingScreen> {
       backgroundColor: whiteSmoke,
       appBar: AppBar(
         backgroundColor: baseColor,
-        title: Text('Setting'),
+        title: const Text('Setting'),
       ),
       body: Column(
         children: [
@@ -81,7 +80,7 @@ class SettingListItem extends StatelessWidget {
         onTap();
       },
       child: Container(
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           top: 15,
           left: 15,
           right: 15,

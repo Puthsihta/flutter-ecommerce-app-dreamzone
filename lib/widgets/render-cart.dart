@@ -14,7 +14,7 @@ class RenderCartItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.fromLTRB(15, index == 0 ? 15 : 0, 15, 15),
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       height: 130,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
@@ -37,20 +37,21 @@ class RenderCartItem extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          SizedBox(width: 12),
+          const SizedBox(width: 12),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 width: 200,
-                child: Flexible(
-                  child: Text(
-                    cart[index].name,
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: false,
-                    maxLines: 1,
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                child: Text(
+                  cart[index].name,
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: false,
+                  maxLines: 1,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -63,7 +64,10 @@ class RenderCartItem extends StatelessWidget {
                   Text(
                     // products[index].discount.toString(),
                     currencyFormatter.format(cart[index].discount),
-                    style: TextStyle(fontSize: 13, color: greenColor),
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: greenColor,
+                    ),
                   ),
                 ],
               ),
@@ -72,29 +76,31 @@ class RenderCartItem extends StatelessWidget {
                   Text(
                     currencyFormatter.format(cart[index].prices),
                     style: TextStyle(
-                        fontSize: 15,
-                        color: placeHolderColor,
-                        decoration: TextDecoration.lineThrough,
-                        fontWeight: FontWeight.normal),
+                      fontSize: 15,
+                      color: placeHolderColor,
+                      decoration: TextDecoration.lineThrough,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
-                  SizedBox(width: 12),
+                  const SizedBox(width: 12),
                   Text(
                     currencyFormatter
                         .format(cart[index].prices - cart[index].discount),
                     style: TextStyle(
-                        fontSize: 15,
-                        color: baseColor,
-                        fontWeight: FontWeight.bold),
+                      fontSize: 15,
+                      color: baseColor,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
-              Container(
+              SizedBox(
                 width: 200,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
+                    SizedBox(
                       width: 150,
                       height: 40,
                       child: Row(
@@ -108,10 +114,10 @@ class RenderCartItem extends StatelessWidget {
                             ),
                             onPressed: () {},
                           ),
-                          Container(
+                          const SizedBox(
                             height: 40,
                             width: 50,
-                            child: const Center(
+                            child: Center(
                               child: Text(
                                 '1',
                                 style: TextStyle(
@@ -130,37 +136,38 @@ class RenderCartItem extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return CupertinoAlertDialog(
-                                title: Text("Delete Cart?"),
-                                actions: [
-                                  CupertinoDialogAction(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CupertinoAlertDialog(
+                              title: const Text("Delete Cart?"),
+                              actions: [
+                                CupertinoDialogAction(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text(
+                                    "Cancel",
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                ),
+                                CupertinoDialogAction(
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text(
-                                      "Cancel",
-                                      style: TextStyle(color: Colors.red),
-                                    ),
-                                  ),
-                                  CupertinoDialogAction(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text(
-                                        "Delete",
-                                        style: TextStyle(color: Colors.blue),
-                                      )),
-                                ],
-                                content: Text("You can add more cart!"),
-                              );
-                            },
-                          );
-                        },
-                        icon: Icon(Icons.delete_outline, color: secondColor))
+                                    child: const Text(
+                                      "Delete",
+                                      style: TextStyle(color: Colors.blue),
+                                    )),
+                              ],
+                              content: const Text("You can add more cart!"),
+                            );
+                          },
+                        );
+                      },
+                      icon: Icon(Icons.delete_outline, color: secondColor),
+                    )
                   ],
                 ),
               )

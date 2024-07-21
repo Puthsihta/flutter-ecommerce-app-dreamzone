@@ -4,7 +4,6 @@ import 'package:dreamzone/utils/index.dart';
 import 'package:dreamzone/widgets/custom-button.dart';
 import 'package:dreamzone/widgets/render-cart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class MyCart extends StatefulWidget {
   const MyCart({super.key});
@@ -62,8 +61,8 @@ class _MyCartState extends State<MyCart> {
           ),
         ),
         Container(
-          margin: EdgeInsets.all(15),
-          padding: EdgeInsets.all(15),
+          margin: const EdgeInsets.all(15),
+          padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(12),
@@ -73,28 +72,28 @@ class _MyCartState extends State<MyCart> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Subtotal"),
+                  const Text("Subtotal"),
                   Text(currencyFormatter.format(136)),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Discount"),
+                  const Text("Discount"),
                   Text(currencyFormatter.format(10)),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
-              Divider(),
-              SizedBox(
+              const Divider(),
+              const SizedBox(
                 height: 5,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Total Amount"),
+                  const Text("Total Amount"),
                   Text(
                     currencyFormatter.format(126),
                     style: TextStyle(
@@ -105,7 +104,7 @@ class _MyCartState extends State<MyCart> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               CustomButton(

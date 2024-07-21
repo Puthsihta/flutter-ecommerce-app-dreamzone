@@ -6,6 +6,7 @@ import 'package:dreamzone/widgets/custom-text-input.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
+  static const routeName = "/auth/signup";
   const SignUpScreen({super.key});
 
   @override

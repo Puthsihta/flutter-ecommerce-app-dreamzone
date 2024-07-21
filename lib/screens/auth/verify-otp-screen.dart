@@ -5,6 +5,7 @@ import 'package:dreamzone/widgets/custom-text-input.dart';
 import 'package:flutter/material.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
+  static const routeName = "/auth/verify-otp";
   const VerifyOtpScreen({super.key});
 
   @override
@@ -59,7 +60,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Text(
@@ -71,7 +72,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(
+                margin: const EdgeInsets.only(
                   top: 20,
                 ),
                 padding: paddingHorizontal,
@@ -119,7 +120,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                       },
                       keyboardType: TextInputType.phone,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     CustomTextInput(
                       label: 'OTP code',
                       hintText: 'Enter your otp code',
@@ -149,10 +150,10 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                                 : placeHolderColor,
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          margin: EdgeInsets.symmetric(
+                          margin: const EdgeInsets.symmetric(
                             horizontal: 7,
                           ),
-                          child: Text(
+                          child: const Text(
                             "Verify",
                             style: TextStyle(
                               color: Colors.white,
@@ -177,7 +178,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                       },
                       keyboardType: TextInputType.number,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     )
                   ],

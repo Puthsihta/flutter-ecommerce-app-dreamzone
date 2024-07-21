@@ -1,5 +1,9 @@
+import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/models/products.model.dart';
 import 'package:dreamzone/models/shop.model.dart';
+import 'package:dreamzone/routes.dart';
+import 'package:dreamzone/screens/products/product-detail-screen.dart';
+import 'package:dreamzone/screens/shop/shop-detail-screen.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/widgets/home-icon.dart';
 import 'package:dreamzone/widgets/image-slide.dart';
@@ -11,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const routeName = "/home";
   const HomeScreen({
     super.key,
   });
@@ -107,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             "Best Selling",
                             style: TextStyle(
                               fontSize: 18,
@@ -121,10 +126,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 '/product/all',
                               );
                             },
-                            child: Text(
+                            child: const Text(
                               "More",
-                              style:
-                                  TextStyle(fontSize: 18, color: Colors.green),
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.green,
+                              ),
                             ),
                           ),
                         ])),
@@ -142,52 +149,56 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           SliverList(
-            delegate: SliverChildListDelegate([
-              Container(
-                margin: const EdgeInsets.all(15),
-                child: const Text(
-                  "Feature Shops",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+            delegate: SliverChildListDelegate(
+              [
+                Container(
+                  margin: const EdgeInsets.all(15),
+                  child: const Text(
+                    "Feature Shops",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                height: 150,
-                child: ListView.builder(
+                SizedBox(
+                  height: 150,
+                  child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: shop.length,
                     itemBuilder: (context, index) {
                       return renderFeatureShop(context, index);
-                    }),
-              ),
-              Container(
-                  margin: const EdgeInsets.fromLTRB(15, 20, 15, 10),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "All Products",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                    },
+                  ),
+                ),
+                Container(
+                    margin: const EdgeInsets.fromLTRB(15, 20, 15, 10),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "All Products",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              '/product/all',
-                            );
-                          },
-                          child: Text(
-                            "More",
-                            style: TextStyle(fontSize: 18, color: Colors.green),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                '/product/all',
+                              );
+                            },
+                            child: const Text(
+                              "More",
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.green),
+                            ),
                           ),
-                        ),
-                      ])),
-            ]),
+                        ])),
+              ],
+            ),
           ),
           SliverPadding(
             padding: const EdgeInsets.only(
@@ -214,8 +225,12 @@ class _HomeScreenState extends State<HomeScreen> {
       products: products,
       index: index,
       onTap: () {
-        Navigator.pushNamed(context, '/product/detail',
-            arguments: products[index]);
+        Navigator.of(context).pushNamed(
+          ProductDetailScreen.routeName,
+          arguments: ProductDetailArgument(
+            product: products[index],
+          ),
+        );
       },
       isFav: false,
     );
@@ -226,7 +241,12 @@ class _HomeScreenState extends State<HomeScreen> {
       shop: shop,
       index: index,
       onTap: () {
-        Navigator.pushNamed(context, '/shop/detail', arguments: shop[index]);
+        Navigator.of(context).pushNamed(
+          ShopDetailScreen.routeName,
+          arguments: ShopDetailArgument(
+            shop: shop[index],
+          ),
+        );
       },
     );
   }
@@ -236,8 +256,12 @@ class _HomeScreenState extends State<HomeScreen> {
       products: products,
       index: index,
       onTap: () {
-        Navigator.pushNamed(context, '/product/detail',
-            arguments: products[index]);
+        Navigator.of(context).pushNamed(
+          ProductDetailScreen.routeName,
+          arguments: ProductDetailArgument(
+            product: products[index],
+          ),
+        );
       },
     );
   }
@@ -259,11 +283,9 @@ class _HomeScreenState extends State<HomeScreen> {
             image: 'assets/images/home/shop.png',
             title: "Shops",
             onTap: () {
-              Navigator.pushNamed(
-                context,
-                '/',
-                arguments: 1,
-              );
+              Navigator.of(context).pushReplacementNamed(
+                  TabNavigationBar.routeName,
+                  arguments: 1);
             },
           ),
           HomeIcon(
@@ -300,14 +322,14 @@ class _HomeScreenState extends State<HomeScreen> {
             fit: BoxFit.contain,
             height: 32,
           ),
-          Container(
+          SizedBox(
             width: 200,
             // color: Colors.red,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Container(
-                  margin: EdgeInsets.only(right: 15),
+                  margin: const EdgeInsets.only(right: 15),
                   child: GestureDetector(
                     onTap: () {
                       showDialog(
@@ -332,7 +354,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed: () {
                     showDialog(
                       builder: (context) => AlertDialog(
-                        title: Text(
+                        title: const Text(
                           'This is the App QR Code!',
                           textAlign: TextAlign.center,
                           style: TextStyle(fontWeight: FontWeight.bold),
@@ -350,17 +372,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                       data: '1234567890',
                                       version: QrVersions.auto,
                                       size: 200.0,
-                                      embeddedImage:
-                                          AssetImage('assets/images/logo.png'),
-                                      embeddedImageStyle: QrEmbeddedImageStyle(
+                                      embeddedImage: const AssetImage(
+                                          'assets/images/logo.png'),
+                                      embeddedImageStyle:
+                                          const QrEmbeddedImageStyle(
                                         size: Size(30, 30),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                              SizedBox(height: 20.0),
-                              Text(
+                              const SizedBox(height: 20.0),
+                              const Text(
                                 'scan here installing application',
                                 textAlign: TextAlign.center,
                               ),

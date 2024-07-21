@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 class PrivacyPolicyScreen extends StatelessWidget {
+  static const routeName = "/profile/privacy";
   const PrivacyPolicyScreen({super.key});
 
   @override
@@ -12,7 +13,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
       backgroundColor: whiteSmoke,
       appBar: AppBar(
         backgroundColor: baseColor,
-        title: Text("Privacy Policy"),
+        title: const Text("Privacy Policy"),
       ),
       body: SingleChildScrollView(
         child: Container(

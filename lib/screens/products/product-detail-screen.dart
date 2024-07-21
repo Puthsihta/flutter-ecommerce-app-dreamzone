@@ -1,15 +1,17 @@
+import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/models/products.model.dart';
 import 'package:dreamzone/models/shop.model.dart';
+import 'package:dreamzone/screens/shop/shop-detail-screen.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/utils/index.dart';
 import 'package:dreamzone/widgets/render-product.dart';
 import 'package:dreamzone/widgets/webview.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ProductDetailScreen extends StatefulWidget {
-  const ProductDetailScreen({super.key});
+  static const routeName = "/product/detail";
+  final ProductDetailArgument argument;
+  const ProductDetailScreen({super.key, required this.argument});
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -49,8 +51,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   ];
   @override
   Widget build(BuildContext context) {
-    final Product? propData =
-        ModalRoute.of(context)?.settings.arguments as Product?;
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
@@ -61,7 +61,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               background: Image.network(
-                propData!.image,
+                widget.argument.product.image,
                 fit: BoxFit.cover,
               ),
             ),
@@ -78,21 +78,22 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: 250,
-                            child: Flexible(
-                              child: Text(
-                                propData!.name,
-                                overflow: TextOverflow.ellipsis,
-                                softWrap: false,
-                                maxLines: 3,
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
+                            child: Text(
+                              widget.argument.product.name,
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: false,
+                              maxLines: 3,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
                           Text(
-                            currencyFormatter.format(propData!.prices),
+                            currencyFormatter
+                                .format(widget.argument.product.prices),
                             style: TextStyle(
                               color: baseColor,
                               fontWeight: FontWeight.bold,
@@ -132,7 +133,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -165,9 +166,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               ),
                               onPressed: () {},
                             ),
-                            Container(
+                            const SizedBox(
                               height: 40,
-                              child: const Center(
+                              child: Center(
                                 child: Text(
                                   '1',
                                   style: TextStyle(
@@ -188,7 +189,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
                   child: HTMLView(
                     htmlContent:
                         "PRODUCT NAME: Mind, Brain memory matrix\r\n\r\nITEM FORM: Capsules\r\n\r\nUNIT COUNT: 30\r\n\r\nSUGGESTED DOSAGE: 1 capsule to be taken 1 or 2 times daily preferably with a meal.\r\n\r\nDESCRIPTION: Mind, Brain memory matrix is a plant-based supplement backed by clinical studies that demonstrate significant improvements in memory, including long-term memory, spatial memory, and word recall. Made with a blend of ingredients formulated to boost your memory and brain function, it helps deliver essential oxygen and nutrients to your brain to support optimal cognitive function. It works best to improve mental performance and nourish your mind when taken daily. Use this supplement to fight mental sluggishness and brain fog, and improve productivity. For maximum natural brain support and mental clarity, we recommend consuming food.\r\n\r\nCAUTION: AVOID EXCEEDING RECOMMENDED DOSE. Children under the age of 18, pregnant or nursing mothers, and those with a known medical condition should consult with a physician before using this or any other dietary supplement.\r\n\r\n \r\n\r\nផលិតផលជំនួយខួរក្បាលនិងអង្គចងចាំ មាន30 គ្រាប់\r\n\r\n👉ញាំ1ថ្ងៃ 1 គ្រាប់ ញាំបាន1 ខែ\r\n\r\n👉ញាំបន្ទាប់ពីពិសារបាយហើយថ្ងៃត្រង់ឫល្ងាចក៏បាន\r\n\r\n❌ហាមញាំចំពោះអ្នកមានផ្ទៃពោះ ឫក្រោម អាយុ18\r\n\r\n❌ហាមញាំលើសចំនួនដែលបានកំណត់\r\n\r\n❌ហាមញាំគូរភរិយាចង់មានផ្ទៃពោះ\r\n\r\n❌ហាមញាំបើអ្នកជម្ងឺមានប្រវត្តឈាមកក",
@@ -199,7 +200,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   color: whiteSmoke,
                 ),
                 Padding(
-                  padding: EdgeInsets.all(12),
+                  padding: const EdgeInsets.all(12),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -216,19 +217,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.symmetric(vertical: 5),
+                            margin: const EdgeInsets.symmetric(vertical: 5),
                             width: 250,
-                            child: Flexible(
-                              child: Text(
-                                "Less Yuri Health & Beutity",
-                                overflow: TextOverflow.ellipsis,
-                                softWrap: false,
-                                maxLines: 3,
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: descriptionColor,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            child: Text(
+                              "Less Yuri Health & Beutity",
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: false,
+                              maxLines: 3,
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: descriptionColor,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
@@ -239,7 +238,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 color: inActiveColor,
                                 size: 18,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5,
                               ),
                               Text(
@@ -258,7 +257,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 color: inActiveColor,
                                 size: 18,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5,
                               ),
                               Text(
@@ -270,7 +269,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           TextButton(
@@ -280,14 +279,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               ),
                             ),
                             onPressed: () {
-                              Navigator.pushNamed(context, '/shop/detail',
-                                  arguments: Shop(
-                                      name: "Japan Store",
-                                      id: 1,
-                                      shopCover:
-                                          "https://dreamzone.phsartech.com/uploads/uploads/shop/1683017650-best-shopping-in-japan-akihabara.jpg",
-                                      shopLogo:
-                                          "https://dreamzone.phsartech.com/uploads/uploads/shop/1683016085-%20.jpeg"));
+                              Navigator.of(context).pushNamed(
+                                ShopDetailScreen.routeName,
+                                arguments: ShopDetailArgument(
+                                  shop: Shop(
+                                    name: "Japan Store",
+                                    id: 1,
+                                    shopCover:
+                                        "https://dreamzone.phsartech.com/uploads/uploads/shop/1683017650-best-shopping-in-japan-akihabara.jpg",
+                                    shopLogo:
+                                        "https://dreamzone.phsartech.com/uploads/uploads/shop/1683016085-%20.jpeg",
+                                  ),
+                                ),
+                              );
                             },
                             child: Text(
                               "More",
@@ -374,8 +378,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       products: products,
       index: index,
       onTap: () {
-        Navigator.pushNamed(context, '/product/detail',
-            arguments: products[index]);
+        Navigator.of(context).pushNamed(
+          ProductDetailScreen.routeName,
+          arguments: ProductDetailArgument(
+            product: products[index],
+          ),
+        );
       },
       isFav: false,
     );

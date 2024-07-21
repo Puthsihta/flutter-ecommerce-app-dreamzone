@@ -1,5 +1,8 @@
+// ignore: file_names
+import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/constants/constants.dart';
 import 'package:dreamzone/models/order.model.dart';
+import 'package:dreamzone/screens/cart/order-detail-screen.dart';
 import 'package:dreamzone/widgets/render-order-item.dart';
 import 'package:flutter/material.dart';
 
@@ -62,7 +65,10 @@ class _MyOrdersState extends State<MyOrders> {
       order: orders,
       index: index,
       onTap: () {
-        Navigator.pushNamed(context, '/order/detail', arguments: orders[index]);
+        Navigator.of(context).pushNamed(
+          OrderDetailScreen.routeName,
+          arguments: OrderDetailArgument(order: orders[index]),
+        );
       },
     );
   }

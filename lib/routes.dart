@@ -3,10 +3,13 @@ import 'package:dreamzone/screens/home/home-screen.dart';
 import 'package:dreamzone/screens/settings/profile-screen.dart';
 import 'package:dreamzone/screens/shop/shop-screen.dart';
 import 'package:dreamzone/theme/colors.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class TabNavigationBar extends StatefulWidget {
-  const TabNavigationBar({super.key});
+  static const routeName = "/route";
+  final int index;
+  const TabNavigationBar({super.key, required this.index});
 
   @override
   State<TabNavigationBar> createState() => _TabNavigationBarState();
@@ -23,6 +26,23 @@ class _TabNavigationBarState extends State<TabNavigationBar> {
     ProfileScreen()
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.index;
+    if (kDebugMode) {
+      print("IN here initState");
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (kDebugMode) {
+      print("IN here dispose");
+    }
+  }
+
   void _onItemTapped(int index) {
     if (_selectedIndex == index) {
       // scrollController.animateTo(
@@ -34,6 +54,9 @@ class _TabNavigationBarState extends State<TabNavigationBar> {
       setState(() {
         _selectedIndex = index;
       });
+      if (kDebugMode) {
+        print("IN here setState");
+      }
     }
   }
 

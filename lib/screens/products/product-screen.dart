@@ -1,9 +1,12 @@
+import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/models/products.model.dart';
+import 'package:dreamzone/screens/products/product-detail-screen.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/widgets/render-product.dart';
 import 'package:flutter/material.dart';
 
 class ProductScreen extends StatefulWidget {
+  static const routeName = "/product/all";
   const ProductScreen({super.key});
 
   @override
@@ -92,7 +95,7 @@ class _ProductScreenState extends State<ProductScreen> {
         title: Text(params ?? 'Products'),
         actions: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.filter_alt_outlined,
               size: 27,
             ),
@@ -103,7 +106,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 context: context,
                 builder: (BuildContext context) {
                   return Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10),
@@ -113,7 +116,7 @@ class _ProductScreenState extends State<ProductScreen> {
                     child: Wrap(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           child: Text(
                             "Filter by Categories",
                             style: TextStyle(
@@ -123,30 +126,30 @@ class _ProductScreenState extends State<ProductScreen> {
                           ),
                         ),
                         ListTile(
-                          leading: Icon(Icons.search),
-                          title: Text('Collagen'),
+                          leading: const Icon(Icons.search),
+                          title: const Text('Collagen'),
                           onTap: () {
                             // Handle delete action
                             Navigator.pop(context);
                           },
                         ),
                         ListTile(
-                          leading: Icon(Icons.search),
-                          title: Text('Brobiotic'),
+                          leading: const Icon(Icons.search),
+                          title: const Text('Brobiotic'),
                           onTap: () {
                             // Handle edit action
                             Navigator.pop(context);
                           },
                         ),
                         ListTile(
-                          leading: Icon(Icons.search),
-                          title: Text('Vitamins'),
+                          leading: const Icon(Icons.search),
+                          title: const Text('Vitamins'),
                           onTap: () {
                             // Handle share action
                             Navigator.pop(context);
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         )
                       ],
@@ -157,7 +160,7 @@ class _ProductScreenState extends State<ProductScreen> {
             },
           ),
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.search,
               size: 27,
             ),
@@ -178,7 +181,7 @@ class _ProductScreenState extends State<ProductScreen> {
               expandedHeight: 70.0,
               flexibleSpace: FlexibleSpaceBar(
                 background: Container(
-                  padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                   child: TextField(
                     controller: searchCotroller,
                     autofocus:
@@ -194,8 +197,8 @@ class _ProductScreenState extends State<ProductScreen> {
                           color: whiteSmoke,
                         ),
                       ),
-                      contentPadding: EdgeInsets.all(10),
-                      prefixIcon: Icon(Icons.search),
+                      contentPadding: const EdgeInsets.all(10),
+                      prefixIcon: const Icon(Icons.search),
                       suffixIcon: GestureDetector(
                         onTap: () {
                           if (searchCotroller.text.isEmpty) {
@@ -219,7 +222,7 @@ class _ProductScreenState extends State<ProductScreen> {
                       hintText: 'Search...',
                       filled: true,
                       fillColor: Colors.white,
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                     ),
                   ),
                 ),
@@ -250,8 +253,12 @@ class _ProductScreenState extends State<ProductScreen> {
       products: products,
       index: index,
       onTap: () {
-        Navigator.pushNamed(context, '/product/detail',
-            arguments: products[index]);
+        Navigator.of(context).pushNamed(
+          ProductDetailScreen.routeName,
+          arguments: ProductDetailArgument(
+            product: products[index],
+          ),
+        );
       },
       isFav: false,
     );

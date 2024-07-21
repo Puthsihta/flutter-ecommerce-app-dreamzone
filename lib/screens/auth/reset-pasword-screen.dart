@@ -6,6 +6,7 @@ import 'package:dreamzone/widgets/custom-text-input.dart';
 import 'package:flutter/material.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
+  static const routeName = "/auth/reset-password";
   const ResetPasswordScreen({super.key});
 
   @override
@@ -63,7 +64,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Text(
@@ -75,7 +76,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(
+                margin: const EdgeInsets.only(
                   top: 20,
                 ),
                 padding: paddingHorizontal,
@@ -117,7 +118,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         },
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     CustomTextInput(
                       label: 'Confirm Password',
                       hintText: 'Enter your confim password',
@@ -158,7 +159,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       text: "Reset",
                       onPressed: () {},
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     )
                   ],

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class ProfileScreen extends StatefulWidget {
+  static const routeName = "/profile";
   const ProfileScreen({super.key});
 
   @override
@@ -18,7 +19,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       backgroundColor: whiteSmoke,
       appBar: AppBar(
         backgroundColor: baseColor,
-        title: Text(
+        title: const Text(
           'Profile',
         ),
         actions: [
@@ -78,13 +79,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 context: context,
                 builder: (BuildContext context) {
                   return CupertinoAlertDialog(
-                    title: Text("Logout"),
+                    title: const Text("Logout"),
                     actions: [
                       CupertinoDialogAction(
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: Text(
+                        child: const Text(
                           "Cancel",
                           style: TextStyle(color: Colors.red),
                         ),
@@ -93,12 +94,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: Text(
+                          child: const Text(
                             "Logout",
                             style: TextStyle(color: Colors.blue),
                           )),
                     ],
-                    content: Text("Are you sure, you want to logout?"),
+                    content: const Text("Are you sure, you want to logout?"),
                   );
                 },
               );
@@ -111,14 +112,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   IconButton profileQRCode(BuildContext context) {
     return IconButton(
-      icon: Icon(
+      icon: const Icon(
         Icons.qr_code,
         size: 27,
       ),
       onPressed: () {
         showDialog(
           builder: (context) => AlertDialog(
-            title: Text(
+            title: const Text(
               'This your profile QR!',
               textAlign: TextAlign.center,
               style: TextStyle(fontWeight: FontWeight.bold),
@@ -135,16 +136,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           data: '1234567890',
                           version: QrVersions.auto,
                           size: 200.0,
-                          embeddedImage: AssetImage('assets/images/logo.png'),
-                          embeddedImageStyle: QrEmbeddedImageStyle(
+                          embeddedImage:
+                              const AssetImage('assets/images/logo.png'),
+                          embeddedImageStyle: const QrEmbeddedImageStyle(
                             size: Size(30, 30),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(height: 20.0),
-                  Text(
+                  const SizedBox(height: 20.0),
+                  const Text(
                     'scan here share your referail code to your friends',
                     textAlign: TextAlign.center,
                   ),
@@ -160,8 +162,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Container headerProfile(context) {
     return Container(
-      margin: EdgeInsets.all(15),
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      margin: const EdgeInsets.all(15),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -178,29 +180,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   CircleAvatar(
                     radius: 30,
                     backgroundColor: whiteSmoke,
-                    backgroundImage: NetworkImage(
+                    backgroundImage: const NetworkImage(
                         "https://dreamzone.phsartech.com/uploads/users/1684391005-logo.png"),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
+                      SizedBox(
                         width: 200,
-                        child: Flexible(
-                          child: Text(
-                            "Puthsitha Moeurn",
-                            overflow: TextOverflow.clip,
-                            maxLines: 2,
-                            softWrap: true,
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: titleColor,
-                                fontWeight: FontWeight.bold),
-                          ),
+                        child: Text(
+                          "Puthsitha Moeurn",
+                          overflow: TextOverflow.clip,
+                          maxLines: 2,
+                          softWrap: true,
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: titleColor,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],

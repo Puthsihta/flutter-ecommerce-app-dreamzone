@@ -1,8 +1,8 @@
 import 'package:dreamzone/theme/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CategorieScreen extends StatefulWidget {
+  static const routeName = "/categories";
   const CategorieScreen({super.key});
 
   @override
@@ -18,7 +18,7 @@ class _CategorieScreenState extends State<CategorieScreen> {
       backgroundColor: whiteSmoke,
       appBar: AppBar(
         backgroundColor: baseColor,
-        title: Text("Categories"),
+        title: const Text("Categories"),
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -27,7 +27,7 @@ class _CategorieScreenState extends State<CategorieScreen> {
           children: [
             GestureDetector(
               onTap: () {},
-              child: Container(
+              child: SizedBox(
                 width: MediaQuery.of(context).size.width / 3.5,
                 child: ListView.builder(
                   itemCount: items.length,
@@ -36,7 +36,7 @@ class _CategorieScreenState extends State<CategorieScreen> {
                       onTap: () {},
                       child: Container(
                         height: 100,
-                        margin: EdgeInsets.only(bottom: 2),
+                        margin: const EdgeInsets.only(bottom: 2),
                         color: Colors.white,
                         child: Center(
                           child: Text(
@@ -51,7 +51,7 @@ class _CategorieScreenState extends State<CategorieScreen> {
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               color: whiteSmoke,
               width: MediaQuery.of(context).size.width / 1.4,
               child: GridView.builder(

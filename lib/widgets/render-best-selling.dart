@@ -8,11 +8,12 @@ class RenderBestSelling extends StatelessWidget {
   final int index;
   final Function onTap;
 
-  const RenderBestSelling(
-      {super.key,
-      required this.products,
-      required this.index,
-      required this.onTap});
+  const RenderBestSelling({
+    super.key,
+    required this.products,
+    required this.index,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -51,16 +52,16 @@ class RenderBestSelling extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
+                SizedBox(
                   width: 65,
-                  child: Flexible(
-                    child: Text(
-                      products[index].name,
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: false,
-                      maxLines: 1,
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                  child: Text(
+                    products[index].name,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -68,21 +69,28 @@ class RenderBestSelling extends StatelessWidget {
                   children: [
                     Text(
                       "Discout : ",
-                      style: TextStyle(fontSize: 9, color: descriptionColor),
+                      style: TextStyle(
+                        fontSize: 9,
+                        color: descriptionColor,
+                      ),
                     ),
                     Text(
                       // products[index].discount.toString(),
                       currencyFormatter.format(products[index].discount),
-                      style: TextStyle(fontSize: 10, color: greenColor),
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: greenColor,
+                      ),
                     ),
                   ],
                 ),
                 Text(
                   currencyFormatter.format(products[index].prices),
                   style: TextStyle(
-                      fontSize: 14,
-                      color: baseColor,
-                      fontWeight: FontWeight.bold),
+                    fontSize: 14,
+                    color: baseColor,
+                    fontWeight: FontWeight.bold,
+                  ),
                 )
               ],
             ),
