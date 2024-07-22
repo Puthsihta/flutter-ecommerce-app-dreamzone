@@ -1,4 +1,5 @@
 import 'package:dreamzone/constants/constants.dart';
+import 'package:dreamzone/screens/auth/verify-otp-screen.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/utils/validation.dart';
 import 'package:dreamzone/widgets/custom-button.dart';
@@ -15,24 +16,18 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   TextEditingController phoneNumber = TextEditingController();
-  TextEditingController password = TextEditingController();
-  bool obscurePassword = true;
   late FocusNode refPhoneNumber;
-  late FocusNode refPassword;
   String errorMessagePhone = "";
-  String errorMessagePassword = "";
 
   @override
   void initState() {
     super.initState();
     refPhoneNumber = FocusNode();
-    refPassword = FocusNode();
   }
 
   @override
   void dispose() {
     refPhoneNumber.dispose();
-    refPassword.dispose();
     super.dispose();
   }
 
@@ -60,19 +55,27 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Text(
-                "Login",
+                "Continue with phone number",
                 style: TextStyle(
                   color: titleColor,
                   fontWeight: FontWeight.bold,
-                  fontSize: 25,
+                  fontSize: 20,
+                ),
+              ),
+              Text(
+                "Sms verification code required to continue",
+                style: TextStyle(
+                  color: descriptionColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(
+                margin: const EdgeInsets.only(
                   top: 20,
                 ),
                 padding: paddingHorizontal,
@@ -89,14 +92,6 @@ class _SignInScreenState extends State<SignInScreen> {
                       enable: true,
                       focusNode: refPhoneNumber,
                       textInputAction: TextInputAction.next,
-                      onSubmitAction: (value) {
-                        if (errorMessagePhone == "") {
-                          refPhoneNumber.unfocus();
-                          FocusScope.of(context).requestFocus(refPassword);
-                        } else {
-                          FocusScope.of(context).requestFocus(refPhoneNumber);
-                        }
-                      },
                       errorMessage: errorMessagePhone,
                       onChangedText: (value) {
                         setState(() {
@@ -105,79 +100,30 @@ class _SignInScreenState extends State<SignInScreen> {
                       },
                       keyboardType: TextInputType.phone,
                     ),
-                    SizedBox(height: 20),
-                    CustomTextInput(
-                      label: 'Password',
-                      hintText: 'Enter your password',
-                      controller: password,
-                      prefixIcon: Icon(
-                        Icons.lock,
-                        color: placeHolderColor,
-                      ),
-                      enable: true,
-                      focusNode: refPassword,
-                      textInputAction: TextInputAction.done,
-                      onSubmitAction: (value) {
-                        if (errorMessagePassword == "") {
-                          refPassword.unfocus();
-                        } else {
-                          FocusScope.of(context).requestFocus(refPassword);
-                        }
-                      },
-                      errorMessage: errorMessagePassword,
-                      onChangedText: (value) {
-                        setState(() {
-                          errorMessagePassword = validateInputPassword(value);
-                        });
-                      },
-                      obscureText: obscurePassword,
-                      keyboardType: TextInputType.visiblePassword,
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          !obscurePassword
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            obscurePassword = !obscurePassword;
-                          });
-                        },
-                      ),
-                    ),
                     Container(
                       margin: marginAll,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                '/auth/verify-otp',
-                                arguments: AuthType.forgetPassword,
-                              );
-                            },
-                            child: Text(
-                              "Forget Password?",
-                              style: TextStyle(
-                                color: secondColor,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
                     CustomButton(
-                      text: "Login",
-                      onPressed:
-                          (phoneNumber.text.isEmpty || password.text.isEmpty)
-                              ? null
-                              : () {},
+                      text: "Get Verification Code",
+                      onPressed: phoneNumber.text.isEmpty
+                          ? null
+                          : () {
+                              if (phoneNumber.text.isNotEmpty &&
+                                  phoneNumber.text[0] == '0') {
+                                String result = phoneNumber.text.substring(1);
+                                Navigator.of(context).pushNamed(
+                                  VerifyOtpScreen.routeName,
+                                  arguments: result,
+                                );
+                              } else {
+                                Navigator.of(context).pushNamed(
+                                  VerifyOtpScreen.routeName,
+                                  arguments: phoneNumber.text,
+                                );
+                              }
+                            },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Row(
@@ -192,14 +138,10 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              '/auth/verify-otp',
-                              arguments: AuthType.retister,
-                            );
+                            Navigator.pop(context);
                           },
                           child: Text(
-                            'Register',
+                            'Login Later',
                             style: TextStyle(
                               color: secondColor,
                               fontSize: 15,
@@ -208,7 +150,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     )
                   ],

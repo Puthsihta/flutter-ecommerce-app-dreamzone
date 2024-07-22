@@ -66,7 +66,6 @@ class AppContainer extends StatelessWidget {
           SignInScreen.routeName: const SignInScreen(),
           SignUpScreen.routeName: const SignUpScreen(),
           HomeScreen.routeName: const HomeScreen(),
-          VerifyOtpScreen.routeName: const VerifyOtpScreen(),
           ResetPasswordScreen.routeName: const ResetPasswordScreen(),
           OrderProductScreen.routeName: const OrderProductScreen(),
           PaymentSuccesScreen.routeName: const PaymentSuccesScreen(),
@@ -86,6 +85,14 @@ class AppContainer extends StatelessWidget {
         };
 
         switch (settings.name) {
+          case VerifyOtpScreen.routeName:
+            screen = MaterialPageRoute(
+              builder: (context) {
+                final phoneNumber = settings.arguments as String;
+                return VerifyOtpScreen(phoneNumber: phoneNumber);
+              },
+            );
+            break;
           case OrderDetailScreen.routeName:
             screen = MaterialPageRoute(
               builder: (context) {
