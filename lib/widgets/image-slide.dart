@@ -1,13 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dreamzone/theme/colors.dart';
-import 'package:flutter/material.dart';
+import 'package:dreamzone/widgets/transparent_image.dart';
+import 'package:flutter/material.dart' hide Banner;
+import 'package:dreamzone/data/models/home.dart';
 
 class ImageSlide extends StatelessWidget {
-  final List<String> images;
+  final List<Banner> banner;
 
   const ImageSlide({
     super.key,
-    required this.images,
+    required this.banner,
   });
 
   @override
@@ -21,8 +23,8 @@ class ImageSlide extends StatelessWidget {
         enableInfiniteScroll: true,
         reverse: false,
         autoPlay: true,
-        autoPlayInterval: Duration(seconds: 3),
-        autoPlayAnimationDuration: Duration(milliseconds: 1000),
+        autoPlayInterval: const Duration(seconds: 3),
+        autoPlayAnimationDuration: const Duration(milliseconds: 1000),
         autoPlayCurve: Curves.linearToEaseOut,
         // enlargeCenterPage: true,
         // enlargeFactor: 0.3,
@@ -31,21 +33,24 @@ class ImageSlide extends StatelessWidget {
         // disableCenter: true,
         // pageSnapping: true,
       ),
-      items: images.map((i) {
+      items: banner.map((item) {
         return Builder(
           builder: (BuildContext context) {
             return Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                    color: baseColor, borderRadius: BorderRadius.circular(12)),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(
-                    i,
-                    fit: BoxFit.cover,
-                  ),
-                ));
+              width: MediaQuery.of(context).size.width,
+              margin: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: baseColor,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: TransparentImage(
+                  url: item.image_url!,
+                  enableCache: true,
+                ),
+              ),
+            );
           },
         );
       }).toList(),

@@ -27,49 +27,49 @@ class CustomInterceptor extends Interceptor {
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
     // print('onresponse in customInterceptor : ${response.data}');
 
-    if (response.data["status"] >= 400) {
-      if (response.data["status"] == 401) {
-        if (!response.requestOptions.path.contains('/api/login') &&
-            !response.requestOptions.path.contains('/api/refresh-token')) {
-          try {
-            final newToken = await ClientRequest().refreshToken();
+    // if (response.data["status"] >= 400) {
+    //   if (response.data["status"] == 401) {
+    //     if (!response.requestOptions.path.contains('/api/login') &&
+    //     // !response.requestOptions.path.contains('/api/refresh-token')) {
+    //       try {
+    //         final newToken = await ClientRequest().refreshToken();
 
-            try {
-              final retryRequest =
-                  await ClientRequest()._retry(response.requestOptions);
+    //         try {
+    //           final retryRequest =
+    //               await ClientRequest()._retry(response.requestOptions);
 
-              if (newToken.isNotEmpty) {
-                response.requestOptions.headers['Authorization'] =
-                    "Bearer $newToken";
-              }
+    //           if (newToken.isNotEmpty) {
+    //             response.requestOptions.headers['Authorization'] =
+    //                 "Bearer $newToken";
+    //           }
 
-              if (retryRequest.data["status"] == 401) {
-                onRefreshTokenExpired!();
-                final pref = await preference;
-                pref.clear();
-              }
-              return handler.resolve(retryRequest);
-            } catch (e) {
-              // print("erorr _retry : $e");
-            }
-          } catch (e) {
-            if (onRefreshTokenExpired != null) {
-              onRefreshTokenExpired!();
-              final pref = await preference;
-              pref.clear();
-              // print("logout");
-            }
-          }
-        } else {
-          return handler.reject(DioException(
-              type: DioExceptionType.badResponse,
-              requestOptions: response.requestOptions,
-              response: response,
-              error: response,
-              message: response.data['message']));
-        }
-      }
-    }
+    //           if (retryRequest.data["status"] == 401) {
+    //             onRefreshTokenExpired!();
+    //             final pref = await preference;
+    //             pref.clear();
+    //           }
+    //           return handler.resolve(retryRequest);
+    //         } catch (e) {
+    //           // print("erorr _retry : $e");
+    //         }
+    //       } catch (e) {
+    //         if (onRefreshTokenExpired != null) {
+    //           onRefreshTokenExpired!();
+    //           final pref = await preference;
+    //           pref.clear();
+    //           // print("logout");
+    //         }
+    //       }
+    //     } else {
+    //       return handler.reject(DioException(
+    //           type: DioExceptionType.badResponse,
+    //           requestOptions: response.requestOptions,
+    //           response: response,
+    //           error: response,
+    //           message: response.data['message']));
+    //     }
+    //   }
+    // }
 
     super.onResponse(response, handler);
   }
@@ -113,10 +113,6 @@ class ClientRequest {
       throw "";
     }
     final response = await authRepo.refreshToken(refreshToken);
-
-    if (response.status == 401) {
-      return response.message;
-    }
 
     return response.data!.token;
   }

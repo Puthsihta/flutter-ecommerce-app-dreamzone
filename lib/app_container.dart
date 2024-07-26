@@ -72,9 +72,7 @@ class AppContainer extends StatelessWidget {
           CategorieScreen.routeName: const CategorieScreen(),
           NotificationScreen.routeName: const NotificationScreen(),
           ProductFavoriteScreen.routeName: const ProductFavoriteScreen(),
-          ProductScreen.routeName: const ProductScreen(),
           SepecialProductScreen.routeName: const SepecialProductScreen(),
-          AllShopScreen.routeName: const AllShopScreen(),
           PrivacyPolicyScreen.routeName: const PrivacyPolicyScreen(),
           ChangePasswordScreen.routeName: const ChangePasswordScreen(),
           ContactUsScreen.routeName: const ContactUsScreen(),
@@ -98,6 +96,22 @@ class AppContainer extends StatelessWidget {
               builder: (context) {
                 final args = settings.arguments as OrderDetailArgument;
                 return OrderDetailScreen(argument: args);
+              },
+            );
+            break;
+          case ProductScreen.routeName:
+            screen = MaterialPageRoute(
+              builder: (context) {
+                final args = settings.arguments as ProductArgument;
+                return ProductScreen(argument: args);
+              },
+            );
+            break;
+          case AllShopScreen.routeName:
+            screen = MaterialPageRoute(
+              builder: (context) {
+                final args = settings.arguments as AllShopArgument;
+                return AllShopScreen(argument: args);
               },
             );
             break;

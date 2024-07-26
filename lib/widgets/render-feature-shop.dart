@@ -1,4 +1,5 @@
-import 'package:dreamzone/models/shop.model.dart';
+import 'package:dreamzone/data/models/shop.dart';
+import 'package:dreamzone/widgets/transparent_image.dart';
 import 'package:flutter/material.dart';
 
 class RenderFeatureShops extends StatelessWidget {
@@ -6,11 +7,12 @@ class RenderFeatureShops extends StatelessWidget {
   final int index;
   final Function onTap;
 
-  const RenderFeatureShops(
-      {super.key,
-      required this.shop,
-      required this.index,
-      required this.onTap});
+  const RenderFeatureShops({
+    super.key,
+    required this.shop,
+    required this.index,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,19 +25,18 @@ class RenderFeatureShops extends StatelessWidget {
         child: Stack(
           children: [
             // Background image
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                shop[index].shopCover,
-                fit: BoxFit.cover,
-                width: 300,
-              ),
-            ),
             Container(
               height: 150,
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.6),
+                color: Colors.black.withOpacity(1),
                 borderRadius: BorderRadius.circular(10),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  opacity: 0.4,
+                  image: NetworkImage(
+                    shop[index].cover_image!,
+                  ),
+                ),
               ),
               width: 300, // Adjust opacity as needed
             ),
@@ -47,7 +48,7 @@ class RenderFeatureShops extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    shop[index].name,
+                    shop[index].name!,
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -64,11 +65,13 @@ class RenderFeatureShops extends StatelessWidget {
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        shop[index].shopLogo,
+                      child: Container(
                         width: 50,
                         height: 50,
-                        fit: BoxFit.cover,
+                        child: TransparentImage(
+                          url: shop[index].logo_image!,
+                          enableCache: true,
+                        ),
                       ),
                     ),
                   ),

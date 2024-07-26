@@ -1,83 +1,96 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class PaginationResponse<T> {
-  final int status;
-  final String message;
+  final bool message;
   final List<T> data;
-  final Meta meta;
+  final Pagination pagination;
 
   PaginationResponse({
-    required this.status,
     required this.message,
     required this.data,
-    required this.meta,
+    required this.pagination,
   });
 
   factory PaginationResponse.fromMap(
       Map<String, dynamic> map, T Function(dynamic e) toElement) {
     return PaginationResponse<T>(
-        status: map['status'] as int,
-        message: map['message'] as String,
+        message: map['message'] as bool,
         data: (map['data'] as List<dynamic>).map(toElement).toList(),
-        meta: Meta.fromMap(map['meta']));
+        pagination: Pagination.fromMap(map['pagination']));
   }
 }
 
-class Meta {
-  final int page;
-  final int size;
-  final int total;
+class Pagination {
+  final int? limit;
+  final int? total;
+  final int? currentPage;
+  final int? totalPages;
 
-  Meta({
-    required this.page,
-    required this.size,
-    required this.total,
+  Pagination({
+    this.limit,
+    this.total,
+    this.currentPage,
+    this.totalPages,
   });
 
-  Meta copyWith({
-    int? page,
-    int? size,
+  Pagination copyWith({
+    int? limit,
     int? total,
+    int? currentPage,
+    int? totalPages,
   }) {
-    return Meta(
-      page: page ?? this.page,
-      size: size ?? this.size,
+    return Pagination(
+      limit: limit ?? this.limit,
       total: total ?? this.total,
+      currentPage: currentPage ?? this.currentPage,
+      totalPages: totalPages ?? this.totalPages,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'page': page,
-      'size': size,
+      'limit': limit,
       'total': total,
+      'currentPage': currentPage,
+      'totalPages': totalPages,
     };
   }
 
-  factory Meta.fromMap(Map<String, dynamic> map) {
-    return Meta(
-      page: map['page'] as int,
-      size: map['size'] as int,
-      total: map['total'] as int,
+  factory Pagination.fromMap(Map<String, dynamic> map) {
+    return Pagination(
+      limit: map['limit'] != null ? map['limit'] as int : null,
+      total: map['total'] != null ? map['total'] as int : null,
+      currentPage:
+          map['currentPage'] != null ? map['currentPage'] as int : null,
+      totalPages: map['totalPages'] != null ? map['totalPages'] as int : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Meta.fromJson(String source) =>
-      Meta.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Pagination.fromJson(String source) =>
+      Pagination.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'Meta(page: $page, size: $size, total: $total)';
-
-  @override
-  bool operator ==(covariant Meta other) {
-    if (identical(this, other)) return true;
-
-    return other.page == page && other.size == size && other.total == total;
+  String toString() {
+    return 'Pagination(limit: $limit, total: $total, currentPage: $currentPage, totalPages: $totalPages)';
   }
 
   @override
-  int get hashCode => page.hashCode ^ size.hashCode ^ total.hashCode;
+  bool operator ==(covariant Pagination other) {
+    if (identical(this, other)) return true;
+
+    return other.limit == limit &&
+        other.total == total &&
+        other.currentPage == currentPage &&
+        other.totalPages == totalPages;
+  }
+
+  @override
+  int get hashCode {
+    return limit.hashCode ^
+        total.hashCode ^
+        currentPage.hashCode ^
+        totalPages.hashCode;
+  }
 }

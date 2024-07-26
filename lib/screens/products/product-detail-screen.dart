@@ -1,12 +1,17 @@
 import 'package:dreamzone/constants/argument.dart';
-import 'package:dreamzone/models/products.model.dart';
-import 'package:dreamzone/models/shop.model.dart';
+import 'package:dreamzone/data/repos/product_detail_repo.dart';
+import 'package:dreamzone/locator.dart';
+import 'package:dreamzone/screens/products/product-detail-controller.dart';
+import 'package:dreamzone/screens/products/product-screen.dart';
 import 'package:dreamzone/screens/shop/shop-detail-screen.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/utils/index.dart';
 import 'package:dreamzone/widgets/render-product.dart';
+import 'package:dreamzone/widgets/transparent_image.dart';
 import 'package:dreamzone/widgets/webview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   static const routeName = "/product/detail";
@@ -18,362 +23,369 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
-  final List<Product> products = [
-    Product(
-        name: "MAGIC AMPOULE TONER PADS សំឡីជូតមុខ",
-        id: 1,
-        image:
-            "https://dreamzone.phsartech.com/uploads//product/1684401424-1.webp",
-        discount: 10,
-        prices: 36),
-    Product(
-        name: "HYDRATING CLEANSING BALM ជួយសម្អាត Make Up",
-        id: 2,
-        image:
-            "https://dreamzone.phsartech.com/uploads//product/1684400972-1.webp",
-        discount: 1,
-        prices: 63),
-    Product(
-        name: "Peptide Ampoule Mist ទឹកបាញ់មុខ",
-        id: 3,
-        image:
-            "https://dreamzone.phsartech.com/uploads//product/1684400758-1.webp",
-        discount: 15,
-        prices: 99),
-    Product(
-        name: "Peptide Eye Cream គ្រីមលាបត្របកភ្នែក",
-        id: 3,
-        image:
-            "https://dreamzone.phsartech.com/uploads//product/1684400559-1.webp",
-        discount: 3,
-        prices: 99),
-    // Add more products here
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            pinned: true,
-            expandedHeight: MediaQuery.of(context).size.height * 0.35,
-            flexibleSpace: FlexibleSpaceBar(
-              centerTitle: true,
-              background: Image.network(
-                widget.argument.product.image,
-                fit: BoxFit.cover,
-              ),
-            ),
-            backgroundColor: baseColor,
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: 250,
-                            child: Text(
-                              widget.argument.product.name,
-                              overflow: TextOverflow.ellipsis,
-                              softWrap: false,
-                              maxLines: 3,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Text(
-                            currencyFormatter
-                                .format(widget.argument.product.prices),
-                            style: TextStyle(
-                              color: baseColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
-                          ),
-                          Text(
-                            "Pv : 5pts",
-                            style: TextStyle(
-                              color: descriptionColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.favorite_outline,
-                                color: baseColor,
-                              )),
-                          Text(
-                            "#d24332",
-                            style: TextStyle(
-                              color: descriptionColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+      body: ChangeNotifierProvider(
+        create: (context) => ProductDetailController(
+            productDetialRepo: locator<ProductDetialRepo>())
+          ..getProductDetail(widget.argument.product.id!),
+        child: Consumer<ProductDetailController>(
+            builder: (context, viewController, child) {
+          if (viewController.loading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                pinned: true,
+                expandedHeight: MediaQuery.of(context).size.height * 0.35,
+                flexibleSpace: FlexibleSpaceBar(
+                  centerTitle: true,
+                  background: widget.argument.product.image_url != null
+                      ? TransparentImage(
+                          url: widget.argument.product.image_url!,
+                          fit: BoxFit.cover,
+                          enableCache: true,
+                        )
+                      : Image.asset("assets/images/logo.png"),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Quantity",
-                        style: TextStyle(
-                          color: descriptionColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Container(
-                        width: 120,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: descriptionColor,
-                            width: 0.5,
-                          ),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            IconButton(
-                              icon: Icon(
-                                Icons.remove,
-                                color: descriptionColor,
-                              ),
-                              onPressed: () {},
-                            ),
-                            const SizedBox(
-                              height: 40,
-                              child: Center(
+                // backgroundColor: baseColor,
+              ),
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: 250,
                                 child: Text(
-                                  '1',
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 62, 44, 44),
-                                    fontSize: 15,
+                                  widget.argument.product.name!,
+                                  overflow: TextOverflow.ellipsis,
+                                  softWrap: false,
+                                  maxLines: 3,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.add, color: descriptionColor),
-                              onPressed: () {},
-                            )
-                          ],
-                        ),
+                              Text(
+                                currencyFormatter.format(double.parse(
+                                    widget.argument.product.price!)),
+                                style: TextStyle(
+                                  color: baseColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              // Text(
+                              //   "Pv : 5pts",
+                              //   style: TextStyle(
+                              //     color: descriptionColor,
+                              //     fontWeight: FontWeight.bold,
+                              //     fontSize: 15,
+                              //   ),
+                              // ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    viewController.productDetail!.productDetail!
+                                            .is_favorite!
+                                        ? Icons.favorite
+                                        : Icons.favorite_outline,
+                                    color: baseColor,
+                                  )),
+                              Text(
+                                "#d24332",
+                                style: TextStyle(
+                                  color: descriptionColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: HTMLView(
-                    htmlContent:
-                        "PRODUCT NAME: Mind, Brain memory matrix\r\n\r\nITEM FORM: Capsules\r\n\r\nUNIT COUNT: 30\r\n\r\nSUGGESTED DOSAGE: 1 capsule to be taken 1 or 2 times daily preferably with a meal.\r\n\r\nDESCRIPTION: Mind, Brain memory matrix is a plant-based supplement backed by clinical studies that demonstrate significant improvements in memory, including long-term memory, spatial memory, and word recall. Made with a blend of ingredients formulated to boost your memory and brain function, it helps deliver essential oxygen and nutrients to your brain to support optimal cognitive function. It works best to improve mental performance and nourish your mind when taken daily. Use this supplement to fight mental sluggishness and brain fog, and improve productivity. For maximum natural brain support and mental clarity, we recommend consuming food.\r\n\r\nCAUTION: AVOID EXCEEDING RECOMMENDED DOSE. Children under the age of 18, pregnant or nursing mothers, and those with a known medical condition should consult with a physician before using this or any other dietary supplement.\r\n\r\n \r\n\r\nផលិតផលជំនួយខួរក្បាលនិងអង្គចងចាំ មាន30 គ្រាប់\r\n\r\n👉ញាំ1ថ្ងៃ 1 គ្រាប់ ញាំបាន1 ខែ\r\n\r\n👉ញាំបន្ទាប់ពីពិសារបាយហើយថ្ងៃត្រង់ឫល្ងាចក៏បាន\r\n\r\n❌ហាមញាំចំពោះអ្នកមានផ្ទៃពោះ ឫក្រោម អាយុ18\r\n\r\n❌ហាមញាំលើសចំនួនដែលបានកំណត់\r\n\r\n❌ហាមញាំគូរភរិយាចង់មានផ្ទៃពោះ\r\n\r\n❌ហាមញាំបើអ្នកជម្ងឺមានប្រវត្តឈាមកក",
-                  ),
-                ),
-                Container(
-                  height: 15,
-                  color: whiteSmoke,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Store Profile",
+                            "Quantity",
                             style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: titleColor,
+                              color: descriptionColor,
                               fontSize: 18,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           Container(
-                            margin: const EdgeInsets.symmetric(vertical: 5),
-                            width: 250,
-                            child: Text(
-                              "Less Yuri Health & Beutity",
-                              overflow: TextOverflow.ellipsis,
-                              softWrap: false,
-                              maxLines: 3,
-                              style: TextStyle(
-                                fontSize: 15,
+                            width: 120,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              border: Border.all(
                                 color: descriptionColor,
+                                width: 0.5,
+                              ),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.remove,
+                                    color: descriptionColor,
+                                  ),
+                                  onPressed: () {},
+                                ),
+                                const SizedBox(
+                                  height: 40,
+                                  child: Center(
+                                    child: Text(
+                                      '1',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 62, 44, 44),
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                  icon:
+                                      Icon(Icons.add, color: descriptionColor),
+                                  onPressed: () {},
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (widget.argument.product.description != null)
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: HTMLView(
+                          htmlContent: widget.argument.product.description!,
+                        ),
+                      ),
+                    Container(
+                      height: 15,
+                      color: whiteSmoke,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Store Profile",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: titleColor,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.symmetric(vertical: 5),
+                                width: 250,
+                                child: Text(
+                                  viewController.productDetail!.productDetail!
+                                      .shop!.name!,
+                                  overflow: TextOverflow.ellipsis,
+                                  softWrap: false,
+                                  maxLines: 3,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: descriptionColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(
+                                    Icons.map,
+                                    color: inActiveColor,
+                                    size: 18,
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  SizedBox(
+                                    width: 250,
+                                    child: Text(
+                                      viewController
+                                          .productDetail!
+                                          .productDetail!
+                                          .shop!
+                                          .address!
+                                          .address!,
+                                      style: TextStyle(
+                                        color: descriptionColor,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              if (viewController.productDetail!.productDetail!
+                                      .shop!.phone !=
+                                  null)
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.phone,
+                                      color: inActiveColor,
+                                      size: 18,
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      viewController.productDetail!
+                                          .productDetail!.shop!.phone!,
+                                      style: TextStyle(
+                                        color: descriptionColor,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                    whiteSmoke,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pushNamed(
+                                    ShopDetailScreen.routeName,
+                                    arguments: ShopDetailArgument(
+                                      shop: viewController
+                                          .productDetail!.productDetail!.shop!,
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  "More",
+                                  style: TextStyle(
+                                    color: greenColor,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: TransparentImage(
+                                url: viewController.productDetail!
+                                    .productDetail!.shop!.logo_image,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 15,
+                      color: whiteSmoke,
+                    ),
+                    if (viewController
+                        .productDetail!.relateProducts!.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Related Products",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: titleColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.map,
-                                color: inActiveColor,
-                                size: 18,
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                "PhnomPenh",
-                                style: TextStyle(
-                                  color: descriptionColor,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.phone,
-                                color: inActiveColor,
-                                size: 18,
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                "092389497",
-                                style: TextStyle(
-                                  color: descriptionColor,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          TextButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                whiteSmoke,
-                              ),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pushNamed(
-                                ShopDetailScreen.routeName,
-                                arguments: ShopDetailArgument(
-                                  shop: Shop(
-                                    name: "Japan Store",
-                                    id: 1,
-                                    shopCover:
-                                        "https://dreamzone.phsartech.com/uploads/uploads/shop/1683017650-best-shopping-in-japan-akihabara.jpg",
-                                    shopLogo:
-                                        "https://dreamzone.phsartech.com/uploads/uploads/shop/1683016085-%20.jpeg",
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushNamed(
+                                  ProductScreen.routeName,
+                                  arguments: ProductArgument(
+                                    shopId: widget.argument.product.shop_id,
                                   ),
+                                );
+                              },
+                              child: Text(
+                                "More",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: greenColor,
                                 ),
-                              );
-                            },
-                            child: Text(
-                              "More",
-                              style: TextStyle(
-                                color: greenColor,
                               ),
                             ),
-                          )
-                        ],
-                      ),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                          "https://dreamzone.phsartech.com/uploads/uploads/shop/1683016085-%20.jpeg",
-                          width: 50,
-                          height: 50,
-                          fit: BoxFit.cover,
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
+                      )
+                  ],
                 ),
-                Container(
-                  height: 15,
-                  color: whiteSmoke,
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Related Products",
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: titleColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            '/product/all',
-                          );
-                        },
-                        child: Text(
-                          "More",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: greenColor,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.only(
-              bottom: 15,
-            ),
-            sliver: SliverGrid(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, mainAxisSpacing: 15, mainAxisExtent: 290),
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return renderProduct(context, index);
-                },
-                childCount: products.length,
               ),
-            ),
-          ),
-        ],
+              SliverPadding(
+                padding: const EdgeInsets.only(
+                  bottom: 15,
+                ),
+                sliver: SliverGrid(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 15,
+                      mainAxisExtent: 290),
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      return renderProduct(context, index,
+                          viewController.productDetail!.relateProducts);
+                    },
+                    childCount:
+                        viewController.productDetail!.relateProducts!.length,
+                  ),
+                ),
+              ),
+            ],
+          );
+        }),
       ),
     );
   }
 
-  Widget renderProduct(BuildContext context, int index) {
+  Widget renderProduct(BuildContext context, int index, products) {
     return RenderProduct(
       products: products,
       index: index,

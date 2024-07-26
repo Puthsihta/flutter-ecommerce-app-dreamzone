@@ -1,111 +1,117 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:dreamzone/data/models/category.dart';
-
 class Product {
-  final int id;
-  final String name_en;
-  final String? name_kh;
-  final String? img_url;
-  final String? thumbnail_url;
-  final num price;
-  final String barcode;
-  final int? category_id;
-  final int created_by;
-  final DateTime? deleted_at;
-  final DateTime created_at;
-  final DateTime? updated_at;
-  final Category? category;
+  int? id;
+  int? cate_id;
+  int? sub_cate_id;
+  int? shop_id;
+  String? name;
+  String? description;
+  String? price;
+  String? image_url;
+  bool? is_favorite;
+  bool? is_best_salling;
+  int? discount;
+  String? follow_shop_discount;
+  String? created_at;
+  String? updated_at;
 
   Product({
-    required this.id,
-    required this.name_en,
-    this.name_kh,
-    this.img_url,
-    this.thumbnail_url,
-    required this.price,
-    required this.barcode,
-    this.category_id,
-    required this.created_by,
-    this.deleted_at,
-    required this.created_at,
-    required this.updated_at,
-    this.category,
+    this.id,
+    this.cate_id,
+    this.sub_cate_id,
+    this.shop_id,
+    this.name,
+    this.description,
+    this.price,
+    this.image_url,
+    this.is_favorite,
+    this.is_best_salling,
+    this.discount,
+    this.follow_shop_discount,
+    this.created_at,
+    this.updated_at,
   });
 
   Product copyWith({
     int? id,
-    String? name_en,
-    String? name_kh,
-    String? img_url,
-    String? thumbnail_url,
-    num? price,
-    String? barcode,
-    int? category_id,
-    int? created_by,
-    DateTime? deleted_at,
-    DateTime? created_at,
-    DateTime? updated_at,
-    Category? category,
+    int? cate_id,
+    int? sub_cate_id,
+    int? shop_id,
+    String? name,
+    String? description,
+    String? price,
+    String? image_url,
+    bool? is_favorite,
+    bool? is_best_salling,
+    int? discount,
+    String? follow_shop_discount,
+    String? created_at,
+    String? updated_at,
   }) {
     return Product(
       id: id ?? this.id,
-      name_en: name_en ?? this.name_en,
-      name_kh: name_kh ?? this.name_kh,
-      img_url: img_url ?? this.img_url,
-      thumbnail_url: thumbnail_url ?? this.thumbnail_url,
+      cate_id: cate_id ?? this.cate_id,
+      sub_cate_id: sub_cate_id ?? this.sub_cate_id,
+      shop_id: shop_id ?? this.shop_id,
+      name: name ?? this.name,
+      description: description ?? this.description,
       price: price ?? this.price,
-      barcode: barcode ?? this.barcode,
-      category_id: category_id ?? this.category_id,
-      created_by: created_by ?? this.created_by,
-      deleted_at: deleted_at ?? this.deleted_at,
+      image_url: image_url ?? this.image_url,
+      is_favorite: is_favorite ?? this.is_favorite,
+      is_best_salling: is_best_salling ?? this.is_best_salling,
+      discount: discount ?? this.discount,
+      follow_shop_discount: follow_shop_discount ?? this.follow_shop_discount,
       created_at: created_at ?? this.created_at,
       updated_at: updated_at ?? this.updated_at,
-      category: category ?? this.category,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'name_en': name_en,
-      'name_kh': name_kh,
-      'img_url': img_url,
-      'thumbnail_url': thumbnail_url,
+      'cate_id': cate_id,
+      'sub_cate_id': sub_cate_id,
+      'shop_id': shop_id,
+      'name': name,
+      'description': description,
       'price': price,
-      'barcode': barcode,
-      'category_id': category_id,
-      'created_by': created_by,
-      'deleted_at': deleted_at?.toString(),
-      'created_at': created_at.toString(),
-      'updated_at': updated_at.toString(),
-      'category': category?.toMap(),
+      'image_url': image_url,
+      'is_favorite': is_favorite,
+      'is_best_salling': is_best_salling,
+      'discount': discount,
+      'follow_shop_discount': follow_shop_discount,
+      'created_at': created_at,
+      'updated_at': updated_at,
     };
   }
 
   factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
-      id: map['id'] as int,
-      name_en: map['name_en'] as String,
-      name_kh: map['name_kh'] != null ? map['name_kh'] as String : null,
-      img_url: map['img_url'] != null ? map['img_url'] as String : null,
-      thumbnail_url:
-          map['thumbnail_url'] != null ? map['thumbnail_url'] as String : null,
-      price: map['price'] as num,
-      barcode: map['barcode'] as String,
-      category_id:
-          map['category_id'] != null ? map['category_id'] as int : null,
-      created_by: map['created_by'] as int,
-      deleted_at: map['deleted_at'] != null
-          ? DateTime.parse(map['deleted_at'] as String)
+      id: map['id'] != null ? map['id'] as int : null,
+      cate_id: map['cate_id'] != null ? map['cate_id'] as int : null,
+      sub_cate_id:
+          map['sub_cate_id'] != null ? map['sub_cate_id'] as int : null,
+      shop_id: map['shop_id'] != null ? map['shop_id'] as int : null,
+      name: map['name'] != null ? map['name'] as String : null,
+      description:
+          map['description'] != null ? map['description'] as String : null,
+      price: map['price'] != null ? map['price'] as String : null,
+      image_url: map['image_url'] != null ? map['image_url'] as String : null,
+      is_favorite:
+          map['is_favorite'] != null ? map['is_favorite'] as bool : null,
+      is_best_salling: map['is_best_salling'] != null
+          ? map['is_best_salling'] as bool
           : null,
-      created_at: DateTime.parse(map['created_at'] as String),
-      updated_at: map['updated_at'] != null
-          ? DateTime.parse(map['updated_at'] as String)
+      discount: map['discount'] != null ? map['discount'] as int : null,
+      follow_shop_discount: map['follow_shop_discount'] != null
+          ? map['follow_shop_discount'] as String
           : null,
-      category: map['category'] != null
-          ? Category.fromMap(map['category'] as Map<String, dynamic>)
-          : null,
+      created_at:
+          map['created_at'] != null ? map['created_at'] as String : null,
+      updated_at:
+          map['updated_at'] != null ? map['updated_at'] as String : null,
     );
   }
 
@@ -116,7 +122,7 @@ class Product {
 
   @override
   String toString() {
-    return 'Product(id: $id, name_en: $name_en, name_kh: $name_kh, img_url: $img_url, thumbnail_url: $thumbnail_url, price: $price, barcode: $barcode, category_id: $category_id, created_by: $created_by, deleted_at: $deleted_at, created_at: $created_at, updated_at: $updated_at, category: $category)';
+    return 'Product(id: $id, cate_id: $cate_id, sub_cate_id: $sub_cate_id, shop_id: $shop_id, name: $name, description: $description, price: $price, image_url: $image_url, is_favorite: $is_favorite, is_best_salling: $is_best_salling, discount: $discount, follow_shop_discount: $follow_shop_discount, created_at: $created_at, updated_at: $updated_at)';
   }
 
   @override
@@ -124,34 +130,36 @@ class Product {
     if (identical(this, other)) return true;
 
     return other.id == id &&
-        other.name_en == name_en &&
-        other.name_kh == name_kh &&
-        other.img_url == img_url &&
-        other.thumbnail_url == thumbnail_url &&
+        other.cate_id == cate_id &&
+        other.sub_cate_id == sub_cate_id &&
+        other.shop_id == shop_id &&
+        other.name == name &&
+        other.description == description &&
         other.price == price &&
-        other.barcode == barcode &&
-        other.category_id == category_id &&
-        other.created_by == created_by &&
-        other.deleted_at == deleted_at &&
+        other.image_url == image_url &&
+        other.is_favorite == is_favorite &&
+        other.is_best_salling == is_best_salling &&
+        other.discount == discount &&
+        other.follow_shop_discount == follow_shop_discount &&
         other.created_at == created_at &&
-        other.updated_at == updated_at &&
-        other.category == category;
+        other.updated_at == updated_at;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-        name_en.hashCode ^
-        name_kh.hashCode ^
-        img_url.hashCode ^
-        thumbnail_url.hashCode ^
+        cate_id.hashCode ^
+        sub_cate_id.hashCode ^
+        shop_id.hashCode ^
+        name.hashCode ^
+        description.hashCode ^
         price.hashCode ^
-        barcode.hashCode ^
-        category_id.hashCode ^
-        created_by.hashCode ^
-        deleted_at.hashCode ^
+        image_url.hashCode ^
+        is_favorite.hashCode ^
+        is_best_salling.hashCode ^
+        discount.hashCode ^
+        follow_shop_discount.hashCode ^
         created_at.hashCode ^
-        updated_at.hashCode ^
-        category.hashCode;
+        updated_at.hashCode;
   }
 }

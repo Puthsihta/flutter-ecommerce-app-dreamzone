@@ -1,4 +1,5 @@
-import 'package:dreamzone/models/shop.model.dart';
+import 'package:dreamzone/data/models/shop.dart';
+import 'package:dreamzone/widgets/transparent_image.dart';
 import 'package:flutter/material.dart';
 
 class RenderShops extends StatelessWidget {
@@ -6,11 +7,12 @@ class RenderShops extends StatelessWidget {
   final int index;
   final Function onTap;
 
-  const RenderShops(
-      {super.key,
-      required this.shop,
-      required this.index,
-      required this.onTap});
+  const RenderShops({
+    super.key,
+    required this.shop,
+    required this.index,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +40,10 @@ class RenderShops extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                shop[index].shopLogo,
+              child: TransparentImage(
+                url: shop[index].logo_image,
                 fit: BoxFit.cover,
+                enableCache: true,
               ),
             ),
           ),
@@ -50,7 +53,7 @@ class RenderShops extends StatelessWidget {
           SizedBox(
             width: 100,
             child: Text(
-              shop[index].name,
+              shop[index].name!,
               overflow: TextOverflow.ellipsis,
               softWrap: false,
               maxLines: 1,

@@ -1,6 +1,7 @@
-import 'package:dreamzone/models/products.model.dart';
+import 'package:dreamzone/data/models/product.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/utils/index.dart';
+import 'package:dreamzone/widgets/transparent_image.dart';
 import 'package:flutter/material.dart';
 
 class RenderBestSelling extends StatelessWidget {
@@ -38,11 +39,16 @@ class RenderBestSelling extends StatelessWidget {
         ),
         child: Row(
           children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                products[index].image,
-                fit: BoxFit.cover,
+            Container(
+              width: 70,
+              height: 70,
+              decoration: BoxDecoration(
+                color: grayColor,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: TransparentImage(
+                url: products[index].image_url!,
+                enableCache: true,
               ),
             ),
             const SizedBox(
@@ -55,7 +61,7 @@ class RenderBestSelling extends StatelessWidget {
                 SizedBox(
                   width: 65,
                   child: Text(
-                    products[index].name,
+                    products[index].name!,
                     overflow: TextOverflow.ellipsis,
                     softWrap: false,
                     maxLines: 1,
@@ -75,7 +81,6 @@ class RenderBestSelling extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      // products[index].discount.toString(),
                       currencyFormatter.format(products[index].discount),
                       style: TextStyle(
                         fontSize: 10,
@@ -85,7 +90,8 @@ class RenderBestSelling extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  currencyFormatter.format(products[index].prices),
+                  currencyFormatter
+                      .format(double.parse(products[index].price!)),
                   style: TextStyle(
                     fontSize: 14,
                     color: baseColor,

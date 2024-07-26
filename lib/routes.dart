@@ -54,16 +54,12 @@ class _TabNavigationBarState extends State<TabNavigationBar> {
       setState(() {
         _selectedIndex = index;
       });
-      if (kDebugMode) {
-        print("IN here setState");
-      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final int? params = ModalRoute.of(context)?.settings.arguments as int?;
-    _selectedIndex = params ?? _selectedIndex;
+    // final int? params = ModalRoute.of(context)?.settings.arguments as int?;
     return Scaffold(
       body: Container(
         child: _widgetOptions.elementAt(_selectedIndex),

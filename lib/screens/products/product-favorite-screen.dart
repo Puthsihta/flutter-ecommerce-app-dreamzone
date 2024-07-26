@@ -66,15 +66,15 @@ class _ProductFavoriteScreenState extends State<ProductFavoriteScreen> {
 
   Widget renderProduct(BuildContext context, int index) {
     return RenderProduct(
-      products: products,
+      products: [],
       index: index,
       onTap: () {
-        Navigator.of(context).pushNamed(
-          ProductDetailScreen.routeName,
-          arguments: ProductDetailArgument(
-            product: products[index],
-          ),
-        );
+        // Navigator.of(context).pushNamed(
+        //   ProductDetailScreen.routeName,
+        //   arguments: ProductDetailArgument(
+        //     product: products[index],
+        //   ),
+        // );
       },
       isFav: true,
     );

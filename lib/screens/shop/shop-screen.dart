@@ -1,12 +1,18 @@
 import 'package:dreamzone/constants/argument.dart';
+import 'package:dreamzone/data/repos/shop_repo.dart';
+import 'package:dreamzone/locator.dart';
 import 'package:dreamzone/models/provices.model.dart';
 import 'package:dreamzone/models/shop.model.dart';
+import 'package:dreamzone/providers/home_provider.dart';
+import 'package:dreamzone/screens/shop/all-shop-screen.dart';
+import 'package:dreamzone/screens/shop/shop-controller.dart';
 import 'package:dreamzone/screens/shop/shop-detail-screen.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/widgets/image-slide.dart';
 import 'package:dreamzone/widgets/render-provices.dart';
 import 'package:dreamzone/widgets/render-shops.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ShopScreen extends StatefulWidget {
   static const routeName = "/shop";
@@ -17,12 +23,6 @@ class ShopScreen extends StatefulWidget {
 }
 
 class _ShopScreenState extends State<ShopScreen> {
-  final List<String> _images = [
-    'https://dreamzone.phsartech.com/uploads/slide/1682340854-telegram-cloud-document-5-6210643450136628041.png',
-    'https://dreamzone.phsartech.com/uploads/slide/1682340976-telegram-cloud-document-5-6210643450136628042.png',
-    'https://dreamzone.phsartech.com/uploads/slide/1682341280-tg_image_229619768.png',
-  ];
-
   final List<Provices> provices = [
     Provices(
         name: "Phnom Penh",
@@ -124,172 +124,146 @@ class _ShopScreenState extends State<ShopScreen> {
               size: 27,
             ),
             onPressed: () {
-              Navigator.pushNamed(
-                context,
-                '/shop/all',
-                arguments: "Search",
+              Navigator.of(context).pushNamed(
+                AllShopScreen.routeName,
+                arguments: AllShopArgument(name: "Search"),
               );
             },
           ),
         ],
       ),
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                ImageSlide(
-                  images: _images,
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: 15, left: 15, right: 15),
-                  child: const Text(
-                    "Provices",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.all(15),
-            sliver: SliverGrid(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 15,
-                  mainAxisExtent: 150,
-                  crossAxisSpacing: 15),
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return renderProvices(context, index);
-                },
-                childCount: provices.length,
-              ),
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate([
-              Container(
-                color: whiteSmoke,
-                height: 12,
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 15, right: 15, top: 15),
-                child: const Text(
-                  "Shop Features",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ]),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.all(15),
-            sliver: SliverGrid(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                mainAxisSpacing: 15,
-                mainAxisExtent: 120,
-                crossAxisSpacing: 15,
-              ),
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return renderFeaturShop(context, index);
-                },
-                childCount: 5,
-              ),
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate([
-              Container(
-                color: whiteSmoke,
-                height: 12,
-              ),
-              Container(
-                  margin: const EdgeInsets.only(left: 15, right: 15, top: 15),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Shops",
+      body: ChangeNotifierProvider(
+        create: (context) =>
+            ShopScreenController(shopRepo: locator<ShopRepo>())..getShop(),
+        child: Consumer2<ShopScreenController, HomeProvider>(
+            builder: (context, viewController, homeController, child) {
+          if (viewController.loading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return RefreshIndicator(
+            onRefresh: () => viewController.getShop(),
+            child: CustomScrollView(
+              slivers: <Widget>[
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                    [
+                      ImageSlide(
+                        banner: homeController.homeData!.banner,
+                      ),
+                      Container(
+                        padding:
+                            const EdgeInsets.only(top: 15, left: 15, right: 15),
+                        child: const Text(
+                          "Provices",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              '/shop/all',
-                            );
-                          },
-                          child: const Text(
-                            "More",
-                            style: TextStyle(fontSize: 18, color: Colors.green),
-                          ),
-                        ),
-                      ])),
-            ]),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.all(15),
-            sliver: SliverGrid(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                mainAxisSpacing: 15,
-                mainAxisExtent: 120,
-                crossAxisSpacing: 15,
-              ),
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return renderShop(context, index);
-                },
-                childCount: shop.length,
-              ),
+                      ),
+                    ],
+                  ),
+                ),
+                SliverPadding(
+                  padding: const EdgeInsets.all(15),
+                  sliver: SliverGrid(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            mainAxisSpacing: 15,
+                            mainAxisExtent: 150,
+                            crossAxisSpacing: 15),
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        return renderProvices(
+                          context,
+                          index,
+                          viewController.shops!.provinces,
+                        );
+                      },
+                      childCount: viewController.shops!.provinces.length,
+                    ),
+                  ),
+                ),
+                SliverList(
+                  delegate: SliverChildListDelegate([
+                    Container(
+                      color: whiteSmoke,
+                      height: 12,
+                    ),
+                    Container(
+                        margin:
+                            const EdgeInsets.only(left: 15, right: 15, top: 15),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                "Shops",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pushNamed(
+                                    AllShopScreen.routeName,
+                                    arguments: AllShopArgument(),
+                                  );
+                                },
+                                child: const Text(
+                                  "More",
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.green),
+                                ),
+                              ),
+                            ])),
+                  ]),
+                ),
+                SliverPadding(
+                  padding: const EdgeInsets.all(15),
+                  sliver: SliverGrid(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4,
+                      mainAxisSpacing: 15,
+                      mainAxisExtent: 120,
+                      crossAxisSpacing: 15,
+                    ),
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        return renderShop(
+                            context, index, viewController.shops!.shops);
+                      },
+                      childCount: viewController.shops!.shops.length,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
+          );
+        }),
       ),
     );
   }
 
-  Widget renderProvices(BuildContext context, int index) {
+  Widget renderProvices(BuildContext context, int index, provices) {
     return RenderProvices(
       provices: provices,
       index: index,
       onTap: () {
-        Navigator.pushNamed(
-          context,
-          '/shop/all',
-          arguments: provices[index].name,
-        );
-      },
-    );
-  }
-
-  Widget renderFeaturShop(BuildContext context, int index) {
-    return RenderShops(
-      shop: shop,
-      index: index,
-      onTap: () {
         Navigator.of(context).pushNamed(
-          ShopDetailScreen.routeName,
-          arguments: ShopDetailArgument(
-            shop: shop[index],
-          ),
+          AllShopScreen.routeName,
+          arguments: AllShopArgument(
+              name: provices[index].name, provineId: provices[index].id),
         );
       },
     );
   }
 
-  Widget renderShop(BuildContext context, int index) {
+  Widget renderShop(BuildContext context, int index, shop) {
     return RenderShops(
       shop: shop,
       index: index,

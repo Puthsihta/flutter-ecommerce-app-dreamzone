@@ -1,9 +1,9 @@
-import 'package:dreamzone/models/provices.model.dart';
+import 'package:dreamzone/data/models/provinces.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class RenderProvices extends StatelessWidget {
-  final List<Provices> provices;
+  final List<Provinces> provices;
   final int index;
   final Function onTap;
 
@@ -13,7 +13,6 @@ class RenderProvices extends StatelessWidget {
     required this.index,
     required this.onTap,
   });
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -30,13 +29,13 @@ class RenderProvices extends StatelessWidget {
             CircleAvatar(
               radius: 30,
               backgroundColor: whiteSmoke,
-              backgroundImage: NetworkImage(provices[index].url),
+              backgroundImage: NetworkImage(provices[index].image_url!),
             ),
             const SizedBox(height: 10),
             SizedBox(
               width: 100,
               child: Text(
-                provices[index].name,
+                provices[index].name!,
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.clip,
                 maxLines: 2,

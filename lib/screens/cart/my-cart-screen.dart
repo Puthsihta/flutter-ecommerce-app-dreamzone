@@ -50,14 +50,11 @@ class _MyCartState extends State<MyCart> {
     return Column(
       children: [
         Expanded(
-          child: Container(
-            // height: MediaQuery.of(context).size.height * (1.5 / 3.4),
-            child: ListView.builder(
-              itemCount: carts.length,
-              itemBuilder: (context, index) {
-                return renderCartItem(context, index);
-              },
-            ),
+          child: ListView.builder(
+            itemCount: carts.length,
+            itemBuilder: (context, index) {
+              return renderCartItem(context, index);
+            },
           ),
         ),
         Container(

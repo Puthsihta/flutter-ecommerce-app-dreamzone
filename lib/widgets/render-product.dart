@@ -1,7 +1,9 @@
-import 'package:dreamzone/models/products.model.dart';
+import 'package:dreamzone/data/models/product.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/utils/index.dart';
+import 'package:dreamzone/widgets/transparent_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class RenderProduct extends StatelessWidget {
   final List<Product> products;
@@ -24,7 +26,10 @@ class RenderProduct extends StatelessWidget {
         onTap();
       },
       child: Container(
-        margin: EdgeInsets.only(left: 15, right: index % 2 != 0 ? 15 : 0),
+        margin: EdgeInsets.only(
+          left: 15,
+          right: index % 2 != 0 ? 15 : 0,
+        ),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -39,15 +44,17 @@ class RenderProduct extends StatelessWidget {
         ),
         child: Column(
           children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                products[index].image,
-                fit: BoxFit.cover,
+            Container(
                 height: 200,
-                width: 200,
-              ),
-            ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                ),
+                child: TransparentImage(
+                  url: products[index].image_url,
+                  enableCache: true,
+                  borderRadius: 10,
+                )),
             Container(
               padding: const EdgeInsets.all(10),
               child: Column(
@@ -56,7 +63,7 @@ class RenderProduct extends StatelessWidget {
                   SizedBox(
                     width: 200,
                     child: Text(
-                      products[index].name,
+                      products[index].name!,
                       overflow: TextOverflow.ellipsis,
                       softWrap: false,
                       maxLines: 1,
@@ -76,8 +83,8 @@ class RenderProduct extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                currencyFormatter
-                                    .format(products[index].prices),
+                                currencyFormatter.format(
+                                    double.parse(products[index].price!)),
                                 style: TextStyle(
                                   fontSize: 10,
                                   color: placeHolderColor,
@@ -88,8 +95,8 @@ class RenderProduct extends StatelessWidget {
                                 width: 5,
                               ),
                               Text(
-                                currencyFormatter
-                                    .format(products[index].prices),
+                                currencyFormatter.format(
+                                    double.parse(products[index].price!)),
                                 style: TextStyle(
                                     fontSize: 13,
                                     color: baseColor,

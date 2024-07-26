@@ -23,35 +23,35 @@ class CartProvider extends ChangeNotifier {
   Cart? get selectedCart => cart[shopProvider.shop?.id];
 
   void onIncrement({required Product product}) {
-    print("Product : ${product.name_en} ${product.id}");
-    if (selectedCart != null) {
-      final item = selectedCart!.cart[product.id];
+    // print("Product : ${product.name_en} ${product.id}");
+    // if (selectedCart != null) {
+    //   final item = selectedCart!.cart[product.id];
 
-      if (item != null) {
-        selectedCart!.cart.update(product.id,
-            (value) => value.copyWith(quantity: value.quantity + 1));
-      } else {
-        selectedCart!.cart.addAll({
-          product.id: CartItem(
-              product: product,
-              quantity: 1,
-              discountType: DiscountType.NONE,
-              discount: 0)
-        });
-      }
-    } else {
-      if (shopProvider.shop != null) {
-        cart.addAll({
-          shopProvider.shop!.id: Cart(cart: {
-            product.id: CartItem(
-                product: product,
-                quantity: 1,
-                discountType: DiscountType.NONE,
-                discount: 0)
-          })
-        });
-      }
-    }
+    //   if (item != null) {
+    //     selectedCart!.cart.update(product.id,
+    //         (value) => value.copyWith(quantity: value.quantity + 1));
+    //   } else {
+    //     selectedCart!.cart.addAll({
+    //       product.id: CartItem(
+    //           product: product,
+    //           quantity: 1,
+    //           discountType: DiscountType.NONE,
+    //           discount: 0)
+    //     });
+    //   }
+    // } else {
+    //   if (shopProvider.shop != null) {
+    //     cart.addAll({
+    //       shopProvider.shop!.id: Cart(cart: {
+    //         product.id: CartItem(
+    //             product: product,
+    //             quantity: 1,
+    //             discountType: DiscountType.NONE,
+    //             discount: 0)
+    //       })
+    //     });
+    //   }
+    // }
 
     notifyListeners();
   }
@@ -109,28 +109,28 @@ class CartProvider extends ChangeNotifier {
   }
 
   double getSubTotalPrice() {
-    if (selectedCart != null) {
-      final total = selectedCart!.cart.values.fold<double>(
-          0,
-          (value, element) =>
-              value + (element.product.price * element.quantity));
-      return total;
-    }
+    // if (selectedCart != null) {
+    //   final total = selectedCart!.cart.values.fold<double>(
+    //       0,
+    //       (value, element) =>
+    //           value + (element.product.price * element.quantity));
+    //   return total;
+    // }
     return 0;
   }
 
   double getTotalDiscount() {
-    if (selectedCart != null) {
-      final total = selectedCart!.cart.values.fold<double>(
-          0,
-          (value, element) =>
-              value +
-              ((element.discountType == DiscountType.AMOUNT
-                      ? element.discount
-                      : element.discount / 100 * element.product.price) *
-                  element.quantity));
-      return total;
-    }
+    // if (selectedCart != null) {
+    //   final total = selectedCart!.cart.values.fold<double>(
+    //       0,
+    //       (value, element) =>
+    //           value +
+    //           ((element.discountType == DiscountType.AMOUNT
+    //                   ? element.discount
+    //                   : element.discount / 100 * element.product.price) *
+    //               element.quantity));
+    //   return total;
+    // }
     return 0;
   }
 }

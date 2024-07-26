@@ -1,6 +1,7 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:dreamzone/data/models/product.dart';
+import 'package:dreamzone/data/models/shop.dart';
 import 'package:dreamzone/models/order.model.dart';
-import 'package:dreamzone/models/products.model.dart';
-import 'package:dreamzone/models/shop.model.dart';
 
 class OrderDetailArgument {
   final Order order;
@@ -20,5 +21,27 @@ class ShopDetailArgument {
   final Shop shop;
   ShopDetailArgument({
     required this.shop,
+  });
+}
+
+class AllShopArgument {
+  int? provineId;
+  String? name;
+  AllShopArgument({
+    this.provineId,
+    this.name,
+  });
+}
+
+class ProductArgument {
+  int? shopId;
+  String? name;
+  int? cateId;
+  int? subCateId;
+  ProductArgument({
+    this.shopId,
+    this.name,
+    this.cateId,
+    this.subCateId,
   });
 }
