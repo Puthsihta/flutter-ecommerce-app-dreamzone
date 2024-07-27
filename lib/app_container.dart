@@ -86,8 +86,8 @@ class AppContainer extends StatelessWidget {
           case VerifyOtpScreen.routeName:
             screen = MaterialPageRoute(
               builder: (context) {
-                final phoneNumber = settings.arguments as String;
-                return VerifyOtpScreen(phoneNumber: phoneNumber);
+                final args = settings.arguments as VerfiyOtpArgument;
+                return VerifyOtpScreen(argument: args);
               },
             );
             break;

@@ -89,12 +89,11 @@ class _DreamzoneAppState extends State<DreamzoneApp> {
           ),
           ChangeNotifierProvider(
             create: (_) => AuthProvider(
-              onTokenChanged: (token) {
-                // print("on token changed : ${token}");
-              },
               authRepo: locator<AuthRepo>(),
             ),
           ),
+          ChangeNotifierProvider(
+              create: (_) => UserProvider(userRepo: locator<UserRepo>())),
           ChangeNotifierProvider(
             create: (_) => ShopProvider(),
           ),

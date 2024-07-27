@@ -13,7 +13,7 @@ class UserRepoImpl implements UserRepo {
   @override
   Future<User> getUser() async {
     final apiResponse =
-        (await request.get('/api/user')).data as Map<String, dynamic>;
+        (await request.get('auth/profile')).data as Map<String, dynamic>;
 
     final response =
         BaseResponse.fromMap(apiResponse, User.fromMap(apiResponse["data"]));

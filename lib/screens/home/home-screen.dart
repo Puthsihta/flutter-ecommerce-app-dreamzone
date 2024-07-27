@@ -1,6 +1,7 @@
 import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/data/repos/home_repo.dart';
 import 'package:dreamzone/locator.dart';
+import 'package:dreamzone/providers/auth_provider.dart';
 import 'package:dreamzone/providers/home_provider.dart';
 import 'package:dreamzone/routes.dart';
 import 'package:dreamzone/screens/home/home-controller.dart';
@@ -389,8 +390,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 IconButton(
                   icon: const Icon(Icons.notifications_outlined),
                   onPressed: () {
+                    final authProvider = context.read<AuthProvider>();
+                    if (authProvider.isLoggedIn) {
+                      Navigator.pushNamed(context, '/notification');
+                    } else {
+                      Navigator.pushNamed(context, '/auth/signin');
+                    }
                     // Navigator.pushNamed(context, '/notification');
-                    Navigator.pushNamed(context, '/auth/signin');
                   },
                 ),
               ],

@@ -6,12 +6,10 @@ import 'package:dreamzone/data/models/user.dart';
 
 class Token {
   final String token;
-  final String refresh_token;
   final User user;
 
   Token({
     required this.token,
-    required this.refresh_token,
     required this.user,
   });
 
@@ -22,7 +20,6 @@ class Token {
   }) {
     return Token(
       token: token ?? this.token,
-      refresh_token: refresh_token ?? this.refresh_token,
       user: user ?? this.user,
     );
   }
@@ -30,7 +27,6 @@ class Token {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'token': token,
-      'refresh_token': refresh_token,
       'user': user.toMap(),
     };
   }
@@ -38,7 +34,6 @@ class Token {
   factory Token.fromMap(Map<String, dynamic> map) {
     return Token(
       token: map['token'] as String,
-      refresh_token: map['refresh_token'] as String,
       user: User.fromMap(map['user'] as Map<String, dynamic>),
     );
   }
@@ -49,18 +44,15 @@ class Token {
       Token.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() =>
-      'Token(token: $token, refresh_token: $refresh_token, user: $user)';
+  String toString() => 'Token(token: $token, user: $user)';
 
   @override
   bool operator ==(covariant Token other) {
     if (identical(this, other)) return true;
 
-    return other.token == token &&
-        other.refresh_token == refresh_token &&
-        other.user == user;
+    return other.token == token && other.user == user;
   }
 
   @override
-  int get hashCode => token.hashCode ^ refresh_token.hashCode ^ user.hashCode;
+  int get hashCode => token.hashCode ^ user.hashCode;
 }

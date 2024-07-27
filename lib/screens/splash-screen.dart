@@ -1,4 +1,6 @@
+import 'package:dreamzone/providers/auth_provider.dart';
 import 'package:dreamzone/providers/theme_provider.dart';
+import 'package:dreamzone/providers/user_provider.dart';
 import 'package:dreamzone/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,14 +22,14 @@ class _SplashViewState extends State<SplashView> {
 
   Future<void> init() async {
     final themeProvider = context.read<ThemeProvider>();
-    // final authProvider = context.read<AuthProvider>();
+    final authProvider = context.read<AuthProvider>();
+    final userProvider = context.read<UserProvider>();
     // final shopProvider = context.read<ShopProvider>();
-    // final userProvider = context.read<UserProvider>();
 
     await themeProvider.ensureInitialization();
-    // await authProvider.ensureInitialization();
+    await authProvider.ensureInitialization();
+    await userProvider.ensureInitialization();
     // await shopProvider.ensureInitialization();
-    // await userProvider.ensureInitialization();
 
     Future.delayed(
       const Duration(milliseconds: 500),

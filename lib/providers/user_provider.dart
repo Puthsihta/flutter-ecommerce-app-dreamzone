@@ -22,7 +22,6 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
     _preferences.then((pref) {
       if (newUser != null) {
-        // print("USER_KEY : $newUser");
         pref.setString(StorageKeys.USER_KEY, newUser.toJson());
       } else {
         pref.remove(StorageKeys.USER_KEY);
@@ -43,7 +42,7 @@ class UserProvider with ChangeNotifier {
       if (userPref != null) {
         user = User.fromJson(userPref);
       } else {
-        throw "Shop not defined";
+        throw "user undefined";
       }
     } catch (e) {
       user = null;

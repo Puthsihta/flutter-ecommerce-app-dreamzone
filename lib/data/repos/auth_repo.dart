@@ -10,9 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class AuthRepo {
   Future<Token?> getToken();
-  Future<BaseResponse<Token?>> login(LoginRequest request);
+  Future<BaseResponse<Token?>> verifyOtp(VerifyOtpRequest request);
   Future<void> logout();
-  Future<BaseResponse<Token?>> refreshToken(String refreshToken);
 }
 
 class AuthRepoImpl implements AuthRepo {
@@ -36,23 +35,21 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<BaseResponse<Token?>> login(LoginRequest request) async {
-    final mappedResponse = (await client.post(
-      "/api/login",
-      data: request.toMap(),
-      // queryParameters: {"test": true},
-    ))
-        .data as Map<String, dynamic>;
-
-    print("mappedReponse : $mappedResponse ");
+  Future<BaseResponse<Token?>> verifyOtp(VerifyOtpRequest request) async {
+    final mappedResponse =
+        (await client.post("auth/verify-sms", data: request.toMap())).data
+            as Map<String, dynamic>;
     final prefs = await _preferences;
     final response = BaseResponse.fromMap(
-        mappedResponse,
-        mappedResponse["data"] == null
-            ? null
-            : Token.fromMap(mappedResponse["data"]));
+      mappedResponse,
+      mappedResponse["data"] == null
+          ? null
+          : Token.fromMap(
+              mappedResponse["data"],
+            ),
+    );
 
-    print("getRefresh token in login : ${response.data}");
+    // print("getRefresh token in login : ${response.data}");
 
     if (response.data != null) {
       final tokenString = response.data!.toJson();
@@ -70,31 +67,5 @@ class AuthRepoImpl implements AuthRepo {
   Future<void> logout() async {
     final prefs = await _preferences;
     prefs.remove(StorageKeys.TOKEN_KEY);
-  }
-
-  @override
-  Future<BaseResponse<Token?>> refreshToken(String refreshToken) async {
-    final mappedResponse = (await client
-            .post('/api/refresh-token', data: {"refresh_token": refreshToken}))
-        .data as Map<String, dynamic>;
-
-    final prefs = await _preferences;
-    final response = BaseResponse.fromMap(
-        mappedResponse,
-        mappedResponse["data"] == null
-            ? null
-            : Token.fromMap(mappedResponse["data"]));
-
-    // print('response refresh Token : ${response.data}');
-
-    if (response.data != null) {
-      final tokenString = response.data!.toJson();
-
-      if (tokenString != '') {
-        prefs.setString(StorageKeys.TOKEN_KEY, tokenString);
-      }
-    }
-
-    return response;
   }
 }

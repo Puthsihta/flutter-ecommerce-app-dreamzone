@@ -45,3 +45,12 @@ class ProductArgument {
     this.subCateId,
   });
 }
+
+class VerfiyOtpArgument {
+  String phone;
+  int? code;
+  VerfiyOtpArgument({
+    required this.phone,
+    this.code,
+  });
+}
