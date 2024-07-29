@@ -46,8 +46,14 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                   vertical: 20,
                 ),
                 child: CustomButton(
-                  text: "Cancel Order",
                   onPressed: () {},
+                  child: const Text(
+                    "Cancel Order",
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
           ],

@@ -42,10 +42,16 @@ class PaymentSuccesScreen extends StatelessWidget {
                 horizontal: 15,
               ),
               child: CustomButton(
-                text: "Confirm",
                 onPressed: () {
                   Navigator.pop(context);
                 },
+                child: const Text(
+                  "Confirm",
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
           ],

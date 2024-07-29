@@ -174,7 +174,8 @@ class _AllShopScreenState extends State<AllShopScreen> {
                     children: [
                       Expanded(
                         child: RefreshIndicator(
-                          onRefresh: () => shopViewController.onGetShop(),
+                          onRefresh: () =>
+                              shopViewController.onGetShop(refresh: true),
                           child: CustomScrollView(
                             controller: _scrollController,
                             slivers: [

@@ -48,7 +48,7 @@ class _TabNavigationBarState extends State<TabNavigationBar> {
     final authProvider = context.read<AuthProvider>();
     setState(
       () {
-        if (authProvider.isLoggedIn) {
+        if (authProvider.isLoggedIn || index == 1 || index == 0) {
           _selectedIndex = index;
         } else {
           // Navigate to login screen if not logged in

@@ -156,8 +156,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     ),
                     const SizedBox(height: 50),
                     CustomButton(
-                      text: "Reset",
                       onPressed: () {},
+                      child: const Text(
+                        "Reset",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                     const SizedBox(
                       height: 20,

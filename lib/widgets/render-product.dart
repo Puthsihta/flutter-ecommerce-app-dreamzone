@@ -122,13 +122,6 @@ class RenderProduct extends StatelessWidget {
                           ),
                         ],
                       ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          isFav ? Icons.favorite : Icons.add_shopping_cart,
-                          color: secondColor,
-                        ),
-                      )
                     ],
                   ),
                 ],

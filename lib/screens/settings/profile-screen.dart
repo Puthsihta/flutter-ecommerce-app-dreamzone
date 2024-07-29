@@ -1,7 +1,11 @@
+import 'package:dreamzone/providers/auth_provider.dart';
+import 'package:dreamzone/providers/user_provider.dart';
+import 'package:dreamzone/routes.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/widgets/list-item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -93,6 +97,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       CupertinoDialogAction(
                           onPressed: () {
                             Navigator.of(context).pop();
+                            context.read<AuthProvider>().logout().then(
+                                  (value) => {
+                                    Navigator.of(context)
+                                        .pushNamedAndRemoveUntil(
+                                      TabNavigationBar.routeName,
+                                      (route) => false,
+                                    )
+                                  },
+                                );
                           },
                           child: const Text(
                             "Logout",
@@ -174,39 +187,50 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: [
           Row(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CircleAvatar(
-                    radius: 30,
-                    backgroundColor: whiteSmoke,
-                    backgroundImage: const NetworkImage(
-                        "https://dreamzone.phsartech.com/uploads/users/1684391005-logo.png"),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: 200,
-                        child: Text(
-                          "Puthsitha Moeurn",
-                          overflow: TextOverflow.clip,
-                          maxLines: 2,
-                          softWrap: true,
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: titleColor,
-                              fontWeight: FontWeight.bold),
+              Consumer<UserProvider>(builder: (context, user, child) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    user.user!.image_url != null
+                        ? CircleAvatar(
+                            radius: 30,
+                            backgroundColor: whiteSmoke,
+                            backgroundImage: NetworkImage(
+                              user.user!.image_url!,
+                            ),
+                          )
+                        : CircleAvatar(
+                            radius: 30,
+                            backgroundColor: whiteSmoke,
+                            backgroundImage: const AssetImage(
+                              'assets/images/logo.png',
+                            ),
+                          ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: 200,
+                          child: Text(
+                            user.user!.name!,
+                            overflow: TextOverflow.clip,
+                            maxLines: 2,
+                            softWrap: true,
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: titleColor,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
+                      ],
+                    )
+                  ],
+                );
+              }),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [

@@ -15,7 +15,6 @@ class UserProvider with ChangeNotifier {
   final _preferences = SharedPreferences.getInstance();
 
   User? _user;
-
   User? get user => _user;
   set user(User? newUser) {
     _user = newUser;
@@ -36,14 +35,7 @@ class UserProvider with ChangeNotifier {
 
   Future<void> ensureInitialization() async {
     try {
-      final prefs = await _preferences;
-      final userPref = prefs.getString(StorageKeys.USER_KEY);
-
-      if (userPref != null) {
-        user = User.fromJson(userPref);
-      } else {
-        throw "user undefined";
-      }
+      getUser();
     } catch (e) {
       user = null;
     }

@@ -13,7 +13,7 @@ class CustomInterceptor extends Interceptor {
       RequestOptions options, RequestInterceptorHandler handler) async {
     final token = await ClientRequest().getToken();
     if (token.isNotEmpty) {
-      options.headers['Authorization'] = "Bearer $token";
+      options.headers['Authorization'] = token;
     }
     super.onRequest(options, handler);
   }

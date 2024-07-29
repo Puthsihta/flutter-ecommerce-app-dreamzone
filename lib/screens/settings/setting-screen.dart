@@ -33,17 +33,6 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
           ),
           SettingListItem(
-            title: 'Change Password',
-            onTap: () {
-              Navigator.pushNamed(context, '/setting/change-password');
-            },
-            trailing: Icon(
-              Icons.arrow_forward_ios,
-              size: 20,
-              color: descriptionColor,
-            ),
-          ),
-          SettingListItem(
             title: 'Notifications',
             onTap: () {},
             trailing: Switch(

@@ -426,10 +426,16 @@ class _OrderProductScreenState extends State<OrderProductScreen> {
             height: 15,
           ),
           CustomButton(
-            text: "Confirm",
             onPressed: () {
               Navigator.pushNamed(context, '/order/payment-success');
             },
+            child: const Text(
+              "Confirm",
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ],
       ),

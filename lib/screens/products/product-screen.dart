@@ -86,71 +86,6 @@ class _ProductScreenState extends State<ProductScreen> {
         actions: [
           IconButton(
             icon: const Icon(
-              Icons.filter_alt_outlined,
-              size: 27,
-            ),
-            onPressed: () {
-              showModalBottomSheet(
-                enableDrag: true,
-                useSafeArea: true,
-                context: context,
-                builder: (BuildContext context) {
-                  return Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10),
-                      ),
-                    ),
-                    child: Wrap(
-                      children: <Widget>[
-                        Container(
-                          padding: const EdgeInsets.all(15),
-                          child: Text(
-                            "Filter by Categories",
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: titleColor),
-                          ),
-                        ),
-                        ListTile(
-                          leading: const Icon(Icons.search),
-                          title: const Text('Collagen'),
-                          onTap: () {
-                            // Handle delete action
-                            Navigator.pop(context);
-                          },
-                        ),
-                        ListTile(
-                          leading: const Icon(Icons.search),
-                          title: const Text('Brobiotic'),
-                          onTap: () {
-                            // Handle edit action
-                            Navigator.pop(context);
-                          },
-                        ),
-                        ListTile(
-                          leading: const Icon(Icons.search),
-                          title: const Text('Vitamins'),
-                          onTap: () {
-                            // Handle share action
-                            Navigator.pop(context);
-                          },
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        )
-                      ],
-                    ),
-                  );
-                },
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(
               Icons.search,
               size: 27,
             ),
@@ -250,7 +185,8 @@ class _ProductScreenState extends State<ProductScreen> {
                     children: [
                       Expanded(
                         child: RefreshIndicator(
-                          onRefresh: () => searchViewController.onGetProduct(),
+                          onRefresh: () =>
+                              searchViewController.onGetProduct(refresh: true),
                           child: CustomScrollView(
                             controller: _scrollController,
                             slivers: [

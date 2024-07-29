@@ -1,7 +1,11 @@
 import 'package:dreamzone/constants/constants.dart';
+import 'package:dreamzone/data/repos/setting_repo.dart';
+import 'package:dreamzone/locator.dart';
+import 'package:dreamzone/screens/settings/contact-us-controller.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ContactUsScreen extends StatelessWidget {
   static const routeName = "/profile/contactus";
@@ -39,144 +43,159 @@ class ContactUsScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    padding: paddingHorizontal * 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Support By ",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: titleColor,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
+                  ChangeNotifierProvider(
+                    create: (context) =>
+                        ContactusController(settingRepo: locator<SettingRepo>())
+                          ..getContactUs(),
+                    child: Consumer<ContactusController>(
+                        builder: (context, viewController, child) {
+                      print("viewController : ${viewController.contactUsData}");
+                      if (viewController.loading) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return Container(
+                        padding: paddingHorizontal * 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(
-                              CupertinoIcons.phone,
-                              color: descriptionColor,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
                             Text(
-                              "+91 9876543210",
+                              "Support By ",
+                              textAlign: TextAlign.center,
                               style: TextStyle(
-                                fontSize: 15,
-                                color: descriptionColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: titleColor,
                               ),
                             ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              CupertinoIcons.mail,
-                              color: descriptionColor,
-                            ),
                             const SizedBox(
-                              width: 10,
+                              height: 10,
                             ),
-                            Text(
-                              "dreamzone@gmail.com",
-                              style: TextStyle(
-                                fontSize: 15,
-                                color: descriptionColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              CupertinoIcons.map_pin,
-                              color: descriptionColor,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width / 1.3,
-                              child: Text(
-                                "#17K SongKat Jom Chao1 Khan Po SenChey ,Phnom Penh",
-                                overflow: TextOverflow.ellipsis,
-                                softWrap: false,
-                                maxLines: 2,
-                                style: TextStyle(
-                                  fontSize: 15,
+                            Row(
+                              children: [
+                                Icon(
+                                  CupertinoIcons.phone,
                                   color: descriptionColor,
                                 ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  viewController.contactUsData!.phone!,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: descriptionColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  CupertinoIcons.mail,
+                                  color: descriptionColor,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  viewController.contactUsData!.email!,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: descriptionColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  CupertinoIcons.map_pin,
+                                  color: descriptionColor,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.3,
+                                  child: Text(
+                                    viewController.contactUsData!.address!,
+                                    overflow: TextOverflow.ellipsis,
+                                    softWrap: false,
+                                    maxLines: 2,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: descriptionColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "Socail",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: titleColor,
                               ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(
+                                    Icons.facebook,
+                                    color: Colors.blueAccent,
+                                    size: 40,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(
+                                    Icons.play_circle,
+                                    color: Colors.redAccent,
+                                    size: 40,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(
+                                    Icons.telegram,
+                                    color: Colors.lightBlue,
+                                    size: 40,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(
+                                    Icons.public,
+                                    color: Colors.lightBlueAccent,
+                                    size: 40,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Socail",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: titleColor,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.facebook,
-                                color: Colors.blueAccent,
-                                size: 40,
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.play_circle,
-                                color: Colors.redAccent,
-                                size: 40,
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.telegram,
-                                color: Colors.lightBlue,
-                                size: 40,
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.public,
-                                color: Colors.lightBlueAccent,
-                                size: 40,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                      );
+                    }),
                   )
                 ],
               ),

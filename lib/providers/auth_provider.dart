@@ -1,6 +1,5 @@
 import 'package:dreamzone/constants/storage_key.dart';
 import 'package:dreamzone/data/models/token.dart';
-import 'package:dreamzone/data/models/user.dart';
 import 'package:dreamzone/data/repos/auth_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,7 +10,6 @@ class AuthProvider with ChangeNotifier {
   AuthProvider({required this.authRepo, this.onTokenChanged});
 
   String? _token;
-  User? _user;
 
   bool get isLoggedIn => _token != null;
 
@@ -24,14 +22,9 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  User? get user => _user;
-  set user(User? newUser) {
-    _user = newUser;
-    notifyListeners();
-  }
-
   Future<void> logout() async {
     await authRepo.logout();
+    token = null;
   }
 
   Future<void> ensureInitialization() async {

@@ -1,6 +1,8 @@
 import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/data/repos/product_detail_repo.dart';
 import 'package:dreamzone/locator.dart';
+import 'package:dreamzone/providers/auth_provider.dart';
+import 'package:dreamzone/screens/auth/signin-screen.dart';
 import 'package:dreamzone/screens/products/product-detail-controller.dart';
 import 'package:dreamzone/screens/products/product-screen.dart';
 import 'package:dreamzone/screens/shop/shop-detail-screen.dart';
@@ -9,6 +11,7 @@ import 'package:dreamzone/utils/index.dart';
 import 'package:dreamzone/widgets/render-product.dart';
 import 'package:dreamzone/widgets/transparent_image.dart';
 import 'package:dreamzone/widgets/webview.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -51,6 +54,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         )
                       : Image.asset("assets/images/logo.png"),
                 ),
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.add_shopping_cart),
+                    onPressed: () {
+                      // Handle the button press
+                    },
+                  ),
+                ],
+
                 // backgroundColor: baseColor,
               ),
               SliverList(
@@ -100,7 +112,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    final authProvider =
+                                        context.read<AuthProvider>();
+                                    if (authProvider.isLoggedIn) {
+                                      //action
+                                    } else {
+                                      // Navigate to login screen if not logged in
+                                      Navigator.pushNamed(
+                                          context, SignInScreen.routeName);
+                                    }
+                                  },
                                   icon: Icon(
                                     viewController.productDetail!.productDetail!
                                             .is_favorite!
@@ -126,22 +148,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "Quantity",
-                            style: TextStyle(
-                              color: descriptionColor,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
                           Container(
                             width: 120,
                             height: 40,
                             decoration: BoxDecoration(
-                              border: Border.all(
-                                color: descriptionColor,
-                                width: 0.5,
-                              ),
+                              // border: Border.all(
+                              //   color: descriptionColor,
+                              //   width: 0.5,
+                              // ),
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Row(
@@ -150,7 +164,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               children: [
                                 IconButton(
                                   icon: Icon(
-                                    Icons.remove,
+                                    Icons.remove_circle_outline,
                                     color: descriptionColor,
                                   ),
                                   onPressed: () {},
@@ -168,13 +182,22 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   ),
                                 ),
                                 IconButton(
-                                  icon:
-                                      Icon(Icons.add, color: descriptionColor),
+                                  icon: Icon(
+                                    Icons.add_circle_outline_rounded,
+                                    color: descriptionColor,
+                                  ),
                                   onPressed: () {},
                                 )
                               ],
                             ),
                           ),
+                          SizedBox(
+                            width: 250,
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              child: const Text("Add Cart"),
+                            ),
+                          )
                         ],
                       ),
                     ),

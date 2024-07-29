@@ -211,10 +211,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                     CustomButton(
-                      text: "Register",
                       onPressed: acceptCondition ? () {} : null,
+                      child: const Text(
+                        "Register",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                   ],

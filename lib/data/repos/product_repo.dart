@@ -11,6 +11,10 @@ abstract class ProductRepo {
     int? cateId,
     int? subCateId,
   });
+
+  Future<PaginationResponse<Product>> getFavoriteProduct({
+    int? page,
+  });
 }
 
 class ProductRepoImpl implements ProductRepo {
@@ -36,6 +40,25 @@ class ProductRepoImpl implements ProductRepo {
 
     final mappedResponse = (await request.get(
       'products',
+      queryParameters: params,
+    ))
+        .data as Map<String, dynamic>;
+    final response =
+        PaginationResponse.fromMap(mappedResponse, (e) => Product.fromMap(e));
+
+    return response;
+  }
+
+  @override
+  Future<PaginationResponse<Product>> getFavoriteProduct({
+    int? page = 1,
+  }) async {
+    final params = {
+      'page': page,
+    };
+
+    final mappedResponse = (await request.get(
+      'products/favorites',
       queryParameters: params,
     ))
         .data as Map<String, dynamic>;

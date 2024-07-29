@@ -1,7 +1,4 @@
 import 'package:dreamzone/models/products.model.dart';
-import 'package:dreamzone/theme/colors.dart';
-import 'package:dreamzone/utils/index.dart';
-import 'package:dreamzone/widgets/custom-button.dart';
 import 'package:dreamzone/widgets/render-cart.dart';
 import 'package:flutter/material.dart';
 
@@ -47,76 +44,11 @@ class _MyCartState extends State<MyCart> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: ListView.builder(
-            itemCount: carts.length,
-            itemBuilder: (context, index) {
-              return renderCartItem(context, index);
-            },
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.all(15),
-          padding: const EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text("Subtotal"),
-                  Text(currencyFormatter.format(136)),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text("Discount"),
-                  Text(currencyFormatter.format(10)),
-                ],
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              const Divider(),
-              const SizedBox(
-                height: 5,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text("Total Amount"),
-                  Text(
-                    currencyFormatter.format(126),
-                    style: TextStyle(
-                      color: greenColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              CustomButton(
-                text: "Checkout",
-                onPressed: () {
-                  Navigator.pushNamed(
-                    context,
-                    '/cart/order',
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-      ],
+    return ListView.builder(
+      itemCount: carts.length,
+      itemBuilder: (context, index) {
+        return renderCartItem(context, index);
+      },
     );
   }
 
