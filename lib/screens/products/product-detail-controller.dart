@@ -11,6 +11,7 @@ class ProductDetailController extends ChangeNotifier {
 
   ProductDetailContainer? _productDetail;
   bool loading = true;
+  bool favLoading = false;
   ProductDetailContainer? get productDetail => _productDetail;
   set productDetail(ProductDetailContainer? home) {
     _productDetail = home;
@@ -18,9 +19,23 @@ class ProductDetailController extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> onFavoriteProduct(int productId) async {
+    try {
+      favLoading = true;
+      await productDetialRepo.onFavoriteProduct(productId);
+      favLoading = false;
+      getProductDetail(productId);
+    } catch (e) {
+      favLoading = false;
+      notifyListeners();
+      if (kDebugMode) {
+        print('Error on favorite product : $e');
+      }
+    }
+  }
+
   Future<void> getProductDetail(int productId) async {
     try {
-      loading = true;
       final data = await productDetialRepo.getProductDetail(productId);
       productDetail = data;
     } catch (e) {

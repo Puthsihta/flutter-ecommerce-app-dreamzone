@@ -1,5 +1,7 @@
+import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/data/repos/product_repo.dart';
 import 'package:dreamzone/locator.dart';
+import 'package:dreamzone/screens/products/product-detail-screen.dart';
 import 'package:dreamzone/screens/products/product-favorite-controller.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/widgets/fetch_error.dart';
@@ -107,12 +109,12 @@ class _ProductFavoriteScreenState extends State<ProductFavoriteScreen> {
       products: products,
       index: index,
       onTap: () {
-        // Navigator.of(context).pushNamed(
-        //   ProductDetailScreen.routeName,
-        //   arguments: ProductDetailArgument(
-        //     product: products[index],
-        //   ),
-        // );
+        Navigator.of(context).pushNamed(
+          ProductDetailScreen.routeName,
+          arguments: ProductDetailArgument(
+            product: products[index],
+          ),
+        );
       },
       isFav: true,
     );

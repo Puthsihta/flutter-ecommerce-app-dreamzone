@@ -55,6 +55,7 @@ class AuthRepoImpl implements AuthRepo {
       final tokenString = response.data!.toJson();
 
       if (tokenString != '') {
+        // print("tokenString : $tokenString");
         prefs.setString(StorageKeys.TOKEN_KEY, tokenString);
         // print("login refresh token : ${response.data!.refresh_token}");
       }
@@ -67,5 +68,6 @@ class AuthRepoImpl implements AuthRepo {
   Future<void> logout() async {
     final prefs = await _preferences;
     prefs.remove(StorageKeys.TOKEN_KEY);
+    prefs.remove(StorageKeys.CART_KEY);
   }
 }

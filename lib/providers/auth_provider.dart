@@ -32,8 +32,10 @@ class AuthProvider with ChangeNotifier {
 
     try {
       final tokenString = _prefs.getString(StorageKeys.TOKEN_KEY);
+      // print("tokenResponse : $tokenString");
       if (tokenString != null) {
         final tokenResponse = Token.fromJson(tokenString);
+        // print("tokenResponse : $tokenResponse");
         token = tokenResponse.token;
       }
     } catch (e) {}

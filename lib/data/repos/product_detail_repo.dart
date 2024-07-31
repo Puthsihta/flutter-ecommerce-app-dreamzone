@@ -5,6 +5,7 @@ import 'package:dreamzone/locator.dart';
 
 abstract class ProductDetialRepo {
   Future<ProductDetailContainer> getProductDetail(int productId);
+  Future<bool> onFavoriteProduct(int productId);
 }
 
 class ProductDetialRepoImpl implements ProductDetialRepo {
@@ -21,5 +22,11 @@ class ProductDetialRepoImpl implements ProductDetialRepo {
       ),
     );
     return response.data;
+  }
+
+  @override
+  Future<bool> onFavoriteProduct(int? productid) async {
+    final response = await request.post('products/favorite/$productid');
+    return response.statusCode == 200;
   }
 }

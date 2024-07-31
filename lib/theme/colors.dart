@@ -18,6 +18,7 @@ Color iconColor = _colorFromHex('#030303');
 Color placeHolderColor = _colorFromHex('#707070');
 Color textStatus = _colorFromHex('#DE6671');
 Color deleteColor = _colorFromHex('#D10000');
+Color discoutColor = _colorFromHex('#D10000');
 Color numberColor = _colorFromHex('#EB903F');
 Color notificationColor = _colorFromHex('#F84F31');
 Color activeColor = _colorFromHex('#BD3C4B');

@@ -1,7 +1,10 @@
 import 'package:dreamzone/constants/argument.dart';
+import 'package:dreamzone/data/models/product_detail.dart';
+import 'package:dreamzone/data/models/shop.dart';
 import 'package:dreamzone/data/repos/product_detail_repo.dart';
 import 'package:dreamzone/locator.dart';
 import 'package:dreamzone/providers/auth_provider.dart';
+import 'package:dreamzone/providers/cart_provider.dart';
 import 'package:dreamzone/screens/auth/signin-screen.dart';
 import 'package:dreamzone/screens/products/product-detail-controller.dart';
 import 'package:dreamzone/screens/products/product-screen.dart';
@@ -11,10 +14,9 @@ import 'package:dreamzone/utils/index.dart';
 import 'package:dreamzone/widgets/render-product.dart';
 import 'package:dreamzone/widgets/transparent_image.dart';
 import 'package:dreamzone/widgets/webview.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart' hide Badge;
 import 'package:provider/provider.dart';
+import 'package:badges/badges.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   static const routeName = "/product/detail";
@@ -28,6 +30,9 @@ class ProductDetailScreen extends StatefulWidget {
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
+    final cartProvider = context.watch<CartProvider>();
+    final cart = cartProvider.cart;
+    final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: ChangeNotifierProvider(
@@ -39,6 +44,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           if (viewController.loading) {
             return const Center(child: CircularProgressIndicator());
           }
+          // print(
+          //     "Cart : ${cart?.cart[viewController.productDetail!.productDetail!.shop!.id.toString()]?.shop}");
+          final cartItem = cart
+              ?.cart[viewController.productDetail!.productDetail!.shop!.id
+                  .toString()]
+              ?.product[
+                  viewController.productDetail!.productDetail!.id.toString()]
+              ?.quantity;
+          // print("product Qty: $cartItem");
           return CustomScrollView(
             slivers: [
               SliverAppBar(
@@ -55,14 +69,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       : Image.asset("assets/images/logo.png"),
                 ),
                 actions: [
-                  IconButton(
-                    icon: const Icon(Icons.add_shopping_cart),
-                    onPressed: () {
-                      // Handle the button press
-                    },
-                  ),
+                  if (cartItem != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Badge(
+                        badgeContent: Text(
+                          cartItem
+                              .toString(), // The number to display in the badge
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        child: const Icon(Icons.add_shopping_cart),
+                      ),
+                    ),
                 ],
-
                 // backgroundColor: baseColor,
               ),
               SliverList(
@@ -112,32 +131,44 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               IconButton(
-                                  onPressed: () {
-                                    final authProvider =
-                                        context.read<AuthProvider>();
-                                    if (authProvider.isLoggedIn) {
-                                      //action
-                                    } else {
-                                      // Navigate to login screen if not logged in
-                                      Navigator.pushNamed(
-                                          context, SignInScreen.routeName);
-                                    }
-                                  },
-                                  icon: Icon(
-                                    viewController.productDetail!.productDetail!
-                                            .is_favorite!
-                                        ? Icons.favorite
-                                        : Icons.favorite_outline,
-                                    color: baseColor,
-                                  )),
-                              Text(
-                                "#d24332",
-                                style: TextStyle(
-                                  color: descriptionColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
+                                  onPressed: viewController.favLoading
+                                      ? null
+                                      : () {
+                                          final authProvider =
+                                              context.read<AuthProvider>();
+                                          if (authProvider.isLoggedIn) {
+                                            //action
+                                            viewController.onFavoriteProduct(
+                                              viewController.productDetail!
+                                                  .productDetail!.id!,
+                                            );
+                                          } else {
+                                            // Navigate to login screen if not logged in
+                                            Navigator.pushNamed(context,
+                                                SignInScreen.routeName);
+                                          }
+                                        },
+                                  icon: viewController.favLoading
+                                      ? const SizedBox(
+                                          width: 30,
+                                          height: 30,
+                                          child: CircularProgressIndicator(),
+                                        )
+                                      : Icon(
+                                          viewController.productDetail!
+                                                  .productDetail!.is_favorite!
+                                              ? Icons.favorite
+                                              : Icons.favorite_outline,
+                                          color: baseColor,
+                                        )),
+                              // Text(
+                              //   "#d24332",
+                              //   style: TextStyle(
+                              //     color: descriptionColor,
+                              //     fontWeight: FontWeight.bold,
+                              //     fontSize: 15,
+                              //   ),
+                              // ),
                             ],
                           ),
                         ],
@@ -146,58 +177,119 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            width: 120,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              // border: Border.all(
-                              //   color: descriptionColor,
-                              //   width: 0.5,
-                              // ),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                IconButton(
-                                  icon: Icon(
-                                    Icons.remove_circle_outline,
-                                    color: descriptionColor,
+                          if (cartItem != null)
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Quantity in Cart : ",
+                                    style: theme.textTheme.bodyLarge,
                                   ),
-                                  onPressed: () {},
-                                ),
-                                const SizedBox(
-                                  height: 40,
-                                  child: Center(
-                                    child: Text(
-                                      '1',
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 62, 44, 44),
-                                        fontSize: 15,
+                                  Container(
+                                    width: 120,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: descriptionColor,
+                                        width: 0.5,
                                       ),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        IconButton(
+                                          icon: cartItem == 1
+                                              ? Icon(
+                                                  Icons.delete_outline,
+                                                  color: secondColor,
+                                                )
+                                              : Icon(
+                                                  Icons.remove_circle_outline,
+                                                  color: descriptionColor,
+                                                ),
+                                          onPressed: () {
+                                            Shop? shop = viewController
+                                                .productDetail!
+                                                .productDetail!
+                                                .shop;
+                                            ProductDetail? product =
+                                                viewController.productDetail!
+                                                    .productDetail;
+                                            if (cartItem == 1) {
+                                              cartProvider.onRemoveProduct(
+                                                shopId: shop!.id!,
+                                                productId: product!.id!,
+                                              );
+                                            } else {
+                                              cartProvider.onDecrement(
+                                                productId: product!.id!,
+                                                shopId: shop!.id!,
+                                              );
+                                            }
+                                          },
+                                        ),
+                                        SizedBox(
+                                          height: 40,
+                                          child: Center(
+                                            child: Text(
+                                              cartItem.toString(),
+                                              style: const TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 62, 44, 44),
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        IconButton(
+                                          icon: Icon(
+                                            Icons.add_circle_outline_rounded,
+                                            color: descriptionColor,
+                                          ),
+                                          onPressed: () {
+                                            Shop? shop = viewController
+                                                .productDetail!
+                                                .productDetail!
+                                                .shop;
+                                            ProductDetail? product =
+                                                viewController.productDetail!
+                                                    .productDetail;
+                                            cartProvider.onIncrement(
+                                              shop: shop,
+                                              product: product,
+                                            );
+                                          },
+                                        )
+                                      ],
                                     ),
                                   ),
-                                ),
-                                IconButton(
-                                  icon: Icon(
-                                    Icons.add_circle_outline_rounded,
-                                    color: descriptionColor,
-                                  ),
-                                  onPressed: () {},
-                                )
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            width: 250,
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              child: const Text("Add Cart"),
+                          if (cartItem == null)
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Shop? shop = viewController
+                                      .productDetail!.productDetail!.shop;
+                                  ProductDetail? product = viewController
+                                      .productDetail!.productDetail;
+                                  cartProvider.onIncrement(
+                                    shop: shop,
+                                    product: product,
+                                  );
+                                },
+                                child: const Text("Add Cart"),
+                              ),
                             ),
-                          )
                         ],
                       ),
                     ),

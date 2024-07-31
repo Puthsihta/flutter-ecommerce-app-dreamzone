@@ -1,13 +1,14 @@
 import 'package:dreamzone/providers/auth_provider.dart';
+import 'package:dreamzone/providers/cart_provider.dart';
 import 'package:dreamzone/screens/auth/signin-screen.dart';
 import 'package:dreamzone/screens/cart/cart-screen.dart';
 import 'package:dreamzone/screens/home/home-screen.dart';
 import 'package:dreamzone/screens/settings/profile-screen.dart';
 import 'package:dreamzone/screens/shop/shop-screen.dart';
 import 'package:dreamzone/theme/colors.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Badge;
 import 'package:provider/provider.dart';
+import 'package:badges/badges.dart';
 
 class TabNavigationBar extends StatefulWidget {
   static const routeName = "/route";
@@ -31,17 +32,17 @@ class _TabNavigationBarState extends State<TabNavigationBar> {
   void initState() {
     super.initState();
     _selectedIndex = widget.index;
-    if (kDebugMode) {
-      print("IN here initState");
-    }
+    // if (kDebugMode) {
+    //   print("IN here initState");
+    // }
   }
 
   @override
   void dispose() {
     super.dispose();
-    if (kDebugMode) {
-      print("IN here dispose");
-    }
+    // if (kDebugMode) {
+    //   print("IN here dispose");
+    // }
   }
 
   void _onItemTapped(int index) {
@@ -60,28 +61,35 @@ class _TabNavigationBarState extends State<TabNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = context.watch<CartProvider>();
+    final cart = cartProvider.cart;
     return Scaffold(
       body: Container(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
+        items: <BottomNavigationBarItem>[
+          const BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.shop),
             label: 'Shop',
           ),
           BottomNavigationBarItem(
             icon: Badge(
-              label: Text('2'),
-              child: Icon(Icons.shopping_cart),
+              badgeContent: Text(
+                cart!.cart.length.toString(),
+                style: const TextStyle(color: Colors.white),
+              ),
+              child: const Icon(
+                Icons.shopping_cart,
+              ),
             ),
             label: 'Cart',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Profile',
           ),

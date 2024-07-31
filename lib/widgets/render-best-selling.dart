@@ -52,7 +52,7 @@ class RenderBestSelling extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              width: 5,
+              width: 10,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,36 +64,37 @@ class RenderBestSelling extends StatelessWidget {
                     products[index].name!,
                     overflow: TextOverflow.ellipsis,
                     softWrap: false,
-                    maxLines: 1,
+                    maxLines: products[index].discount != 0 ? 1 : 2,
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      "Discout : ",
-                      style: TextStyle(
-                        fontSize: 9,
-                        color: descriptionColor,
+                if (products[index].discount != 0)
+                  Row(
+                    children: [
+                      Text(
+                        "Discout : ",
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: descriptionColor,
+                        ),
                       ),
-                    ),
-                    Text(
-                      currencyFormatter.format(products[index].discount),
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: greenColor,
+                      Text(
+                        '${products[index].discount}%',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: discoutColor,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
                 Text(
                   currencyFormatter
                       .format(double.parse(products[index].price!)),
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 16,
                     color: baseColor,
                     fontWeight: FontWeight.bold,
                   ),

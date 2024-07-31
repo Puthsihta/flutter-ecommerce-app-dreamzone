@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    print("dispose home ");
+    // print("dispose home ");
     super.dispose();
   }
 

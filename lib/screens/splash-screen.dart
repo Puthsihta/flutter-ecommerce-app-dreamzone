@@ -1,4 +1,5 @@
 import 'package:dreamzone/providers/auth_provider.dart';
+import 'package:dreamzone/providers/cart_provider.dart';
 import 'package:dreamzone/providers/theme_provider.dart';
 import 'package:dreamzone/providers/user_provider.dart';
 import 'package:dreamzone/routes.dart';
@@ -24,12 +25,13 @@ class _SplashViewState extends State<SplashView> {
     final themeProvider = context.read<ThemeProvider>();
     final authProvider = context.read<AuthProvider>();
     final userProvider = context.read<UserProvider>();
-    // final shopProvider = context.read<ShopProvider>();
+    final cartProvider = context.read<CartProvider>();
 
     await themeProvider.ensureInitialization();
     await authProvider.ensureInitialization();
     await userProvider.ensureInitialization();
-    // await shopProvider.ensureInitialization();
+    // await cartProvider.clearCart();
+    await cartProvider.ensureInitialization();
 
     Future.delayed(
       const Duration(milliseconds: 500),

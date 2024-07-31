@@ -2,6 +2,7 @@ import 'package:dreamzone/data/models/product.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/utils/index.dart';
 import 'package:dreamzone/widgets/transparent_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -61,67 +62,71 @@ class RenderProduct extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: 200,
+                    width: double.infinity,
                     child: Text(
                       products[index].name!,
                       overflow: TextOverflow.ellipsis,
                       softWrap: false,
-                      maxLines: 1,
+                      maxLines: products[index].discount != 0 ? 1 : 2,
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
                         children: [
-                          Row(
-                            children: [
-                              Text(
-                                currencyFormatter.format(
-                                    double.parse(products[index].price!)),
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  color: placeHolderColor,
-                                  decoration: TextDecoration.lineThrough,
+                          if (products[index].discount != 0)
+                            Row(
+                              children: [
+                                Text(
+                                  currencyFormatter.format(
+                                      double.parse(products[index].price!)),
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: placeHolderColor,
+                                    decoration: TextDecoration.lineThrough,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                currencyFormatter.format(
-                                    double.parse(products[index].price!)),
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: baseColor,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                "Discout : ",
-                                style: TextStyle(
-                                    fontSize: 10, color: descriptionColor),
-                              ),
-                              Text(
-                                // products[index].discount.toString(),
-                                currencyFormatter
-                                    .format(products[index].discount),
-                                style:
-                                    TextStyle(fontSize: 13, color: greenColor),
-                              ),
-                            ],
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                              ],
+                            ),
+                          Text(
+                            currencyFormatter.format(
+                                double.parse(products[index].price!) -
+                                    ((products[index].discount! / 100) *
+                                        double.parse(products[index].price!))),
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: baseColor,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       ),
+                      if (products[index].discount != 0)
+                        Row(
+                          children: [
+                            Text(
+                              "Discout : ",
+                              style: TextStyle(
+                                  fontSize: 12, color: descriptionColor),
+                            ),
+                            Text(
+                              // products[index].discount.toString(),
+                              '${products[index].discount}%',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: discoutColor,
+                              ),
+                            ),
+                          ],
+                        ),
                     ],
                   ),
                 ],

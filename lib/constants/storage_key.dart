@@ -4,4 +4,5 @@ abstract class StorageKeys {
   static const USER_KEY = 'user';
   static const THEME_KEY = "theme";
   static const PAYMENT_KEY = "payment";
+  static const CART_KEY = "payment";
 }

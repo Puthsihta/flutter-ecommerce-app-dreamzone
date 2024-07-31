@@ -1,8 +1,6 @@
 import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/data/repos/shop_repo.dart';
 import 'package:dreamzone/locator.dart';
-import 'package:dreamzone/models/provices.model.dart';
-import 'package:dreamzone/models/shop.model.dart';
 import 'package:dreamzone/providers/home_provider.dart';
 import 'package:dreamzone/screens/shop/all-shop-screen.dart';
 import 'package:dreamzone/screens/shop/shop-controller.dart';
@@ -23,91 +21,6 @@ class ShopScreen extends StatefulWidget {
 }
 
 class _ShopScreenState extends State<ShopScreen> {
-  final List<Provices> provices = [
-    Provices(
-        name: "Phnom Penh",
-        id: 1,
-        url: "https://www.dreamzonekh.com/uploads/provinces/pp.jpeg"),
-    Provices(
-        name: "Kandal",
-        id: 1,
-        url: "https://www.dreamzonekh.com/uploads/provinces/kandal.jpeg"),
-    Provices(
-        name: "Kampong Thom",
-        id: 1,
-        url: "https://www.dreamzonekh.com/uploads/provinces/kpt.jpeg"),
-    Provices(
-        name: "Battambang",
-        id: 1,
-        url: "https://www.dreamzonekh.com/uploads/provinces/btb.jpeg"),
-  ];
-
-  final List<Shop> shop = [
-    Shop(
-        name: "Japan Store",
-        id: 1,
-        shopCover:
-            "https://dreamzone.phsartech.com/uploads/uploads/shop/1683017650-best-shopping-in-japan-akihabara.jpg",
-        shopLogo:
-            "https://dreamzone.phsartech.com/uploads/uploads/shop/1683016085-%20.jpeg"),
-    Shop(
-        name: "FlOWER DREAM SHOP",
-        id: 2,
-        shopCover:
-            "https://dreamzone.phsartech.com/uploads/uploads/shop/1683017446-WNt5m4qKlbdUTRHujeAkmwggRONlkh6J6tQRGBM1.jpg",
-        shopLogo:
-            "https://dreamzone.phsartech.com/uploads/uploads/shop/1683017446-WNt5m4qKlbdUTRHujeAkmwggRONlkh6J6tQRGBM1.jpg"),
-    Shop(
-        name: "OKA SOAP",
-        id: 3,
-        shopCover:
-            "https://dreamzone.phsartech.com/uploads/uploads/shop/1683016410-7LPj9HwcXLKfQl38DJz8MZCHDEU0vbIyQXNajcNa.jpg",
-        shopLogo:
-            "https://dreamzone.phsartech.com/uploads/uploads/shop/1683016410-7LPj9HwcXLKfQl38DJz8MZCHDEU0vbIyQXNajcNa.jpg"),
-    Shop(
-        name: "Japan Store",
-        id: 4,
-        shopCover:
-            "https://dreamzone.phsartech.com/uploads/uploads/shop/1683017650-best-shopping-in-japan-akihabara.jpg",
-        shopLogo:
-            "https://dreamzone.phsartech.com/uploads/uploads/shop/1683016085-%20.jpeg"),
-    Shop(
-        name: "FlOWER DREAM SHOP",
-        id: 5,
-        shopCover:
-            "https://dreamzone.phsartech.com/uploads/uploads/shop/1683017446-WNt5m4qKlbdUTRHujeAkmwggRONlkh6J6tQRGBM1.jpg",
-        shopLogo:
-            "https://dreamzone.phsartech.com/uploads/uploads/shop/1683017446-WNt5m4qKlbdUTRHujeAkmwggRONlkh6J6tQRGBM1.jpg"),
-    Shop(
-        name: "OKA SOAP",
-        id: 6,
-        shopCover:
-            "https://dreamzone.phsartech.com/uploads/uploads/shop/1683016410-7LPj9HwcXLKfQl38DJz8MZCHDEU0vbIyQXNajcNa.jpg",
-        shopLogo:
-            "https://dreamzone.phsartech.com/uploads/uploads/shop/1683016410-7LPj9HwcXLKfQl38DJz8MZCHDEU0vbIyQXNajcNa.jpg"),
-    Shop(
-        name: "Japan Store",
-        id: 7,
-        shopCover:
-            "https://dreamzone.phsartech.com/uploads/uploads/shop/1683017650-best-shopping-in-japan-akihabara.jpg",
-        shopLogo:
-            "https://dreamzone.phsartech.com/uploads/uploads/shop/1683016085-%20.jpeg"),
-    Shop(
-        name: "FlOWER DREAM SHOP",
-        id: 8,
-        shopCover:
-            "https://dreamzone.phsartech.com/uploads/uploads/shop/1683017446-WNt5m4qKlbdUTRHujeAkmwggRONlkh6J6tQRGBM1.jpg",
-        shopLogo:
-            "https://dreamzone.phsartech.com/uploads/uploads/shop/1683017446-WNt5m4qKlbdUTRHujeAkmwggRONlkh6J6tQRGBM1.jpg"),
-    Shop(
-        name: "OKA SOAP",
-        id: 9,
-        shopCover:
-            "https://dreamzone.phsartech.com/uploads/uploads/shop/1683016410-7LPj9HwcXLKfQl38DJz8MZCHDEU0vbIyQXNajcNa.jpg",
-        shopLogo:
-            "https://dreamzone.phsartech.com/uploads/uploads/shop/1683016410-7LPj9HwcXLKfQl38DJz8MZCHDEU0vbIyQXNajcNa.jpg"),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

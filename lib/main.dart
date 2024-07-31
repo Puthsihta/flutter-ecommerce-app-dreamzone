@@ -5,8 +5,8 @@ import 'package:dreamzone/data/repos/home_repo.dart';
 import 'package:dreamzone/data/repos/user_repo.dart';
 import 'package:dreamzone/locator.dart';
 import 'package:dreamzone/providers/auth_provider.dart';
+import 'package:dreamzone/providers/cart_provider.dart';
 import 'package:dreamzone/providers/home_provider.dart';
-import 'package:dreamzone/providers/shop_provider.dart';
 import 'package:dreamzone/providers/theme_provider.dart';
 import 'package:dreamzone/providers/user_provider.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -93,17 +93,22 @@ class _DreamzoneAppState extends State<DreamzoneApp> {
             ),
           ),
           ChangeNotifierProvider(
-              create: (_) => UserProvider(userRepo: locator<UserRepo>())),
-          ChangeNotifierProvider(
-            create: (_) => ShopProvider(),
+            create: (_) => UserProvider(
+              userRepo: locator<UserRepo>(),
+            ),
           ),
           ChangeNotifierProvider(
-            create: (_) => HomeProvider(homeRepo: locator<HomeRepo>()),
+            create: (_) => HomeProvider(
+              homeRepo: locator<HomeRepo>(),
+            ),
           ),
           ChangeNotifierProvider(
             create: (_) => UserProvider(
               userRepo: locator<UserRepo>(),
             ),
+          ),
+          ChangeNotifierProvider<CartProvider>(
+            create: (context) => CartProvider(),
           ),
         ],
         child: const AppContainer(),
