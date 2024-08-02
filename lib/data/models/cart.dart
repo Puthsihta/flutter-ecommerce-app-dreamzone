@@ -1,9 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:dreamzone/data/models/product.dart';
 import 'package:flutter/foundation.dart';
-
-import 'package:dreamzone/data/models/product_detail.dart';
 import 'package:dreamzone/data/models/shop.dart';
 
 class Cart {
@@ -157,7 +156,7 @@ class ShopItem {
 }
 
 class ProductItem {
-  final ProductDetail product;
+  final Product product;
   final int quantity;
   final int discount;
   final double? total;
@@ -172,7 +171,7 @@ class ProductItem {
     Map<String, dynamic> jsonMap = jsonDecode(jsonString);
 
     return ProductItem(
-      product: ProductDetail.fromMap(jsonMap['product']),
+      product: Product.fromMap(jsonMap['product']),
       quantity: jsonMap['quantity'],
       discount: jsonMap['discount'],
       total: jsonMap['total'],
@@ -191,7 +190,7 @@ class ProductItem {
   }
 
   ProductItem copyWith({
-    ProductDetail? product,
+    Product? product,
     int? quantity,
     String? discountType,
     int? discount,
@@ -216,7 +215,7 @@ class ProductItem {
 
   factory ProductItem.fromMap(Map<String, dynamic> map) {
     return ProductItem(
-      product: ProductDetail.fromMap(map['product'] as Map<String, dynamic>),
+      product: Product.fromMap(map['product'] as Map<String, dynamic>),
       quantity: map['quantity'] as int,
       discount: map['discount'] as int,
       total: map['total'] != null ? map['total'] as double : null,

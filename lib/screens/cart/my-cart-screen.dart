@@ -34,6 +34,7 @@ class _MyCartState extends State<MyCart> {
     return RenderCartItem(
       cart: carts.values.elementAt(index),
       index: index,
+      isShowBtnCheckout: true,
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dreamzone/client_request.dart';
+import 'package:dreamzone/data/repos/address_repo.dart';
 import 'package:dreamzone/data/repos/all_shop_repo.dart';
 import 'package:dreamzone/data/repos/auth_repo.dart';
 import 'package:dreamzone/data/repos/categories_repo.dart';
@@ -29,4 +30,5 @@ void setupLocator() {
   locator.registerLazySingleton<LoginRepo>(() => LoginRepoImpl());
   locator.registerLazySingleton<UserRepo>(() => UserRepoImpl());
   locator.registerLazySingleton<SettingRepo>(() => SettingRepoImpl());
+  locator.registerLazySingleton<AddressRepo>(() => AddressRepoImpl());
 }

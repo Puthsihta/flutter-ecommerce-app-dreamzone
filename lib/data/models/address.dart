@@ -4,6 +4,8 @@ import 'dart:convert';
 class Address {
   int? id;
   String? name;
+  String? phone;
+  String? description;
   String? address;
   String? latitude;
   String? longitude;
@@ -14,6 +16,8 @@ class Address {
   Address({
     this.id,
     this.name,
+    this.phone,
+    this.description,
     this.address,
     this.latitude,
     this.longitude,
@@ -25,6 +29,8 @@ class Address {
   Address copyWith({
     int? id,
     String? name,
+    String? phone,
+    String? description,
     String? address,
     String? latitude,
     String? longitude,
@@ -35,6 +41,8 @@ class Address {
     return Address(
       id: id ?? this.id,
       name: name ?? this.name,
+      phone: phone ?? this.phone,
+      description: description ?? this.description,
       address: address ?? this.address,
       latitude: latitude ?? this.latitude,
       longitude: longitude ?? this.longitude,
@@ -48,6 +56,8 @@ class Address {
     return <String, dynamic>{
       'id': id,
       'name': name,
+      'phone': phone,
+      'description': description,
       'address': address,
       'latitude': latitude,
       'longitude': longitude,
@@ -61,6 +71,9 @@ class Address {
     return Address(
       id: map['id'] != null ? map['id'] as int : null,
       name: map['name'] != null ? map['name'] as String : null,
+      phone: map['phone'] != null ? map['phone'] as String : null,
+      description:
+          map['description'] != null ? map['description'] as String : null,
       address: map['address'] != null ? map['address'] as String : null,
       latitude: map['latitude'] != null ? map['latitude'] as String : null,
       longitude: map['longitude'] != null ? map['longitude'] as String : null,
@@ -79,7 +92,7 @@ class Address {
 
   @override
   String toString() {
-    return 'Address(id: $id, name: $name, address: $address, latitude: $latitude, longitude: $longitude, user_id: $user_id, created_at: $created_at, updated_at: $updated_at)';
+    return 'Address(id: $id, name: $name, phone: $phone, description: $description, address: $address, latitude: $latitude, longitude: $longitude, user_id: $user_id, created_at: $created_at, updated_at: $updated_at)';
   }
 
   @override
@@ -88,6 +101,8 @@ class Address {
 
     return other.id == id &&
         other.name == name &&
+        other.phone == phone &&
+        other.description == description &&
         other.address == address &&
         other.latitude == latitude &&
         other.longitude == longitude &&
@@ -100,6 +115,8 @@ class Address {
   int get hashCode {
     return id.hashCode ^
         name.hashCode ^
+        phone.hashCode ^
+        description.hashCode ^
         address.hashCode ^
         latitude.hashCode ^
         longitude.hashCode ^

@@ -1,9 +1,11 @@
 import 'package:dreamzone/app_container.dart';
 import 'package:dreamzone/constants/locales.dart';
+import 'package:dreamzone/data/repos/address_repo.dart';
 import 'package:dreamzone/data/repos/auth_repo.dart';
 import 'package:dreamzone/data/repos/home_repo.dart';
 import 'package:dreamzone/data/repos/user_repo.dart';
 import 'package:dreamzone/locator.dart';
+import 'package:dreamzone/providers/address_provider.dart';
 import 'package:dreamzone/providers/auth_provider.dart';
 import 'package:dreamzone/providers/cart_provider.dart';
 import 'package:dreamzone/providers/home_provider.dart';
@@ -95,6 +97,11 @@ class _DreamzoneAppState extends State<DreamzoneApp> {
           ChangeNotifierProvider(
             create: (_) => UserProvider(
               userRepo: locator<UserRepo>(),
+            ),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => AddressProvider(
+              addressRepo: locator<AddressRepo>(),
             ),
           ),
           ChangeNotifierProvider(

@@ -1,3 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/data/models/cart.dart';
 import 'package:dreamzone/providers/cart_provider.dart';
@@ -6,15 +11,18 @@ import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/theme/theme.dart';
 import 'package:dreamzone/utils/index.dart';
 import 'package:dreamzone/widgets/transparent_image.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class RenderCartItem extends StatelessWidget {
   final ShopItem cart;
   final int index;
+  final bool isShowBtnCheckout;
 
-  const RenderCartItem({super.key, required this.cart, required this.index});
+  const RenderCartItem({
+    super.key,
+    required this.cart,
+    required this.index,
+    required this.isShowBtnCheckout,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -200,13 +208,16 @@ class RenderCartItem extends StatelessWidget {
                                   Text(
                                     "Discout : ",
                                     style: TextStyle(
-                                        fontSize: 12, color: descriptionColor),
+                                      fontSize: 12,
+                                      color: descriptionColor,
+                                    ),
                                   ),
                                   Text(
                                     '${cart.product[cart.product[item.product.id.toString()]!.product.id.toString()]!.discount.toString()}%',
                                     style: TextStyle(
                                       fontSize: 13,
                                       color: discoutColor,
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 ],
@@ -458,18 +469,22 @@ class RenderCartItem extends StatelessWidget {
               );
             },
           ),
-          // for (ProductItem item in cart[0].product.values.toList())
-          const SizedBox(height: 10),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/cart/order');
-              },
-              child: Text(
-                  "Checkout ${currencyFormatter.format(cartProvider.getTotal(shopId: cart.shop!.id!))}"),
-            ),
-          )
+          if (isShowBtnCheckout)
+            Column(
+              children: [
+                const SizedBox(height: 10),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/cart/order');
+                    },
+                    child: Text(
+                        "Checkout ${currencyFormatter.format(cartProvider.getTotal(shopId: cart.shop!.id!))}"),
+                  ),
+                )
+              ],
+            )
         ],
       ),
     );

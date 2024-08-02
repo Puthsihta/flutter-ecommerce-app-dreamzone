@@ -1,6 +1,7 @@
 import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/data/repos/home_repo.dart';
 import 'package:dreamzone/locator.dart';
+import 'package:dreamzone/providers/address_provider.dart';
 import 'package:dreamzone/providers/auth_provider.dart';
 import 'package:dreamzone/providers/home_provider.dart';
 import 'package:dreamzone/routes.dart';
@@ -9,6 +10,7 @@ import 'package:dreamzone/screens/products/product-detail-screen.dart';
 import 'package:dreamzone/screens/products/product-screen.dart';
 import 'package:dreamzone/screens/shop/shop-detail-screen.dart';
 import 'package:dreamzone/theme/colors.dart';
+import 'package:dreamzone/theme/theme.dart';
 import 'package:dreamzone/widgets/home-icon.dart';
 import 'package:dreamzone/widgets/image-slide.dart';
 import 'package:dreamzone/widgets/lang-title.dart';
@@ -17,7 +19,6 @@ import 'package:dreamzone/widgets/render-feature-shop.dart';
 import 'package:dreamzone/widgets/render-product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = "/home";
@@ -43,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final addressProvider = Provider.of<AddressProvider>(context, listen: true);
     return ChangeNotifierProvider(
         create: (context) => HomeScreenController(
               homeRepo: locator<HomeRepo>(),
@@ -50,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
             )..getHomeData(),
         child: Scaffold(
           backgroundColor: whiteSmoke,
-          appBar: appBar(),
+          appBar: appBar(addressProvider),
           body: Consumer<HomeScreenController>(
               builder: (context, viewController, child) {
             if (viewController.loading) {
@@ -291,26 +293,46 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  AppBar appBar() {
+  AppBar appBar(AddressProvider addressProvider) {
     return AppBar(
       backgroundColor: baseColor,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            "CHOC",
-            style: TextStyle(
-              color: titleColor,
-              fontSize: 27,
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/address');
+            },
+            child: Row(
+              children: [
+                Icon(
+                  Icons.place,
+                  color: iconColor,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                  child: Text(
+                    addressProvider.selectAddress.name!,
+                    style: TextStyle(
+                      color: titleColor,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_drop_down,
+                  color: descriptionColor,
+                ),
+              ],
             ),
           ),
           SizedBox(
-            width: 200,
+            width: 150,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(right: 15),
+                  margin: const EdgeInsets.only(right: 12),
                   child: GestureDetector(
                     onTap: () {
                       showDialog(
@@ -329,52 +351,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 25,
                     ),
                   ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.qr_code_2_outlined),
-                  onPressed: () {
-                    showDialog(
-                      builder: (context) => AlertDialog(
-                        title: const Text(
-                          'This is the App QR Code!',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        content: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                width:
-                                    200.0, // Adjust width and height as needed
-                                height: 200.0,
-                                child: Stack(
-                                  children: [
-                                    QrImageView(
-                                      data: '1234567890',
-                                      version: QrVersions.auto,
-                                      size: 200.0,
-                                      embeddedImage: const AssetImage(
-                                          'assets/images/logo.png'),
-                                      embeddedImageStyle:
-                                          const QrEmbeddedImageStyle(
-                                        size: Size(30, 30),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(height: 20.0),
-                              const Text(
-                                'scan here installing application',
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      context: context,
-                    );
-                  },
                 ),
                 IconButton(
                   icon: const Icon(Icons.search),

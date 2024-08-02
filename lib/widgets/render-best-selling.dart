@@ -86,6 +86,7 @@ class RenderBestSelling extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 12,
                           color: discoutColor,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],

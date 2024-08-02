@@ -1,6 +1,6 @@
 import 'package:dreamzone/constants/storage_key.dart';
 import 'package:dreamzone/data/models/cart.dart';
-import 'package:dreamzone/data/models/product_detail.dart';
+import 'package:dreamzone/data/models/product.dart';
 import 'package:dreamzone/data/models/shop.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,8 +15,7 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onIncrement(
-      {required Shop? shop, required ProductDetail? product}) async {
+  void onIncrement({required Shop? shop, required Product? product}) async {
     Cart? selectedCart = cart;
     if (selectedCart != null) {
       final shops = selectedCart.cart[shop!.id.toString()];
@@ -173,6 +172,7 @@ class CartProvider extends ChangeNotifier {
   Future<void> clearCart() async {
     final prefs = await _preferences;
     prefs.remove(StorageKeys.CART_KEY);
+    prefs.remove(StorageKeys.PAYMENT_KEY);
   }
 
   Future<void> ensureInitialization() async {

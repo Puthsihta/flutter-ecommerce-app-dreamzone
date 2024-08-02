@@ -6,6 +6,7 @@ import 'package:dreamzone/locator.dart';
 import 'package:dreamzone/providers/auth_provider.dart';
 import 'package:dreamzone/providers/cart_provider.dart';
 import 'package:dreamzone/screens/auth/signin-screen.dart';
+import 'package:dreamzone/screens/cart/cart-detail-screen.dart';
 import 'package:dreamzone/screens/products/product-detail-controller.dart';
 import 'package:dreamzone/screens/products/product-screen.dart';
 import 'package:dreamzone/screens/shop/shop-detail-screen.dart';
@@ -44,15 +45,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           if (viewController.loading) {
             return const Center(child: CircularProgressIndicator());
           }
-          // print(
-          //     "Cart : ${cart?.cart[viewController.productDetail!.productDetail!.shop!.id.toString()]?.shop}");
           final cartItem = cart
               ?.cart[viewController.productDetail!.productDetail!.shop!.id
                   .toString()]
               ?.product[
                   viewController.productDetail!.productDetail!.id.toString()]
               ?.quantity;
-          // print("product Qty: $cartItem");
+          final products =
+              cart?.cart[widget.argument.product.shop_id.toString()];
+          final productInshop = products?.product.values
+              .fold<int>(0, (value, element) => value + element.quantity);
           return CustomScrollView(
             slivers: [
               SliverAppBar(
@@ -70,15 +72,28 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
                 actions: [
                   if (cartItem != null)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Badge(
-                        badgeContent: Text(
-                          cartItem
-                              .toString(), // The number to display in the badge
-                          style: const TextStyle(color: Colors.white),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                          CartDetailScreen.routeName,
+                          arguments: CartDetialArgument(
+                            shop: viewController
+                                .productDetail!.productDetail!.shop,
+                            relateProducts:
+                                viewController.productDetail!.relateProducts,
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Badge(
+                          badgeContent: Text(
+                            productInshop
+                                .toString(), // The number to display in the badge
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                          child: const Icon(Icons.add_shopping_cart),
                         ),
-                        child: const Icon(Icons.add_shopping_cart),
                       ),
                     ),
                 ],
@@ -108,15 +123,68 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   ),
                                 ),
                               ),
-                              Text(
-                                currencyFormatter.format(double.parse(
-                                    widget.argument.product.price!)),
-                                style: TextStyle(
-                                  color: baseColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                              if (widget.argument.product.discount != 0)
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.discount,
+                                        color: discoutColor,
+                                        size: 20,
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        "${widget.argument.product.discount}% OFF",
+                                        style: TextStyle(
+                                          color: discoutColor,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
+                              Row(
+                                children: [
+                                  if (widget.argument.product.discount != 0)
+                                    Row(
+                                      children: [
+                                        Text(
+                                          currencyFormatter.format(double.parse(
+                                              widget.argument.product.price!)),
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            color: placeHolderColor,
+                                            decoration:
+                                                TextDecoration.lineThrough,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 8,
+                                        ),
+                                      ],
+                                    ),
+                                  Text(
+                                    currencyFormatter.format(
+                                      double.parse(
+                                              widget.argument.product.price!) -
+                                          ((widget.argument.product.discount! /
+                                                  100) *
+                                              double.parse(widget
+                                                  .argument.product.price!)),
+                                    ),
+                                    style: TextStyle(
+                                      color: baseColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ],
+                              )
                               // Text(
                               //   "Pv : 5pts",
                               //   style: TextStyle(
@@ -259,12 +327,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                 .productDetail!
                                                 .productDetail!
                                                 .shop;
-                                            ProductDetail? product =
-                                                viewController.productDetail!
-                                                    .productDetail;
                                             cartProvider.onIncrement(
                                               shop: shop,
-                                              product: product,
+                                              product: widget.argument.product,
                                             );
                                           },
                                         )
@@ -280,14 +345,29 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 onPressed: () {
                                   Shop? shop = viewController
                                       .productDetail!.productDetail!.shop;
-                                  ProductDetail? product = viewController
-                                      .productDetail!.productDetail;
                                   cartProvider.onIncrement(
                                     shop: shop,
-                                    product: product,
+                                    product: widget.argument.product,
                                   );
                                 },
-                                child: const Text("Add Cart"),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.shopping_cart,
+                                      size: 15,
+                                      color: iconColor,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      'Add to Cart',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: titleColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                         ],

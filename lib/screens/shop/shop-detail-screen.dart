@@ -30,237 +30,243 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
             ShopDetailController(shopDetialRepo: locator<ShopDetailRepo>())
               ..getShopDetail(widget.argument.shop.id!),
         child: Consumer<ShopDetailController>(
-            builder: (context, viewController, child) {
-          if (viewController.loading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          return CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                pinned: true,
-                expandedHeight: MediaQuery.of(context).size.height / 4,
-                flexibleSpace: FlexibleSpaceBar(
-                  centerTitle: true,
-                  background: widget.argument.shop.cover_image != null
-                      ? TransparentImage(
-                          url: widget.argument.shop.cover_image!,
-                          fit: BoxFit.cover,
-                          enableCache: true,
-                        )
-                      : Image.asset("assets/images/logo.png"),
+          builder: (context, viewController, child) {
+            if (viewController.loading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  pinned: true,
+                  expandedHeight: MediaQuery.of(context).size.height / 4,
+                  flexibleSpace: FlexibleSpaceBar(
+                    centerTitle: true,
+                    background: widget.argument.shop.cover_image != null
+                        ? TransparentImage(
+                            url: widget.argument.shop.cover_image!,
+                            fit: BoxFit.cover,
+                            enableCache: true,
+                          )
+                        : Image.asset("assets/images/logo.png"),
+                  ),
+                  // backgroundColor: baseColor,
                 ),
-                // backgroundColor: baseColor,
-              ),
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    Container(
-                      padding: const EdgeInsets.all(15),
-                      color: Colors.white,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              widget.argument.shop.logo_image != null
-                                  ? CircleAvatar(
-                                      radius: 30,
-                                      backgroundColor: whiteSmoke,
-                                      backgroundImage: NetworkImage(
-                                        widget.argument.shop.logo_image!,
-                                      ))
-                                  : CircleAvatar(
-                                      radius: 30,
-                                      backgroundColor: whiteSmoke,
-                                      backgroundImage: const AssetImage(
-                                          'assets/images/logo.png'),
-                                    ),
-                              const SizedBox(width: 10),
-                              Text(
-                                widget.argument.shop.name!,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                  color: titleColor,
-                                ),
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              GestureDetector(
-                                onTap: () {},
-                                child: Container(
-                                  width: 200,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: greenColor,
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.call_outlined,
-                                        color: whiteSmoke,
-                                        size: 20,
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Text(
-                                        "Call Now",
-                                        style: TextStyle(
-                                          color: whiteSmoke,
-                                          fontSize: 14,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: Container(
-                                      width: 60,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        color: whiteSmoke,
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      child:
-                                          const Icon(Icons.wordpress_outlined),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: Container(
-                                      width: 60,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        color: whiteSmoke,
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      child: const Icon(Icons.home_outlined),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                    [
+                      Container(
+                        padding: const EdgeInsets.all(15),
+                        color: Colors.white,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               children: [
+                                widget.argument.shop.logo_image != null
+                                    ? CircleAvatar(
+                                        radius: 30,
+                                        backgroundColor: whiteSmoke,
+                                        backgroundImage: NetworkImage(
+                                          widget.argument.shop.logo_image!,
+                                        ))
+                                    : CircleAvatar(
+                                        radius: 30,
+                                        backgroundColor: whiteSmoke,
+                                        backgroundImage: const AssetImage(
+                                            'assets/images/logo.png'),
+                                      ),
+                                const SizedBox(width: 10),
                                 Text(
-                                  "About Store",
+                                  widget.argument.shop.name!,
                                   style: TextStyle(
-                                    color: titleColor,
-                                    fontSize: 15,
                                     fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    color: titleColor,
                                   ),
-                                ),
-                                if (widget.argument.shop.description != null)
-                                  HTMLView(
-                                    htmlContent:
-                                        widget.argument.shop.description!,
-                                  ),
+                                )
                               ],
                             ),
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.map,
-                                color: inActiveColor,
-                                size: 18,
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              SizedBox(
-                                width: 330,
-                                child: Text(
-                                  viewController
-                                      .shopDetail!.shop!.address!.address!,
-                                  style: TextStyle(
-                                    color: descriptionColor,
-                                    fontSize: 15,
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: Container(
+                                    width: 200,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: greenColor,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.call_outlined,
+                                          color: whiteSmoke,
+                                          size: 20,
+                                        ),
+                                        const SizedBox(width: 10),
+                                        Text(
+                                          "Call Now",
+                                          style: TextStyle(
+                                            color: whiteSmoke,
+                                            fontSize: 14,
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "All Products",
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: titleColor,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pushNamed(
-                                ProductScreen.routeName,
-                                arguments: ProductArgument(
-                                  shopId: widget.argument.shop.id,
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {},
+                                      child: Container(
+                                        width: 60,
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                          color: whiteSmoke,
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: const Icon(
+                                            Icons.wordpress_outlined),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {},
+                                      child: Container(
+                                        width: 60,
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                          color: whiteSmoke,
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: const Icon(Icons.home_outlined),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              );
-                            },
-                            child: Text(
-                              "More",
+                              ],
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 10.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "About Store",
+                                    style: TextStyle(
+                                      color: titleColor,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  if (widget.argument.shop.description != null)
+                                    HTMLView(
+                                      htmlContent:
+                                          widget.argument.shop.description!,
+                                    ),
+                                ],
+                              ),
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.map,
+                                  color: inActiveColor,
+                                  size: 18,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                SizedBox(
+                                  width: 330,
+                                  child: Text(
+                                    viewController
+                                        .shopDetail!.shop!.address!.address!,
+                                    style: TextStyle(
+                                      color: descriptionColor,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "All Products",
                               style: TextStyle(
                                 fontSize: 18,
-                                color: greenColor,
+                                color: titleColor,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              SliverPadding(
-                padding: const EdgeInsets.only(
-                  bottom: 15,
-                ),
-                sliver: SliverGrid(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 15,
-                      mainAxisExtent: 290),
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      return renderProduct(
-                          context, index, viewController.shopDetail!.products);
-                    },
-                    childCount: viewController.shopDetail!.products!.length,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushNamed(
+                                  ProductScreen.routeName,
+                                  arguments: ProductArgument(
+                                    shopId: widget.argument.shop.id,
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "More",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: greenColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
                 ),
-              ),
-            ],
-          );
-        }),
+                SliverPadding(
+                  padding: const EdgeInsets.only(
+                    bottom: 15,
+                  ),
+                  sliver: SliverGrid(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 15,
+                            mainAxisExtent: 290),
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        return renderProduct(context, index,
+                            viewController.shopDetail!.products);
+                      },
+                      childCount: viewController.shopDetail!.products!.length,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

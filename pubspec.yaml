@@ -58,6 +58,7 @@ dependencies:
   image: ^4.1.7
   url_launcher: ^6.2.5
   badges: ^3.1.2
+  google_maps_flutter: ^2.2.8
 
 dev_dependencies:
   flutter_test:

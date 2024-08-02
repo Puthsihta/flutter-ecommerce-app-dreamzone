@@ -2,9 +2,7 @@ import 'package:dreamzone/data/models/product.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/utils/index.dart';
 import 'package:dreamzone/widgets/transparent_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class RenderProduct extends StatelessWidget {
   final List<Product> products;
@@ -98,9 +96,10 @@ class RenderProduct extends StatelessWidget {
                             ),
                           Text(
                             currencyFormatter.format(
-                                double.parse(products[index].price!) -
-                                    ((products[index].discount! / 100) *
-                                        double.parse(products[index].price!))),
+                              double.parse(products[index].price!) -
+                                  ((products[index].discount! / 100) *
+                                      double.parse(products[index].price!)),
+                            ),
                             style: TextStyle(
                               fontSize: 15,
                               color: baseColor,
@@ -123,6 +122,7 @@ class RenderProduct extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 15,
                                 color: discoutColor,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ],

@@ -78,15 +78,19 @@ class _TabNavigationBarState extends State<TabNavigationBar> {
             label: 'Shop',
           ),
           BottomNavigationBarItem(
-            icon: Badge(
-              badgeContent: Text(
-                cart!.cart.length.toString(),
-                style: const TextStyle(color: Colors.white),
-              ),
-              child: const Icon(
-                Icons.shopping_cart,
-              ),
-            ),
+            icon: cart!.cart.isEmpty
+                ? const Icon(
+                    Icons.shopping_cart,
+                  )
+                : Badge(
+                    badgeContent: Text(
+                      cart.cart.length.toString(),
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    child: const Icon(
+                      Icons.shopping_cart,
+                    ),
+                  ),
             label: 'Cart',
           ),
           const BottomNavigationBarItem(

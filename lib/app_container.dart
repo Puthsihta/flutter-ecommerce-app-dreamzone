@@ -1,10 +1,14 @@
 import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/providers/theme_provider.dart';
 import 'package:dreamzone/routes.dart';
+import 'package:dreamzone/screens/address/address-form-screen.dart';
+import 'package:dreamzone/screens/address/address-screen.dart';
+import 'package:dreamzone/screens/address/update-location-screen.dart';
 import 'package:dreamzone/screens/auth/reset-pasword-screen.dart';
 import 'package:dreamzone/screens/auth/signin-screen.dart';
 import 'package:dreamzone/screens/auth/signup-screen.dart';
 import 'package:dreamzone/screens/auth/verify-otp-screen.dart';
+import 'package:dreamzone/screens/cart/cart-detail-screen.dart';
 import 'package:dreamzone/screens/cart/order-detail-screen.dart';
 import 'package:dreamzone/screens/cart/order-product-screen.dart';
 import 'package:dreamzone/screens/cart/payment-sucess-screen.dart';
@@ -80,6 +84,7 @@ class AppContainer extends StatelessWidget {
           EditProfileScreen.routeName: const EditProfileScreen(),
           SettingScreen.routeName: const SettingScreen(),
           AboutUsScreen.routeName: const AboutUsScreen(),
+          AddressScreen.routeName: const AddressScreen(),
         };
 
         switch (settings.name) {
@@ -88,6 +93,30 @@ class AppContainer extends StatelessWidget {
               builder: (context) {
                 final args = settings.arguments as VerfiyOtpArgument;
                 return VerifyOtpScreen(argument: args);
+              },
+            );
+            break;
+          case UpdateLocationScreen.routeName:
+            screen = MaterialPageRoute(
+              builder: (context) {
+                final args = settings.arguments as UpdateLocationArgument;
+                return UpdateLocationScreen(argument: args);
+              },
+            );
+            break;
+          case AddressFromScreen.routeName:
+            screen = MaterialPageRoute(
+              builder: (context) {
+                final args = settings.arguments as AddressFromArgument;
+                return AddressFromScreen(argument: args);
+              },
+            );
+            break;
+          case CartDetailScreen.routeName:
+            screen = MaterialPageRoute(
+              builder: (context) {
+                final args = settings.arguments as CartDetialArgument;
+                return CartDetailScreen(argument: args);
               },
             );
             break;

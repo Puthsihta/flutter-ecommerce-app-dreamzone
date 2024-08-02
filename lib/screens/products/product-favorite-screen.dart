@@ -85,6 +85,7 @@ class _ProductFavoriteScreenState extends State<ProductFavoriteScreen> {
           return RefreshIndicator(
             onRefresh: () => viewController.onGetFavoriteProduct(refresh: true),
             child: GridView.builder(
+              controller: scrollController,
               padding: const EdgeInsets.only(top: 15),
               itemCount:
                   viewController.products.length, // Number of items in the grid
