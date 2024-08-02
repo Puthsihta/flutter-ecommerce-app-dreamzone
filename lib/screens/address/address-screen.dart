@@ -145,11 +145,12 @@ class _AddressScreenState extends State<AddressScreen> {
                     itemCount: addressController.address.length,
                     itemBuilder: (context, index) {
                       return renderAddress(
-                          context,
-                          index,
-                          addressController.address,
-                          deleteAddressController,
-                          addressController);
+                        context,
+                        index,
+                        addressController.address,
+                        deleteAddressController,
+                        addressController,
+                      );
                     },
                   );
                 }),

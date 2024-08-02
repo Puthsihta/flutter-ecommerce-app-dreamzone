@@ -71,7 +71,6 @@ class AppContainer extends StatelessWidget {
           SignUpScreen.routeName: const SignUpScreen(),
           HomeScreen.routeName: const HomeScreen(),
           ResetPasswordScreen.routeName: const ResetPasswordScreen(),
-          OrderProductScreen.routeName: const OrderProductScreen(),
           PaymentSuccesScreen.routeName: const PaymentSuccesScreen(),
           CategorieScreen.routeName: const CategorieScreen(),
           NotificationScreen.routeName: const NotificationScreen(),
@@ -101,6 +100,14 @@ class AppContainer extends StatelessWidget {
               builder: (context) {
                 final args = settings.arguments as UpdateLocationArgument;
                 return UpdateLocationScreen(argument: args);
+              },
+            );
+            break;
+          case OrderProductScreen.routeName:
+            screen = MaterialPageRoute(
+              builder: (context) {
+                final args = settings.arguments as OrderProductArgument;
+                return OrderProductScreen(argument: args);
               },
             );
             break;

@@ -12,49 +12,54 @@ class PaymentSuccesScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: whiteSmoke,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Lottie.asset(
-              'assets/jsons/success.json',
-              fit: BoxFit.cover,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              "Congratulations",
-              style: TextStyle(
-                color: titleColor,
-                fontSize: 18,
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height / 1.5,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Lottie.asset(
+                    'assets/jsons/success.json',
+                    fit: BoxFit.cover,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Congratulations",
+                    style: TextStyle(
+                      color: titleColor,
+                      fontSize: 18,
+                    ),
+                  ),
+                  Text(
+                    "Your has order successfully!",
+                    style: TextStyle(
+                      color: descriptionColor,
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Text(
-              "Your has order successfully!",
-              style: TextStyle(
-                color: descriptionColor,
-                fontSize: 15,
-              ),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(
-                horizontal: 15,
-              ),
-              child: CustomButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text(
-                  "Confirm",
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+              Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                ),
+                child: CustomButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    "Confirm",
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

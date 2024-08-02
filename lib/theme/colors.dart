@@ -62,17 +62,17 @@ Color _colorFromHex(String hexColor) {
   return Color(int.parse('FF$hexCode', radix: 16));
 }
 
-Color statusColor(String colorCounter) {
+Color statusColor(int colorCounter) {
   switch (colorCounter) {
-    case "Pending":
+    case 1:
       return pendingColor;
-    case "Confirm":
+    case 2:
       return confrimColor;
-    case "Delivery":
+    case 3:
       return deliveryColor;
-    case "Complete":
+    case 5:
       return completeTextColor;
-    case "Cancel":
+    case 4:
       return voidTextColor;
     default:
       return Colors.amber; // when no color match

@@ -1,3 +1,4 @@
+import 'package:dreamzone/constants/constants.dart';
 import 'package:intl/intl.dart';
 
 final currencyFormatter = NumberFormat.currency(
@@ -16,4 +17,20 @@ List<dynamic> objectToArray(object) {
   });
 
   return array;
+}
+
+String checkOrderStatus(int orderStatus) {
+  switch (orderStatus) {
+    case OrderStatus.pending:
+      return "Pending";
+    case OrderStatus.confirm:
+      return "Confirm";
+    case OrderStatus.delivery:
+      return "Delivering";
+    case OrderStatus.cancel:
+      return "Cancelled";
+    case OrderStatus.complete:
+      return "Complete";
+  }
+  return "";
 }

@@ -1,12 +1,14 @@
-String checkOrderStatusLottie(String orderStatus) {
+import 'package:dreamzone/constants/constants.dart';
+
+String checkOrderStatusLottie(int orderStatus) {
   switch (orderStatus) {
-    case "Pending":
+    case OrderStatus.pending:
       return 'assets/jsons/pending.json';
-    case "Confirm":
+    case OrderStatus.confirm:
       return 'assets/jsons/comfirm.json';
-    case "Delivery":
+    case OrderStatus.delivery:
       return 'assets/jsons/tracking.json';
-    case "Complete":
+    case OrderStatus.complete:
       return 'assets/jsons/complete.json';
     default:
       return ''; // when no color match

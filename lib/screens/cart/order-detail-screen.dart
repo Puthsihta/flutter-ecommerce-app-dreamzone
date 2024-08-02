@@ -1,12 +1,18 @@
 import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/constants/constants.dart';
-import 'package:dreamzone/models/order.model.dart';
+import 'package:dreamzone/data/models/order-detail.dart';
+import 'package:dreamzone/data/repos/order-list-repo.dart';
+import 'package:dreamzone/locator.dart';
+import 'package:dreamzone/screens/cart/order-detail-controller.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/utils/index.dart';
 import 'package:dreamzone/utils/validation.dart';
 import 'package:dreamzone/widgets/custom-button.dart';
+import 'package:dreamzone/widgets/transparent_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
 class OrderDetailScreen extends StatefulWidget {
   static const routeName = "/order/detail";
@@ -22,46 +28,171 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: whiteSmoke,
-        appBar: AppBar(
-          backgroundColor: baseColor,
-          title: const Text("Order Detail"),
-        ),
-        body: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                children: [
-                  if (widget.argument.order.status != OrderStatus.cancel)
-                    OrderTacking(widget.argument.order),
-                  OrderInfo(),
-                  OrderProduct(),
-                ],
-              ),
-            ),
-            if (widget.argument.order.status == OrderStatus.pending)
-              Container(
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 25,
-                  vertical: 20,
+      backgroundColor: whiteSmoke,
+      appBar: AppBar(
+        backgroundColor: baseColor,
+        title: const Text("Order Detail"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              showModalBottomSheet(
+                enableDrag: true,
+                useSafeArea: true,
+                context: context,
+                builder: (BuildContext context) {
+                  return Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                      ),
+                    ),
+                    child: Wrap(
+                      children: <Widget>[
+                        Container(
+                          width: double.infinity,
+                          color: whiteSmoke,
+                          padding: const EdgeInsets.all(15),
+                          child: Text(
+                            "Select Options",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: titleColor,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          leading: Icon(
+                            Icons.call,
+                            color: iconColor,
+                          ),
+                          title: const Text('092389497'),
+                          onTap: () {
+                            // Handle delete action
+                            // _takePhoto();
+                            Navigator.pop(context);
+                          },
+                        ),
+                        ListTile(
+                          leading: Icon(
+                            Icons.call,
+                            color: iconColor,
+                          ),
+                          title: const Text('092389497'),
+                          onTap: () {
+                            // Handle edit action
+                            // _getImageFromGallery();
+                            Navigator.pop(context);
+                          },
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        )
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+            icon: const Icon(Icons.support_agent),
+          ),
+        ],
+      ),
+      body: ChangeNotifierProvider(
+        create: (context) =>
+            OrderDetailController(orderListRepo: locator<OrderListRepo>())
+              ..getOrderDetail(widget.argument.orderId),
+        child: Consumer<OrderDetailController>(
+            builder: (context, orderDetailController, child) {
+          if (orderDetailController.loading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return Column(
+            children: [
+              Expanded(
+                child: ListView(
+                  children: [
+                    if (orderDetailController.orderDetail!.status !=
+                        OrderStatus.cancel)
+                      OrderTacking(orderDetailController.orderDetail),
+                    OrderInfo(orderDetailController.orderDetail),
+                    OrderProduct(orderDetailController.orderDetail),
+                  ],
                 ),
-                child: CustomButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "Cancel Order",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
+              ),
+              if (orderDetailController.orderDetail!.status ==
+                  OrderStatus.pending)
+                Container(
+                  padding: EdgeInsets.only(
+                    left: 25,
+                    right: 25,
+                    bottom: MediaQuery.of(context).padding.bottom,
+                    // vertical: 20,
+                  ),
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.transparent, Colors.white],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                  ),
+                  child: CustomButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return CupertinoAlertDialog(
+                            title: const Text("Cancel Order?"),
+                            actions: [
+                              CupertinoDialogAction(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text(
+                                  "No",
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              ),
+                              CupertinoDialogAction(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    orderDetailController
+                                        .onCancelOrder(widget.argument.orderId);
+                                  },
+                                  child: const Text(
+                                    "Okie",
+                                    style: TextStyle(color: Colors.blue),
+                                  )),
+                            ],
+                            content: const Text(
+                                "Are you sure you wannt to cancel this order?"),
+                          );
+                        },
+                      );
+                    },
+                    child: const Text(
+                      "Cancel Order",
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-              ),
-          ],
-        ));
+            ],
+          );
+        }),
+      ),
+    );
   }
 
   // ignore: non_constant_identifier_names
-  Container OrderTacking(Order? propData) {
+  Container OrderTacking(OrderDetail? orderDetail) {
     return Container(
       padding: const EdgeInsets.all(12),
       margin: const EdgeInsets.all(12),
@@ -74,53 +205,52 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               StatusTitle(
-                isCheck: widget.argument.order.status == OrderStatus.pending ||
-                        widget.argument.order.status == OrderStatus.confirm ||
-                        widget.argument.order.status == OrderStatus.delivery ||
-                        widget.argument.order.status == OrderStatus.complete
+                isCheck: orderDetail!.status == OrderStatus.pending ||
+                        orderDetail.status == OrderStatus.confirm ||
+                        orderDetail.status == OrderStatus.delivery ||
+                        orderDetail.status == OrderStatus.complete
                     ? true
                     : false,
                 title: "Pending",
               ),
               VerticalLine(),
               StatusTitle(
-                isCheck: widget.argument.order.status == OrderStatus.confirm ||
-                        widget.argument.order.status == OrderStatus.delivery ||
-                        widget.argument.order.status == OrderStatus.complete
+                isCheck: orderDetail.status == OrderStatus.confirm ||
+                        orderDetail.status == OrderStatus.delivery ||
+                        orderDetail.status == OrderStatus.complete
                     ? true
                     : false,
                 title: "Confirm",
               ),
               VerticalLine(),
               StatusTitle(
-                isCheck: widget.argument.order.status == OrderStatus.delivery ||
-                        widget.argument.order.status == OrderStatus.complete
+                isCheck: orderDetail.status == OrderStatus.delivery ||
+                        orderDetail.status == OrderStatus.complete
                     ? true
                     : false,
                 title: "Delivery",
               ),
               VerticalLine(),
               StatusTitle(
-                isCheck: widget.argument.order.status == OrderStatus.complete
-                    ? true
-                    : false,
+                isCheck:
+                    orderDetail.status == OrderStatus.complete ? true : false,
                 title: "Completed",
               ),
             ],
           ),
           Center(
             child: Lottie.asset(
-              checkOrderStatusLottie(widget.argument.order.status),
-              width: widget.argument.order.status == OrderStatus.complete ||
-                      widget.argument.order.status == OrderStatus.pending
+              checkOrderStatusLottie(orderDetail.status!),
+              width: orderDetail.status == OrderStatus.complete ||
+                      orderDetail.status == OrderStatus.pending
                   ? 200
-                  : widget.argument.order.status == OrderStatus.delivery
+                  : orderDetail.status == OrderStatus.delivery
                       ? 165
                       : 140,
-              height: widget.argument.order.status == OrderStatus.complete ||
-                      widget.argument.order.status == OrderStatus.pending
+              height: orderDetail.status == OrderStatus.complete ||
+                      orderDetail.status == OrderStatus.pending
                   ? 200
-                  : widget.argument.order.status == OrderStatus.delivery
+                  : orderDetail.status == OrderStatus.delivery
                       ? 165
                       : 140,
               fit: BoxFit.cover,
@@ -138,13 +268,13 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
       // color: Colors.red,
       margin: const EdgeInsets.only(left: 5),
       child: const VerticalDivider(
-        thickness: 2,
+        thickness: 1,
       ),
     );
   }
 
   // ignore: non_constant_identifier_names
-  Container OrderProduct() {
+  Container OrderProduct(OrderDetail? orderDetail) {
     return Container(
       padding: const EdgeInsets.all(12),
       margin: const EdgeInsets.all(12),
@@ -164,7 +294,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                 ),
               ),
               Text(
-                "N-923032",
+                orderDetail!.invoice_no!,
                 style: TextStyle(
                   fontSize: 18,
                   color: titleColor,
@@ -175,135 +305,336 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
           const Divider(
             height: 20,
           ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: Image.network(
-                  "https://dreamzone.phsartech.com/uploads//product/1684401424-1.webp",
-                  width: 90,
-                  height: 90,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
                 children: [
                   SizedBox(
-                    width: 230,
-                    child: Text(
-                      "HYDRATING CLEANSING BALM ជួយសម្អាត Make Up",
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: false,
-                      maxLines: 2,
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: titleColor,
-                      ),
-                    ),
+                    width: 30,
+                    height: 30,
+                    child: orderDetail.shop!.logo_image != null
+                        ? TransparentImage(
+                            url: orderDetail.shop!.logo_image!,
+                          )
+                        : Image.asset("assets/images/logo.png"),
                   ),
                   const SizedBox(
-                    height: 5,
+                    width: 10,
                   ),
-                  SizedBox(
-                    width: 230,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          currencyFormatter.format(39),
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: secondColor,
-                          ),
-                        ),
-                        Text(
-                          "x1",
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: titleColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                  Text(
+                    "${orderDetail.shop!.name}",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: titleColor,
+                    ),
+                  ),
+                ],
+              ),
+              const Text("  |"),
+              const Text("  |"),
+              Row(
+                children: [
+                  Icon(
+                    Icons.place,
+                    color: iconColor,
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Flexible(
+                    child: Text(
+                      orderDetail.address!.address!,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      maxLines: 1,
+                      style: TextStyle(
+                        color: titleColor,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
                 ],
               )
             ],
           ),
+          const SizedBox(
+            height: 10,
+          ),
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: orderDetail.product_data!.length,
+            itemBuilder: (context, index) {
+              return renderProduct(context, index, orderDetail.product_data);
+            },
+          ),
           const Divider(
             height: 20,
             indent: 100,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Sub Total",
-                style: TextStyle(
-                  color: descriptionColor,
-                  fontSize: 15,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Sub Total",
+                  style: TextStyle(
+                    color: titleColor,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              Text(
-                currencyFormatter.format(39),
-                style: TextStyle(
-                  color: descriptionColor,
-                  fontSize: 15,
-                ),
-              )
-            ],
+                Text(
+                  currencyFormatter
+                      .format(double.parse(orderDetail.sub_total!)),
+                  style: TextStyle(
+                    color: titleColor,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )
+              ],
+            ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Discount",
-                style: TextStyle(
-                  color: descriptionColor,
-                  fontSize: 15,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Packing Fee",
+                  style: TextStyle(
+                    color: titleColor,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              Text(
-                currencyFormatter.format(0),
-                style: TextStyle(
-                  color: descriptionColor,
-                  fontSize: 15,
-                ),
-              )
-            ],
+                Text(
+                  currencyFormatter.format(0),
+                  style: TextStyle(
+                    color: titleColor,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )
+              ],
+            ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Total",
-                style: TextStyle(
-                  color: titleColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Delivery Fee",
+                  style: TextStyle(
+                    color: titleColor,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              Text(
-                currencyFormatter.format(39),
-                style: TextStyle(
-                    color: secondColor,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-              )
-            ],
+                Row(
+                  children: [
+                    Text(
+                      "(Free Delivery)",
+                      style: TextStyle(
+                        color: baseColor,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      currencyFormatter.format(0),
+                      style: TextStyle(
+                        color: baseColor,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Discount",
+                  style: TextStyle(
+                    color: titleColor,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  currencyFormatter
+                      .format(double.parse(orderDetail.total_discount!)),
+                  style: TextStyle(
+                    color: discoutColor,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )
+              ],
+            ),
+          ),
+          const Divider(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Total Payble (incl. VAT)",
+                  style: TextStyle(
+                    color: discoutColor,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  currencyFormatter.format(double.parse(orderDetail.total!)),
+                  style: TextStyle(
+                    color: discoutColor,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )
+              ],
+            ),
           ),
         ],
       ),
     );
   }
 
+  Widget renderProduct(
+    BuildContext context,
+    int index,
+    List<ProductOrderDetail>? product,
+  ) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(5),
+          // ignore: unnecessary_null_comparison
+          child: product![index].product!.image_url != null
+              ? SizedBox(
+                  width: 90,
+                  height: 90,
+                  child: TransparentImage(
+                    url: product[index].product!.image_url,
+                  ),
+                )
+              : Image.asset("assets/images/logo.png"),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 230,
+              child: Text(
+                product[index].product!.name!,
+                overflow: TextOverflow.ellipsis,
+                softWrap: false,
+                maxLines: 2,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: titleColor,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            if (product[index].product!.discount != 0)
+              Row(
+                children: [
+                  Text(
+                    "Discount : ",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: descriptionColor,
+                    ),
+                  ),
+                  Text(
+                    "${product[index].product!.discount.toString()}%",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: discoutColor,
+                    ),
+                  )
+                ],
+              ),
+            const SizedBox(
+              height: 5,
+            ),
+            SizedBox(
+              width: 230,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      if (product[index].product!.discount != 0)
+                        Text(
+                          currencyFormatter.format(
+                            double.parse(product[index].product!.price!),
+                          ),
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: descriptionColor,
+                            decoration: TextDecoration.lineThrough,
+                          ),
+                        ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        currencyFormatter.format(double.parse(
+                                product[index].product!.price!) -
+                            ((product[index].product!.discount! / 100) *
+                                double.parse(product[index].product!.price!))),
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: baseColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    "x${product[index].quantity.toString()}",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: titleColor,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
   // ignore: non_constant_identifier_names
-  Container OrderInfo() {
+  Container OrderInfo(OrderDetail? orderDetail) {
     return Container(
       padding: const EdgeInsets.all(12),
       margin: const EdgeInsets.all(12),
@@ -332,7 +663,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                 ),
               ),
               Text(
-                "Puthsitha",
+                orderDetail!.user!.name!,
                 style: TextStyle(
                   color: titleColor,
                   fontSize: 15,
@@ -351,26 +682,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                 ),
               ),
               Text(
-                "+85592389497",
-                style: TextStyle(
-                  color: titleColor,
-                  fontSize: 15,
-                ),
-              )
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Adress",
-                style: TextStyle(
-                  color: descriptionColor,
-                  fontSize: 15,
-                ),
-              ),
-              Text(
-                "PhnomPenh",
+                "+${orderDetail.user!.phone!}",
                 style: TextStyle(
                   color: titleColor,
                   fontSize: 15,
@@ -389,7 +701,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                 ),
               ),
               Text(
-                "ABA",
+                orderDetail.payment_method!.name!,
                 style: TextStyle(
                   color: titleColor,
                   fontSize: 15,
@@ -397,25 +709,26 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
               )
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Remark",
-                style: TextStyle(
-                  color: descriptionColor,
-                  fontSize: 15,
+          if (orderDetail.remarks != "")
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Remark",
+                  style: TextStyle(
+                    color: descriptionColor,
+                    fontSize: 15,
+                  ),
                 ),
-              ),
-              Text(
-                "Testing",
-                style: TextStyle(
-                  color: titleColor,
-                  fontSize: 15,
-                ),
-              )
-            ],
-          ),
+                Text(
+                  orderDetail.remarks!,
+                  style: TextStyle(
+                    color: titleColor,
+                    fontSize: 15,
+                  ),
+                )
+              ],
+            ),
         ],
       ),
     );

@@ -1,10 +1,12 @@
 import 'package:dreamzone/constants/constants.dart';
-import 'package:dreamzone/models/payment-method.model.dart';
+import 'package:dreamzone/data/models/payment-method.dart';
 import 'package:dreamzone/theme/colors.dart';
+import 'package:dreamzone/widgets/transparent_image.dart';
 import 'package:flutter/material.dart';
 
 class RenderPaymentMethod extends StatelessWidget {
   final List<PaymentMethod> paymentMethod;
+  final PaymentMethod? selectedPaymentMethod;
   final int index;
   final Function onTap;
   final bool disable;
@@ -15,6 +17,7 @@ class RenderPaymentMethod extends StatelessWidget {
     required this.index,
     required this.onTap,
     required this.disable,
+    this.selectedPaymentMethod,
   });
 
   @override
@@ -30,19 +33,22 @@ class RenderPaymentMethod extends StatelessWidget {
           children: [
             Row(
               children: [
-                Image.asset(
-                  paymentMethod[index].image,
+                SizedBox(
                   width: 45,
                   height: 45,
+                  child: TransparentImage(
+                    url: paymentMethod[index].image_url!,
+                    borderRadius: 45 / 2,
+                  ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      paymentMethod[index].name,
+                      paymentMethod[index].name!,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
@@ -50,7 +56,7 @@ class RenderPaymentMethod extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      paymentMethod[index].description,
+                      paymentMethod[index].description!,
                       style: TextStyle(
                         fontSize: 12,
                         color: descriptionColor,
@@ -63,10 +69,20 @@ class RenderPaymentMethod extends StatelessWidget {
             if (!disable)
               IconButton(
                 icon: Icon(
-                  Icons.circle_outlined,
-                  color: inActiveColor,
+                  selectedPaymentMethod != null
+                      ? selectedPaymentMethod!.id! == paymentMethod[index].id!
+                          ? Icons.check_circle
+                          : Icons.circle_outlined
+                      : Icons.circle_outlined,
+                  color: selectedPaymentMethod != null
+                      ? selectedPaymentMethod!.id! == paymentMethod[index].id!
+                          ? baseColor
+                          : inActiveColor
+                      : inActiveColor,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  onTap();
+                },
               ),
           ],
         ),

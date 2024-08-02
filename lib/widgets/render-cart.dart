@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:dreamzone/screens/cart/order-product-screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -477,7 +478,12 @@ class RenderCartItem extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/cart/order');
+                      Navigator.of(context).pushNamed(
+                        OrderProductScreen.routeName,
+                        arguments: OrderProductArgument(
+                          cart: cart,
+                        ),
+                      );
                     },
                     child: Text(
                         "Checkout ${currencyFormatter.format(cartProvider.getTotal(shopId: cart.shop!.id!))}"),

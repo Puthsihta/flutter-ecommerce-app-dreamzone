@@ -1,14 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dreamzone/data/models/address.dart';
+import 'package:dreamzone/data/models/cart.dart';
 import 'package:dreamzone/data/models/product.dart';
 import 'package:dreamzone/data/models/shop.dart';
-import 'package:dreamzone/models/order.model.dart';
 
 class OrderDetailArgument {
-  final Order order;
-  OrderDetailArgument({
-    required this.order,
-  });
+  final int orderId;
+
+  OrderDetailArgument(this.orderId);
 }
 
 class ProductDetailArgument {
@@ -80,5 +79,13 @@ class CartDetialArgument {
   CartDetialArgument({
     this.shop,
     this.relateProducts,
+  });
+}
+
+class OrderProductArgument {
+  ShopItem cart;
+
+  OrderProductArgument({
+    required this.cart,
   });
 }

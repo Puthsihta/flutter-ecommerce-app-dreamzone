@@ -6,6 +6,9 @@ import 'package:dreamzone/data/repos/auth_repo.dart';
 import 'package:dreamzone/data/repos/categories_repo.dart';
 import 'package:dreamzone/data/repos/home_repo.dart';
 import 'package:dreamzone/data/repos/login_repo.dart';
+import 'package:dreamzone/data/repos/order-list-repo.dart';
+import 'package:dreamzone/data/repos/order_product_repo.dart';
+import 'package:dreamzone/data/repos/payment_method_repo.dart';
 import 'package:dreamzone/data/repos/product_detail_repo.dart';
 import 'package:dreamzone/data/repos/product_repo.dart';
 import 'package:dreamzone/data/repos/setting_repo.dart';
@@ -31,4 +34,8 @@ void setupLocator() {
   locator.registerLazySingleton<UserRepo>(() => UserRepoImpl());
   locator.registerLazySingleton<SettingRepo>(() => SettingRepoImpl());
   locator.registerLazySingleton<AddressRepo>(() => AddressRepoImpl());
+  locator
+      .registerLazySingleton<PaymentMethodRepo>(() => PaymentMethodRepoImpl());
+  locator.registerLazySingleton<OrderRepo>(() => OrderRepoImpl());
+  locator.registerLazySingleton<OrderListRepo>(() => OrderListRepoImpl());
 }

@@ -1,9 +1,10 @@
-import 'package:dreamzone/models/order.model.dart';
+import 'package:dreamzone/data/models/order.dart';
 import 'package:dreamzone/theme/colors.dart';
+import 'package:dreamzone/utils/index.dart';
 import 'package:flutter/material.dart';
 
 class RenderOrderItem extends StatelessWidget {
-  final List<Order> order;
+  final List<OrderList> order;
   final int index;
   final Function onTap;
 
@@ -20,9 +21,9 @@ class RenderOrderItem extends StatelessWidget {
         onTap();
       },
       child: Container(
-        height: 130,
+        // height: 130,
         margin: EdgeInsets.fromLTRB(15, index == 0 ? 15 : 0, 15, 15),
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
@@ -31,7 +32,7 @@ class RenderOrderItem extends StatelessWidget {
               color: Colors.black.withOpacity(0.1),
               spreadRadius: 1,
               blurRadius: 5,
-              offset: Offset(0, 3), // changes position of shadow
+              offset: const Offset(0, 3), // changes position of shadow
             ),
           ],
         ),
@@ -40,40 +41,60 @@ class RenderOrderItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   "Order ID",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                 ),
                 Text(
-                  order[index].invoiceNumber,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  order[index].invoice_no!,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 15),
                 ),
               ],
             ),
-            Divider(),
+            const Divider(),
             Row(
               children: [
                 Text(
                   "Date: ",
-                  style: TextStyle(fontSize: 15, color: descriptionColor),
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: descriptionColor,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 Text(
-                  order[index].orderDate,
-                  style: TextStyle(fontSize: 15, color: titleColor),
+                  order[index].created_at!,
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: titleColor,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ],
             ),
-            Row(
-              children: [
-                Text(
-                  "Total: ",
-                  style: TextStyle(fontSize: 15, color: descriptionColor),
-                ),
-                Text(
-                  order[index].totalPrice.toString(),
-                  style: TextStyle(fontSize: 15, color: titleColor),
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5.0),
+              child: Row(
+                children: [
+                  Text(
+                    "Total: ",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: descriptionColor,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Text(
+                    currencyFormatter.format(double.parse(order[index].total!)),
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: secondColor,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -82,17 +103,28 @@ class RenderOrderItem extends StatelessWidget {
                   children: [
                     Text(
                       "Total Item: ",
-                      style: TextStyle(fontSize: 15, color: descriptionColor),
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: descriptionColor,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     Text(
-                      order[index].totalItem.toString(),
-                      style: TextStyle(fontSize: 15, color: titleColor),
+                      order[index].total_item.toString(),
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: titleColor,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ],
                 ),
                 Text(
-                  order[index].status,
-                  style: TextStyle(color: statusColor(order[index].status)),
+                  checkOrderStatus(order[index].status!),
+                  style: TextStyle(
+                    color: statusColor(order[index].status!),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),

@@ -207,9 +207,9 @@ class AuthType {
 }
 
 class OrderStatus {
-  static const pending = 'Pending';
-  static const confirm = 'Confirm';
-  static const delivery = 'Delivery';
-  static const complete = 'Complete';
-  static const cancel = 'Cancel';
+  static const pending = 1;
+  static const confirm = 2;
+  static const delivery = 3;
+  static const complete = 5;
+  static const cancel = 4;
 }
