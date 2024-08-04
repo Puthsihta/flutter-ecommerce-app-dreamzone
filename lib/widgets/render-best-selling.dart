@@ -18,6 +18,8 @@ class RenderBestSelling extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int discount =
+        products[index].follow_shop_discount ?? products[index].discount!;
     return GestureDetector(
       onTap: () {
         onTap();
@@ -64,14 +66,14 @@ class RenderBestSelling extends StatelessWidget {
                     products[index].name!,
                     overflow: TextOverflow.ellipsis,
                     softWrap: false,
-                    maxLines: products[index].discount != 0 ? 1 : 2,
+                    maxLines: discount != 0 ? 1 : 2,
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                if (products[index].discount != 0)
+                if (discount != 0)
                   Row(
                     children: [
                       Text(
@@ -82,7 +84,7 @@ class RenderBestSelling extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '${products[index].discount}%',
+                        '$discount%',
                         style: TextStyle(
                           fontSize: 12,
                           color: discoutColor,

@@ -18,7 +18,7 @@ import 'package:dreamzone/screens/notifications/notification-screen.dart';
 import 'package:dreamzone/screens/products/product-detail-screen.dart';
 import 'package:dreamzone/screens/products/product-favorite-screen.dart';
 import 'package:dreamzone/screens/products/product-screen.dart';
-import 'package:dreamzone/screens/products/special-product-screen.dart';
+import 'package:dreamzone/screens/shop/promotion-shop-screen.dart';
 import 'package:dreamzone/screens/settings/about-us-screen.dart';
 import 'package:dreamzone/screens/settings/change-password-screen.dart';
 import 'package:dreamzone/screens/settings/contact-us-screen.dart';
@@ -75,7 +75,7 @@ class AppContainer extends StatelessWidget {
           CategorieScreen.routeName: const CategorieScreen(),
           NotificationScreen.routeName: const NotificationScreen(),
           ProductFavoriteScreen.routeName: const ProductFavoriteScreen(),
-          SepecialProductScreen.routeName: const SepecialProductScreen(),
+          PromotionShopScreen.routeName: const PromotionShopScreen(),
           PrivacyPolicyScreen.routeName: const PrivacyPolicyScreen(),
           ChangePasswordScreen.routeName: const ChangePasswordScreen(),
           ContactUsScreen.routeName: const ContactUsScreen(),

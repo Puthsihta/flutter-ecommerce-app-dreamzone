@@ -112,7 +112,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
               child: CircularProgressIndicator(),
             );
           }
-          return Column(
+          return Stack(
             children: [
               Expanded(
                 child: ListView(
@@ -122,64 +122,75 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                       OrderTacking(orderDetailController.orderDetail),
                     OrderInfo(orderDetailController.orderDetail),
                     OrderProduct(orderDetailController.orderDetail),
+                    SizedBox(
+                      height: 12 + MediaQuery.of(context).padding.bottom,
+                    ),
                   ],
                 ),
               ),
               if (orderDetailController.orderDetail!.status ==
                   OrderStatus.pending)
-                Container(
-                  padding: EdgeInsets.only(
-                    left: 25,
-                    right: 25,
-                    bottom: MediaQuery.of(context).padding.bottom,
-                    // vertical: 20,
-                  ),
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.transparent, Colors.white],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    padding: EdgeInsets.only(
+                      left: 25,
+                      right: 25,
+                      bottom: MediaQuery.of(context).padding.bottom,
+                      // vertical: 20,
                     ),
-                  ),
-                  child: CustomButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return CupertinoAlertDialog(
-                            title: const Text("Cancel Order?"),
-                            actions: [
-                              CupertinoDialogAction(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text(
-                                  "No",
-                                  style: TextStyle(color: Colors.red),
-                                ),
-                              ),
-                              CupertinoDialogAction(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Color.fromARGB(0, 255, 255, 255),
+                          Colors.white,
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                    ),
+                    child: CustomButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CupertinoAlertDialog(
+                              title: const Text("Cancel Order?"),
+                              actions: [
+                                CupertinoDialogAction(
                                   onPressed: () {
                                     Navigator.of(context).pop();
-                                    orderDetailController
-                                        .onCancelOrder(widget.argument.orderId);
                                   },
                                   child: const Text(
-                                    "Okie",
-                                    style: TextStyle(color: Colors.blue),
-                                  )),
-                            ],
-                            content: const Text(
-                                "Are you sure you wannt to cancel this order?"),
-                          );
-                        },
-                      );
-                    },
-                    child: const Text(
-                      "Cancel Order",
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
+                                    "No",
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                ),
+                                CupertinoDialogAction(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      orderDetailController.onCancelOrder(
+                                          widget.argument.orderId);
+                                    },
+                                    child: const Text(
+                                      "Okie",
+                                      style: TextStyle(color: Colors.blue),
+                                    )),
+                              ],
+                              content: const Text(
+                                  "Are you sure you wannt to cancel this order?"),
+                            );
+                          },
+                        );
+                      },
+                      child: const Text(
+                        "Cancel Order",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -291,13 +302,15 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                 style: TextStyle(
                   fontSize: 18,
                   color: titleColor,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               Text(
-                orderDetail!.invoice_no!,
+                "#${orderDetail!.invoice_no!}",
                 style: TextStyle(
                   fontSize: 18,
                   color: titleColor,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],

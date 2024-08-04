@@ -40,6 +40,8 @@ class _OrderProductScreenState extends State<OrderProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
+    // print("isKeyboardVisible : $isKeyboardVisible");
     return Scaffold(
       backgroundColor: whiteSmoke,
       appBar: AppBar(
@@ -92,7 +94,7 @@ class _OrderProductScreenState extends State<OrderProductScreen> {
                 child: CircularProgressIndicator(),
               );
             }
-            return Column(
+            return Stack(
               children: [
                 Expanded(
                   child: ListView(
@@ -465,74 +467,87 @@ class _OrderProductScreenState extends State<OrderProductScreen> {
                           ],
                         ),
                       ),
+                      SizedBox(
+                        height: 12 + MediaQuery.of(context).padding.bottom,
+                      ),
                     ],
                   ),
                 ),
-                Container(
-                  padding: EdgeInsets.only(
-                    left: 12,
-                    right: 12,
-                    bottom: MediaQuery.of(context).padding.bottom,
-                  ),
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.transparent, Colors.white],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                  ),
-                  child: CustomButton(
-                    onPressed: () {
-                      if (addressController.selectAddress.id == 0) {
-                        showCupertinoDialog(
-                          barrierDismissible: true,
-                          context: context,
-                          builder: (context) => const AlertDialog.adaptive(
-                            title: Text("Select address"),
-                            content: Text("Please select address delivery!"),
-                          ),
-                        );
-                        return;
-                      }
-                      if (paymentMethodController.selectedPaymentMethod ==
-                          null) {
-                        showCupertinoDialog(
-                          barrierDismissible: true,
-                          context: context,
-                          builder: (context) => const AlertDialog.adaptive(
-                            title: Text("Select payment method"),
-                            content: Text("Please select payment method"),
-                          ),
-                        );
-                        return;
-                      }
-                      List<ProductOrder>? products = [];
-                      for (var i in widget.argument.cart.product.values) {
-                        products.add(ProductOrder(
-                          id: i.product.id!,
-                          quantity: i.quantity,
-                        ));
-                      }
-                      orderController.onOrderProduct(
-                        RequestOrder(
-                          shop_id: widget.argument.cart.shop!.id!,
-                          address_id: addressController.selectAddress.id!,
-                          payment_id: paymentMethodController
-                              .selectedPaymentMethod!.id!,
-                          product: products,
-                          remarks: remark.text,
+                if (!isKeyboardVisible)
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      padding: EdgeInsets.only(
+                        left: 12,
+                        right: 12,
+                        bottom: MediaQuery.of(context).padding.bottom,
+                      ),
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color.fromARGB(0, 255, 255, 255),
+                            Colors.white,
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
                         ),
-                      );
-                    },
-                    child: Text(
-                      "Place Order ${currencyFormatter.format(cartProvider.getTotal(shopId: widget.argument.cart.shop!.id!))}",
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
+                      ),
+                      child: CustomButton(
+                        onPressed: () {
+                          if (addressController.selectAddress.id == 0) {
+                            showCupertinoDialog(
+                              barrierDismissible: true,
+                              context: context,
+                              builder: (context) => const AlertDialog.adaptive(
+                                title: Text("Select address"),
+                                content:
+                                    Text("Please select address delivery!"),
+                              ),
+                            );
+                            return;
+                          }
+                          if (paymentMethodController.selectedPaymentMethod ==
+                              null) {
+                            showCupertinoDialog(
+                              barrierDismissible: true,
+                              context: context,
+                              builder: (context) => const AlertDialog.adaptive(
+                                title: Text("Select payment method"),
+                                content: Text("Please select payment method"),
+                              ),
+                            );
+                            return;
+                          }
+                          List<ProductOrder>? products = [];
+                          for (var i in widget.argument.cart.product.values) {
+                            products.add(ProductOrder(
+                              id: i.product.id!,
+                              quantity: i.quantity,
+                            ));
+                          }
+                          orderController.onOrderProduct(
+                            RequestOrder(
+                              shop_id: widget.argument.cart.shop!.id!,
+                              address_id: addressController.selectAddress.id!,
+                              payment_id: paymentMethodController
+                                  .selectedPaymentMethod!.id!,
+                              product: products,
+                              remarks: remark.text,
+                            ),
+                          );
+                        },
+                        child: Text(
+                          "Place Order ${currencyFormatter.format(cartProvider.getTotal(shopId: widget.argument.cart.shop!.id!))}",
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
               ],
             );
           },

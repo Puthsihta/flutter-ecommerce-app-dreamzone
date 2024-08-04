@@ -271,7 +271,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           HomeIcon(
             image: 'assets/images/home/offer.png',
-            title: "Specials",
+            title: "Promotions",
             onTap: () {
               Navigator.pushNamed(context, '/product/special');
             },

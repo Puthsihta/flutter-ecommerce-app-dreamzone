@@ -136,6 +136,12 @@ class RenderCartItem extends StatelessWidget {
           ),
           ...cart.product.values.map(
             (item) {
+              // final discount = cart
+              //     .product[cart.product[item.product.id.toString()]!.product.id
+              //         .toString()]!
+              //     .discount;
+              print(
+                  "cart.product[cart.product[item.product.id.toString()]!.product.id.toString()]!.discount : ${cart.product[cart.product[item.product.id.toString()]!.product.id.toString()]!.discount}");
               return Column(
                 children: [
                   Padding(

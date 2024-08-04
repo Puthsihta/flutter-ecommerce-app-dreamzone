@@ -13,7 +13,7 @@ class Product {
   bool? is_favorite;
   bool? is_best_salling;
   int? discount;
-  String? follow_shop_discount;
+  int? follow_shop_discount;
   String? created_at;
   String? updated_at;
 
@@ -46,7 +46,7 @@ class Product {
     bool? is_favorite,
     bool? is_best_salling,
     int? discount,
-    String? follow_shop_discount,
+    int? follow_shop_discount,
     String? created_at,
     String? updated_at,
   }) {
@@ -106,7 +106,7 @@ class Product {
           : null,
       discount: map['discount'] != null ? map['discount'] as int : null,
       follow_shop_discount: map['follow_shop_discount'] != null
-          ? map['follow_shop_discount'] as String
+          ? map['follow_shop_discount'] as int
           : null,
       created_at:
           map['created_at'] != null ? map['created_at'] as String : null,

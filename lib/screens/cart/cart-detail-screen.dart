@@ -2,6 +2,7 @@ import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/data/models/cart.dart';
 import 'package:dreamzone/data/models/product.dart';
 import 'package:dreamzone/providers/cart_provider.dart';
+import 'package:dreamzone/screens/cart/order-product-screen.dart';
 import 'package:dreamzone/screens/products/product-detail-screen.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/utils/index.dart';
@@ -36,7 +37,7 @@ class _CartDetailScreenState extends State<CartDetailScreen> {
         backgroundColor: baseColor,
         title: const Text("Cart Detail"),
       ),
-      body: Column(
+      body: Stack(
         children: [
           Expanded(
             child: CustomScrollView(
@@ -104,19 +105,39 @@ class _CartDetailScreenState extends State<CartDetailScreen> {
               ],
             ),
           ),
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.only(
-              left: 12,
-              right: 12,
-              bottom: MediaQuery.of(context).padding.bottom,
-            ),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/cart/order');
-              },
-              child: Text(
-                  "Checkout ${currencyFormatter.format(cartProvider.getTotal(shopId: widget.argument.shop!.id!))}"),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(
+                left: 12,
+                right: 12,
+                bottom: MediaQuery.of(context).padding.bottom,
+              ),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromARGB(0, 255, 255, 255),
+                    Colors.white,
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(
+                    OrderProductScreen.routeName,
+                    arguments: OrderProductArgument(
+                      cart: cartInShop!,
+                    ),
+                  );
+                },
+                child: Text(
+                    "Checkout ${currencyFormatter.format(cartProvider.getTotal(shopId: widget.argument.shop!.id!))}"),
+              ),
             ),
           )
         ],

@@ -20,6 +20,8 @@ class RenderProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int discount =
+        products[index].follow_shop_discount ?? products[index].discount!;
     return GestureDetector(
       onTap: () {
         onTap();
@@ -65,7 +67,7 @@ class RenderProduct extends StatelessWidget {
                       products[index].name!,
                       overflow: TextOverflow.ellipsis,
                       softWrap: false,
-                      maxLines: products[index].discount != 0 ? 1 : 2,
+                      maxLines: discount != 0 ? 1 : 2,
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -77,7 +79,7 @@ class RenderProduct extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          if (products[index].discount != 0)
+                          if (discount != 0)
                             Row(
                               children: [
                                 Text(
@@ -97,7 +99,7 @@ class RenderProduct extends StatelessWidget {
                           Text(
                             currencyFormatter.format(
                               double.parse(products[index].price!) -
-                                  ((products[index].discount! / 100) *
+                                  ((discount / 100) *
                                       double.parse(products[index].price!)),
                             ),
                             style: TextStyle(
@@ -108,7 +110,7 @@ class RenderProduct extends StatelessWidget {
                           ),
                         ],
                       ),
-                      if (products[index].discount != 0)
+                      if (discount != 0)
                         Row(
                           children: [
                             Text(
@@ -117,8 +119,7 @@ class RenderProduct extends StatelessWidget {
                                   fontSize: 12, color: descriptionColor),
                             ),
                             Text(
-                              // products[index].discount.toString(),
-                              '${products[index].discount}%',
+                              '$discount%',
                               style: TextStyle(
                                 fontSize: 15,
                                 color: discoutColor,

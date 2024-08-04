@@ -34,6 +34,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     final cartProvider = context.watch<CartProvider>();
     final cart = cartProvider.cart;
     final theme = Theme.of(context);
+    final discount = widget.argument.product.follow_shop_discount ??
+        widget.argument.product.discount;
     return Scaffold(
       backgroundColor: Colors.white,
       body: ChangeNotifierProvider(
@@ -123,7 +125,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   ),
                                 ),
                               ),
-                              if (widget.argument.product.discount != 0)
+                              if (discount != 0)
                                 Padding(
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 8.0),
@@ -138,7 +140,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                         width: 5,
                                       ),
                                       Text(
-                                        "${widget.argument.product.discount}% OFF",
+                                        "$discount% OFF",
                                         style: TextStyle(
                                           color: discoutColor,
                                           fontSize: 15,
@@ -150,7 +152,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 ),
                               Row(
                                 children: [
-                                  if (widget.argument.product.discount != 0)
+                                  if (discount != 0)
                                     Row(
                                       children: [
                                         Text(
@@ -172,8 +174,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     currencyFormatter.format(
                                       double.parse(
                                               widget.argument.product.price!) -
-                                          ((widget.argument.product.discount! /
-                                                  100) *
+                                          ((discount! / 100) *
                                               double.parse(widget
                                                   .argument.product.price!)),
                                     ),
@@ -199,36 +200,37 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               IconButton(
-                                  onPressed: viewController.favLoading
-                                      ? null
-                                      : () {
-                                          final authProvider =
-                                              context.read<AuthProvider>();
-                                          if (authProvider.isLoggedIn) {
-                                            //action
-                                            viewController.onFavoriteProduct(
-                                              viewController.productDetail!
-                                                  .productDetail!.id!,
-                                            );
-                                          } else {
-                                            // Navigate to login screen if not logged in
-                                            Navigator.pushNamed(context,
-                                                SignInScreen.routeName);
-                                          }
-                                        },
-                                  icon: viewController.favLoading
-                                      ? const SizedBox(
-                                          width: 30,
-                                          height: 30,
-                                          child: CircularProgressIndicator(),
-                                        )
-                                      : Icon(
-                                          viewController.productDetail!
-                                                  .productDetail!.is_favorite!
-                                              ? Icons.favorite
-                                              : Icons.favorite_outline,
-                                          color: baseColor,
-                                        )),
+                                onPressed: viewController.favLoading
+                                    ? null
+                                    : () {
+                                        final authProvider =
+                                            context.read<AuthProvider>();
+                                        if (authProvider.isLoggedIn) {
+                                          //action
+                                          viewController.onFavoriteProduct(
+                                            viewController.productDetail!
+                                                .productDetail!.id!,
+                                          );
+                                        } else {
+                                          // Navigate to login screen if not logged in
+                                          Navigator.pushNamed(
+                                              context, SignInScreen.routeName);
+                                        }
+                                      },
+                                icon: viewController.favLoading
+                                    ? const SizedBox(
+                                        width: 30,
+                                        height: 30,
+                                        child: CircularProgressIndicator(),
+                                      )
+                                    : Icon(
+                                        viewController.productDetail!
+                                                .productDetail!.is_favorite!
+                                            ? Icons.favorite
+                                            : Icons.favorite_outline,
+                                        color: baseColor,
+                                      ),
+                              ),
                               // Text(
                               //   "#d24332",
                               //   style: TextStyle(

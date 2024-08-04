@@ -29,7 +29,7 @@ class CartProvider extends ChangeNotifier {
             product.id.toString(): ProductItem(
               product: product,
               quantity: 1,
-              discount: product.discount!,
+              discount: product.follow_shop_discount ?? product.discount!,
             )
           });
         }
@@ -41,7 +41,7 @@ class CartProvider extends ChangeNotifier {
               product!.id.toString(): ProductItem(
                 product: product,
                 quantity: 1,
-                discount: product.discount!,
+                discount: product.follow_shop_discount ?? product.discount!,
               )
             },
           ),
@@ -55,7 +55,7 @@ class CartProvider extends ChangeNotifier {
             product!.id.toString(): ProductItem(
               product: product,
               quantity: 1,
-              discount: product.discount!,
+              discount: product.follow_shop_discount ?? product.discount!,
             )
           },
         ),

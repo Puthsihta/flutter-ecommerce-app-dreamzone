@@ -25,6 +25,8 @@ class RenderHorizontalProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartProvider = context.watch<CartProvider>();
+    final int discount =
+        products[index].follow_shop_discount ?? products[index].discount!;
     return GestureDetector(
       onTap: () {
         onTap();
@@ -70,7 +72,7 @@ class RenderHorizontalProduct extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (products[index].discount != 0)
+                if (discount != 0)
                   Row(
                     children: [
                       Text(
@@ -81,7 +83,7 @@ class RenderHorizontalProduct extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '${products[index].discount.toString()}%',
+                        '${discount.toString()}%',
                         style: TextStyle(
                           fontSize: 12,
                           color: discoutColor,
@@ -92,7 +94,7 @@ class RenderHorizontalProduct extends StatelessWidget {
                   ),
                 Row(
                   children: [
-                    if (products[index].discount != 0)
+                    if (discount != 0)
                       Row(
                         children: [
                           Text(
@@ -115,7 +117,7 @@ class RenderHorizontalProduct extends StatelessWidget {
                       currencyFormatter.format(double.parse(
                             products[index].price!,
                           ) -
-                          (products[index].discount! / 100) *
+                          (discount / 100) *
                               double.parse(
                                 products[index].price!,
                               )),
