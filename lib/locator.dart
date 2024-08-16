@@ -6,7 +6,7 @@ import 'package:dreamzone/data/repos/auth_repo.dart';
 import 'package:dreamzone/data/repos/categories_repo.dart';
 import 'package:dreamzone/data/repos/home_repo.dart';
 import 'package:dreamzone/data/repos/login_repo.dart';
-import 'package:dreamzone/data/repos/order-list-repo.dart';
+import 'package:dreamzone/data/repos/order-_ist_repo.dart';
 import 'package:dreamzone/data/repos/order_product_repo.dart';
 import 'package:dreamzone/data/repos/payment_method_repo.dart';
 import 'package:dreamzone/data/repos/product_detail_repo.dart';

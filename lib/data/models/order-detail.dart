@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 import 'package:dreamzone/data/models/address.dart';
-import 'package:dreamzone/data/models/payment-method.dart';
+import 'package:dreamzone/data/models/payment_method.dart';
 import 'package:dreamzone/data/models/product.dart';
 import 'package:dreamzone/data/models/shop.dart';
 import 'package:dreamzone/data/models/user.dart';

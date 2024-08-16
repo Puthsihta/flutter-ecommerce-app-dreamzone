@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:dreamzone/data/models/requests/update-profile.dart';
+import 'package:dreamzone/data/models/requests/update_profile.dart';
 import 'package:dreamzone/data/models/respones/base_response.dart';
 import 'package:dreamzone/data/models/user.dart';
 import 'package:dreamzone/locator.dart';

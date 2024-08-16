@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:dreamzone/data/models/requests/order-request.dart';
+import 'package:dreamzone/data/models/requests/order_request.dart';
 import 'package:dreamzone/locator.dart';
 
 abstract class OrderRepo {

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:dreamzone/data/models/promotion-shop.dart';
+import 'package:dreamzone/data/models/promotion_shop.dart';
 import 'package:dreamzone/data/models/respones/pagination_response.dart';
 import 'package:dreamzone/locator.dart';
 

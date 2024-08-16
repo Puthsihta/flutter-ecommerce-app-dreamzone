@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:dreamzone/data/models/payment-method.dart';
+import 'package:dreamzone/data/models/payment_method.dart';
 import 'package:dreamzone/data/models/respones/list_respone.dart';
 import 'package:dreamzone/locator.dart';
 

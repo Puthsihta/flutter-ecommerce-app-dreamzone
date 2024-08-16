@@ -1,10 +1,10 @@
 import 'package:dreamzone/providers/auth_provider.dart';
 import 'package:dreamzone/providers/cart_provider.dart';
-import 'package:dreamzone/screens/auth/signin-screen.dart';
-import 'package:dreamzone/screens/cart/cart-screen.dart';
-import 'package:dreamzone/screens/home/home-screen.dart';
-import 'package:dreamzone/screens/settings/profile-screen.dart';
-import 'package:dreamzone/screens/shop/shop-screen.dart';
+import 'package:dreamzone/screens/auth/signin/signin_screen.dart';
+import 'package:dreamzone/screens/cart/cart_screen.dart';
+import 'package:dreamzone/screens/home/home_screen.dart';
+import 'package:dreamzone/screens/settings/profile_screen.dart';
+import 'package:dreamzone/screens/shop/shop_screen.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:flutter/material.dart' hide Badge;
 import 'package:provider/provider.dart';

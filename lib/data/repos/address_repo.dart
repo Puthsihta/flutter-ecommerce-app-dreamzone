@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dreamzone/data/models/address.dart';
-import 'package:dreamzone/data/models/requests/create-address.dart';
+import 'package:dreamzone/data/models/requests/create_address.dart';
 import 'package:dreamzone/data/models/respones/list_respone.dart';
 import 'package:dreamzone/locator.dart';
 
