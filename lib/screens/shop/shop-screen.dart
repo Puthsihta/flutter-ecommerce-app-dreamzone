@@ -6,6 +6,7 @@ import 'package:dreamzone/screens/shop/all-shop-screen.dart';
 import 'package:dreamzone/screens/shop/shop-controller.dart';
 import 'package:dreamzone/screens/shop/shop-detail-screen.dart';
 import 'package:dreamzone/theme/colors.dart';
+import 'package:dreamzone/widgets/fetch_error.dart';
 import 'package:dreamzone/widgets/image-slide.dart';
 import 'package:dreamzone/widgets/render-provices.dart';
 import 'package:dreamzone/widgets/render-shops.dart';
@@ -53,6 +54,14 @@ class _ShopScreenState extends State<ShopScreen> {
           if (viewController.loading) {
             return const Center(
               child: CircularProgressIndicator(),
+            );
+          }
+          if (viewController.error != null) {
+            return SizedBox(
+              child: FetchError(
+                errorMessage: viewController.error.toString(),
+                onRetry: () => {viewController.getShop()},
+              ),
             );
           }
           return RefreshIndicator(

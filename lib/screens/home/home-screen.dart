@@ -11,6 +11,7 @@ import 'package:dreamzone/screens/products/product-screen.dart';
 import 'package:dreamzone/screens/shop/shop-detail-screen.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/theme/theme.dart';
+import 'package:dreamzone/widgets/fetch_error.dart';
 import 'package:dreamzone/widgets/home-icon.dart';
 import 'package:dreamzone/widgets/image-slide.dart';
 import 'package:dreamzone/widgets/lang-title.dart';
@@ -57,6 +58,14 @@ class _HomeScreenState extends State<HomeScreen> {
               builder: (context, viewController, child) {
             if (viewController.loading) {
               return const Center(child: CircularProgressIndicator());
+            }
+            if (viewController.error != null) {
+              return SizedBox(
+                child: FetchError(
+                  errorMessage: viewController.error.toString(),
+                  onRetry: () => {viewController.getHomeData()},
+                ),
+              );
             }
             return RefreshIndicator(
               onRefresh: () => viewController.getHomeData(),
@@ -372,7 +381,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     } else {
                       Navigator.pushNamed(context, '/auth/signin');
                     }
-                    // Navigator.pushNamed(context, '/notification');
                   },
                 ),
               ],

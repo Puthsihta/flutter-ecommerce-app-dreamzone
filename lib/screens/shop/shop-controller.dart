@@ -1,3 +1,4 @@
+import 'package:dreamzone/constants/analytics.dart';
 import 'package:dreamzone/data/models/shop_container.dart';
 import 'package:dreamzone/data/repos/shop_repo.dart';
 import 'package:flutter/foundation.dart';
@@ -15,6 +16,13 @@ class ShopScreenController extends ChangeNotifier {
     notifyListeners();
   }
 
+  CustomException? _error;
+  CustomException? get error => _error;
+  set error(CustomException? newValue) {
+    _error = newValue;
+    notifyListeners();
+  }
+
   Future<void> getShop() async {
     try {
       loading = true;
@@ -22,11 +30,10 @@ class ShopScreenController extends ChangeNotifier {
       shops = data;
       loading = false;
     } catch (e) {
-      loading = false;
+      error = CustomException(e.toString());
       notifyListeners();
-      if (kDebugMode) {
-        print('erro get Provices : $e');
-      }
+    } finally {
+      loading = false;
     }
   }
 }

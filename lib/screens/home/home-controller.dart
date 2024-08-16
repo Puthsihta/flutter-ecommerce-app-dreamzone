@@ -1,3 +1,4 @@
+import 'package:dreamzone/constants/analytics.dart';
 import 'package:dreamzone/data/models/home.dart';
 import 'package:dreamzone/data/repos/home_repo.dart';
 import 'package:dreamzone/providers/home_provider.dart';
@@ -21,17 +22,23 @@ class HomeScreenController extends ChangeNotifier {
     notifyListeners();
   }
 
+  CustomException? _error;
+  CustomException? get error => _error;
+  set error(CustomException? newValue) {
+    _error = newValue;
+    notifyListeners();
+  }
+
   Future<void> getHome() async {
     try {
       final data = await homeRepo.getHome();
       homeData = data;
       homeProvider?.homeData = data;
     } catch (e) {
-      loading = false;
+      error = CustomException(e.toString());
       notifyListeners();
-      if (kDebugMode) {
-        print('erro get Home : $e');
-      }
+    } finally {
+      loading = false;
     }
   }
 

@@ -3,6 +3,7 @@ import 'package:dreamzone/data/models/address.dart';
 import 'package:dreamzone/data/repos/address_repo.dart';
 import 'package:dreamzone/locator.dart';
 import 'package:dreamzone/providers/address_provider.dart';
+import 'package:dreamzone/providers/auth_provider.dart';
 import 'package:dreamzone/screens/address/address-controller.dart';
 import 'package:dreamzone/screens/address/address-form-screen.dart';
 import 'package:dreamzone/theme/colors.dart';
@@ -132,7 +133,7 @@ class _AddressScreenState extends State<AddressScreen> {
                     return SizedBox(
                       child: FetchError(
                         errorMessage: addressController.error.toString(),
-                        onRetry: () => {},
+                        onRetry: () => {addressController.getAddress()},
                       ),
                     );
                   }
@@ -160,10 +161,15 @@ class _AddressScreenState extends State<AddressScreen> {
               padding: const EdgeInsets.fromLTRB(12, 12, 12, 20),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(
-                    AddressFromScreen.routeName,
-                    arguments: AddressFromArgument(isCreat: true),
-                  );
+                  final authProvider = context.read<AuthProvider>();
+                  if (authProvider.isLoggedIn) {
+                    Navigator.of(context).pushNamed(
+                      AddressFromScreen.routeName,
+                      arguments: AddressFromArgument(isCreat: true),
+                    );
+                  } else {
+                    Navigator.pushNamed(context, '/auth/signin');
+                  }
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
