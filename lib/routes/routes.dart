@@ -21,28 +21,11 @@ class TabNavigationBar extends StatefulWidget {
 
 class _TabNavigationBarState extends State<TabNavigationBar> {
   int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),
-    ShopScreen(),
-    CartScreen(),
-    ProfileScreen()
-  ];
 
   @override
   void initState() {
     super.initState();
-    _selectedIndex = widget.index;
-    // if (kDebugMode) {
-    //   print("IN here initState");
-    // }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    // if (kDebugMode) {
-    //   print("IN here dispose");
-    // }
+    _onItemTapped(widget.index);
   }
 
   void _onItemTapped(int index) {
@@ -64,8 +47,14 @@ class _TabNavigationBarState extends State<TabNavigationBar> {
     final cartProvider = context.watch<CartProvider>();
     final cart = cartProvider.cart;
     return Scaffold(
-      body: Container(
-        child: _widgetOptions.elementAt(_selectedIndex),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: const [
+          HomeScreen(),
+          ShopScreen(),
+          CartScreen(),
+          ProfileScreen(),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[

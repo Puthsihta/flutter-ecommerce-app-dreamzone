@@ -4,12 +4,13 @@ import 'package:dreamzone/data/repos/auth_repo.dart';
 import 'package:dreamzone/locator.dart';
 import 'package:dreamzone/providers/auth_provider.dart';
 import 'package:dreamzone/providers/user_provider.dart';
-import 'package:dreamzone/routes.dart';
+import 'package:dreamzone/routes/routes.dart';
 import 'package:dreamzone/screens/auth/verify/verify_otp_controller.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/widgets/spinning_loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
@@ -27,52 +28,20 @@ class VerifyOtpScreen extends StatefulWidget {
 
 class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   late VerifyOtpController verifyOtpController;
-  final List<FocusNode> _focusNodes = List.generate(4, (_) => FocusNode());
-  final List<TextEditingController> _controllers = List.generate(
-    4,
-    (_) => TextEditingController(),
-  );
+  final TextEditingController _pinController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _focusNodes[0].requestFocus();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showAlertDialog();
     });
-    _controllers.last.addListener(checkLastController);
   }
 
   @override
   void dispose() {
-    for (final controller in _controllers) {
-      controller.dispose();
-    }
-    for (final focusNode in _focusNodes) {
-      focusNode.dispose();
-    }
     super.dispose();
-  }
-
-  void nextField(int index, String value) {
-    if (value.isNotEmpty) {
-      if (index < _focusNodes.length - 1) {
-        _focusNodes[index + 1].requestFocus();
-      } else {
-        _focusNodes[index].unfocus();
-      }
-    }
-  }
-
-  void checkLastController() {
-    if (_controllers.last.text.isNotEmpty) {
-      verifyOtpController.verifyOtp(
-          phone: widget.argument.phone, otp: getConcatenatedValue());
-    }
-  }
-
-  String getConcatenatedValue() {
-    return _controllers.map((controller) => controller.text).join();
+    _pinController.dispose();
   }
 
   void showAlertDialog() {
@@ -80,20 +49,15 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Code'),
+          title: const Text('Code'),
           content: Text(widget.argument.code.toString()),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: const Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop();
                 setState(() {
-                  final codeString = widget.argument.code
-                      .toString()
-                      .padLeft(4, '0'); // Ensures it is 4 digits
-                  for (int i = 0; i < 4; i++) {
-                    _controllers[i].text = codeString[i];
-                  }
+                  _pinController.text = widget.argument.code.toString();
                 });
               },
             ),
@@ -126,9 +90,11 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
             );
           },
           onLoginSuccess: () {
-            print("verfiy code success");
-            Navigator.of(context)
-                .pushReplacementNamed(TabNavigationBar.routeName);
+            // print("verfiy code success");
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              TabNavigationBar.routeName,
+              (route) => false,
+            );
           },
         ),
         child: Consumer<VerifyOtpController>(
@@ -165,31 +131,36 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                           margin: const EdgeInsets.only(
                             top: 20,
                           ),
+                          height: 200,
                           padding: paddingHorizontal,
                           child: Column(
                             children: [
                               const SizedBox(height: 20),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: List.generate(4, (index) {
-                                  return SizedBox(
-                                    width: 50,
-                                    child: TextFormField(
-                                      controller: _controllers[index],
-                                      focusNode: _focusNodes[index],
-                                      keyboardType: TextInputType.number,
-                                      textAlign: TextAlign.center,
-                                      maxLength: 1,
-                                      decoration: const InputDecoration(
-                                        counterText: "",
-                                        border: OutlineInputBorder(),
-                                      ),
-                                      onChanged: (value) =>
-                                          nextField(index, value),
-                                    ),
-                                  );
-                                }),
+                              PinCodeTextField(
+                                controller: _pinController,
+                                appContext: context,
+                                length: 4,
+                                onChanged: (value) {},
+                                autoFocus: true,
+                                keyboardType: TextInputType.number,
+                                pinTheme: PinTheme(
+                                  shape: PinCodeFieldShape.box,
+                                  borderRadius: BorderRadius.circular(5),
+                                  fieldHeight: 50,
+                                  fieldWidth: 40,
+                                  activeFillColor: Colors.white,
+                                  activeColor: baseColor,
+                                  inactiveColor: descriptionColor,
+                                  selectedColor: baseColor,
+                                ),
+                                onCompleted: (value) {
+                                  if (value.isNotEmpty) {
+                                    verifyOtpController.verifyOtp(
+                                      phone: widget.argument.phone,
+                                      otp: value,
+                                    );
+                                  }
+                                },
                               ),
                               const SizedBox(
                                 height: 20,

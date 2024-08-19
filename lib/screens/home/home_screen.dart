@@ -4,7 +4,7 @@ import 'package:dreamzone/locator.dart';
 import 'package:dreamzone/providers/address_provider.dart';
 import 'package:dreamzone/providers/auth_provider.dart';
 import 'package:dreamzone/providers/home_provider.dart';
-import 'package:dreamzone/routes.dart';
+import 'package:dreamzone/routes/routes.dart';
 import 'package:dreamzone/screens/home/home_controller.dart';
 import 'package:dreamzone/screens/product_detail/product_detail_screen.dart';
 import 'package:dreamzone/screens/products/product_screen.dart';
@@ -36,12 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   var language = "Dart";
   late String selectedValue = "English";
-
-  @override
-  void dispose() {
-    // print("dispose home ");
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -273,9 +267,14 @@ class _HomeScreenState extends State<HomeScreen> {
             image: 'assets/images/home/shop.png',
             title: "Shops",
             onTap: () {
-              Navigator.of(context).pushReplacementNamed(
-                  TabNavigationBar.routeName,
-                  arguments: 1);
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (context) => const TabNavigationBar(
+                    index: 1,
+                  ),
+                ),
+                (Route<dynamic> route) => false,
+              );
             },
           ),
           HomeIcon(

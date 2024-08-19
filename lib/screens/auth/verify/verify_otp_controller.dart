@@ -33,7 +33,6 @@ class VerifyOtpController extends ChangeNotifier {
       loading = true;
       final response =
           await authRepo.verifyOtp(VerifyOtpRequest(phone: phone, otp: otp));
-      print("response.data.user : ${response.data}");
 
       if (response.data != null) {
         authProvider.token = response.data!.token;

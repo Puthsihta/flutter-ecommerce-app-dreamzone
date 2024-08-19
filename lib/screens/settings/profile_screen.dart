@@ -1,6 +1,6 @@
 import 'package:dreamzone/providers/auth_provider.dart';
 import 'package:dreamzone/providers/user_provider.dart';
-import 'package:dreamzone/routes.dart';
+import 'package:dreamzone/routes/routes.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/widgets/list_item.dart';
 import 'package:flutter/cupertino.dart';

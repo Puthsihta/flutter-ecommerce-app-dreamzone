@@ -116,7 +116,8 @@ class _AddressScreenState extends State<AddressScreen> {
               child: ChangeNotifierProvider(
                 create: (context) => AddressController(
                   addressRepo: locator<AddressRepo>(),
-                  addressProvider: context.read<AddressProvider>(),
+                  addressProvider: context.read<AddressProvider>()
+                    ..getAddress(),
                 ),
                 child: Consumer2<AddressProvider, AddressController>(builder: (
                   context,

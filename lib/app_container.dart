@@ -1,6 +1,6 @@
 import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/providers/theme_provider.dart';
-import 'package:dreamzone/routes.dart';
+import 'package:dreamzone/routes/routes.dart';
 import 'package:dreamzone/screens/address/address_form_screen.dart';
 import 'package:dreamzone/screens/address/address_screen.dart';
 import 'package:dreamzone/screens/address/update_location_screen.dart';
