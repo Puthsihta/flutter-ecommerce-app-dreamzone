@@ -1,5 +1,6 @@
 import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/data/repos/shop_repo.dart';
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/locator.dart';
 import 'package:dreamzone/providers/home_provider.dart';
 import 'package:dreamzone/screens/shop/all_shop_screen.dart';
@@ -24,12 +25,13 @@ class ShopScreen extends StatefulWidget {
 class _ShopScreenState extends State<ShopScreen> {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: baseColor,
-        title: const Text(
-          'Shops',
+        title: Text(
+          l10n!.shop,
         ),
         actions: [
           IconButton(
@@ -40,7 +42,7 @@ class _ShopScreenState extends State<ShopScreen> {
             onPressed: () {
               Navigator.of(context).pushNamed(
                 AllShopScreen.routeName,
-                arguments: AllShopArgument(name: "Search"),
+                arguments: AllShopArgument(name: l10n.all_shops),
               );
             },
           ),
@@ -71,20 +73,22 @@ class _ShopScreenState extends State<ShopScreen> {
                 SliverList(
                   delegate: SliverChildListDelegate(
                     [
-                      ImageSlide(
-                        banner: homeController.homeData!.banner,
-                      ),
-                      Container(
-                        padding:
-                            const EdgeInsets.only(top: 15, left: 15, right: 15),
-                        child: const Text(
-                          "Provices",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                      if (homeController.homeData!.banner.isNotEmpty)
+                        ImageSlide(
+                          banner: homeController.homeData!.banner,
+                        ),
+                      if (viewController.shops!.provinces.isNotEmpty)
+                        Container(
+                          padding: const EdgeInsets.only(
+                              top: 15, left: 15, right: 15),
+                          child: Text(
+                            l10n.province,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
                     ],
                   ),
                 ),
@@ -93,10 +97,11 @@ class _ShopScreenState extends State<ShopScreen> {
                   sliver: SliverGrid(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            mainAxisSpacing: 15,
-                            mainAxisExtent: 150,
-                            crossAxisSpacing: 15),
+                      crossAxisCount: 3,
+                      mainAxisSpacing: 15,
+                      mainAxisExtent: 150,
+                      crossAxisSpacing: 15,
+                    ),
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
                         return renderProvices(
@@ -121,9 +126,9 @@ class _ShopScreenState extends State<ShopScreen> {
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                "Shops",
-                                style: TextStyle(
+                              Text(
+                                l10n.shop,
+                                style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -135,9 +140,9 @@ class _ShopScreenState extends State<ShopScreen> {
                                     arguments: AllShopArgument(),
                                   );
                                 },
-                                child: const Text(
-                                  "More",
-                                  style: TextStyle(
+                                child: Text(
+                                  l10n.more,
+                                  style: const TextStyle(
                                       fontSize: 18, color: Colors.green),
                                 ),
                               ),

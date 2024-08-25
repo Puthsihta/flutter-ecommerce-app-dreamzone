@@ -1,5 +1,6 @@
 import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/data/repos/shop_detail_repo.dart';
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/locator.dart';
 import 'package:dreamzone/screens/product_detail/product_detail_screen.dart';
 import 'package:dreamzone/screens/products/product_screen.dart';
@@ -23,6 +24,7 @@ class ShopDetailScreen extends StatefulWidget {
 class _ShopDetailScreenState extends State<ShopDetailScreen> {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       backgroundColor: whiteSmoke,
       body: ChangeNotifierProvider(
@@ -112,7 +114,7 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                                         ),
                                         const SizedBox(width: 10),
                                         Text(
-                                          "Call Now",
+                                          l10n!.call_now,
                                           style: TextStyle(
                                             color: whiteSmoke,
                                             fontSize: 14,
@@ -165,7 +167,7 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "About Store",
+                                    l10n.about_store,
                                     style: TextStyle(
                                       color: titleColor,
                                       fontSize: 15,
@@ -214,7 +216,7 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "All Products",
+                              l10n.all_products,
                               style: TextStyle(
                                 fontSize: 18,
                                 color: titleColor,
@@ -231,7 +233,7 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                                 );
                               },
                               child: Text(
-                                "More",
+                                l10n.more,
                                 style: TextStyle(
                                   fontSize: 18,
                                   color: greenColor,

@@ -1,5 +1,6 @@
 import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/data/repos/promotion-shop-repo.dart';
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/locator.dart';
 import 'package:dreamzone/screens/promotion/promotion_shop_controller.dart';
 import 'package:dreamzone/screens/shop_detail/shop_detail_screen.dart';
@@ -47,11 +48,12 @@ class _PromotionShopScreenState extends State<PromotionShopScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       backgroundColor: whiteSmoke,
       appBar: AppBar(
         backgroundColor: baseColor,
-        title: const Text("Promtions"),
+        title: Text(l10n!.promotion),
       ),
       body: ChangeNotifierProvider(
         create: (context) => PromotionShopController(

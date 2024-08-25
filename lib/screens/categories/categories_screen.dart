@@ -1,5 +1,6 @@
 import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/data/repos/categories_repo.dart';
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/locator.dart';
 import 'package:dreamzone/providers/home_provider.dart';
 import 'package:dreamzone/screens/categories/categories_controller.dart';
@@ -15,18 +16,17 @@ class CategorieScreen extends StatefulWidget {
   State<CategorieScreen> createState() => _CategorieScreenState();
 }
 
-final List<String> items = List.generate(100, (index) => "Item $index");
-
 class _CategorieScreenState extends State<CategorieScreen> {
   late int cateID = 1;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       backgroundColor: whiteSmoke,
       appBar: AppBar(
         backgroundColor: baseColor,
-        title: const Text("Categories"),
+        title: Text(l10n!.categories),
       ),
       body: ChangeNotifierProvider(
         create: (context) => CategoriesScreenController(

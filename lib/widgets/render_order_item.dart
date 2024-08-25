@@ -1,4 +1,5 @@
 import 'package:dreamzone/data/models/order.dart';
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/utils/index.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class RenderOrderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return GestureDetector(
       onTap: () {
         onTap();
@@ -41,9 +43,10 @@ class RenderOrderItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  "Order ID",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                Text(
+                  l10n!.order_id,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 15),
                 ),
                 Text(
                   order[index].invoice_no!,
@@ -56,13 +59,14 @@ class RenderOrderItem extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "Date: ",
+                  l10n.date,
                   style: TextStyle(
                     fontSize: 15,
                     color: descriptionColor,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
+                const Text(" : "),
                 Text(
                   order[index].created_at!,
                   style: TextStyle(
@@ -78,13 +82,14 @@ class RenderOrderItem extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    "Total: ",
+                    l10n.total,
                     style: TextStyle(
                       fontSize: 15,
                       color: descriptionColor,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
+                  const Text(" : "),
                   Text(
                     currencyFormatter.format(double.parse(order[index].total!)),
                     style: TextStyle(
@@ -102,13 +107,14 @@ class RenderOrderItem extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      "Total Item: ",
+                      l10n.total_items,
                       style: TextStyle(
                         fontSize: 15,
                         color: descriptionColor,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
+                    const Text(" : "),
                     Text(
                       order[index].total_item.toString(),
                       style: TextStyle(
@@ -120,7 +126,7 @@ class RenderOrderItem extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  checkOrderStatus(order[index].status!),
+                  checkOrderStatus(order[index].status!, l10n),
                   style: TextStyle(
                     color: statusColor(order[index].status!),
                     fontWeight: FontWeight.bold,

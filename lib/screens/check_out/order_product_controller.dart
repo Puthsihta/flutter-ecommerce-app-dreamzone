@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class OrderProductController extends ChangeNotifier {
   OrderRepo orderRepo;
-  Function()? onOrderSuccess;
+  Function(int orderId)? onOrderSuccess;
   Function(dynamic message)? onOrderError;
 
   OrderProductController({
@@ -27,10 +27,8 @@ class OrderProductController extends ChangeNotifier {
     try {
       loading = true;
       final response = await orderRepo.orderProduct(data);
-      if (response) {
-        if (onOrderSuccess != null) {
-          onOrderSuccess!();
-        }
+      if (onOrderSuccess != null) {
+        onOrderSuccess!(response);
       }
     } catch (e) {
       var message = e.toString();

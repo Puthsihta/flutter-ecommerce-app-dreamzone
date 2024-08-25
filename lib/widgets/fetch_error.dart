@@ -1,3 +1,4 @@
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/theme/spacing.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +13,7 @@ class FetchError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Spacing.normal),
@@ -27,14 +29,14 @@ class FetchError extends StatelessWidget {
                     .withOpacity(0.5)),
             const SizedBox(height: Spacing.s),
             Text(
-              "Error Occured!",
+              l10n!.error_occured,
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium!
                   .copyWith(fontSize: 28),
             ),
             const SizedBox(height: Spacing.s),
-            Text(errorMessage ?? "Something went wrong.",
+            Text(errorMessage ?? l10n.sthing_wrong,
                 textAlign: TextAlign.center,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
@@ -50,7 +52,7 @@ class FetchError extends StatelessWidget {
                     minSize: 0,
                     padding:
                         const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-                    child: Text("Retry",
+                    child: Text(l10n.retry,
                         style: TextStyle(
                             color: Theme.of(context).colorScheme.onPrimary)),
                   )

@@ -1,3 +1,4 @@
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/providers/auth_provider.dart';
 import 'package:dreamzone/providers/user_provider.dart';
 import 'package:dreamzone/routes/routes.dart';
@@ -6,7 +7,6 @@ import 'package:dreamzone/widgets/list_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const routeName = "/profile";
@@ -19,50 +19,48 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       backgroundColor: whiteSmoke,
       appBar: AppBar(
         backgroundColor: baseColor,
-        title: const Text(
-          'Profile',
+        title: Text(
+          l10n!.profile,
         ),
-        actions: [
-          profileQRCode(context),
-        ],
       ),
       body: ListView(
         children: [
           headerProfile(context),
           ListItem(
-            title: 'Favorite',
+            title: l10n.favorite,
             icon: Icons.favorite,
             onTap: () {
               Navigator.pushNamed(context, '/product/favorite');
             },
           ),
           ListItem(
-            title: 'Settings',
+            title: l10n.settings,
             icon: Icons.settings,
             onTap: () {
               Navigator.pushNamed(context, '/profile/setting');
             },
           ),
           ListItem(
-            title: 'Privacy & Policy',
+            title: l10n.privacy_policy,
             icon: Icons.expand_circle_down,
             onTap: () {
               Navigator.pushNamed(context, '/profile/privacy');
             },
           ),
           ListItem(
-            title: 'About Us',
+            title: l10n.about_us,
             icon: Icons.person_pin,
             onTap: () {
               Navigator.pushNamed(context, '/profile/aboutus');
             },
           ),
           ListItem(
-            title: 'Contact Us',
+            title: l10n.contact_us,
             icon: Icons.contact_support,
             onTap: () {
               Navigator.pushNamed(context, '/profile/contactus');
@@ -76,22 +74,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
           //   },
           // ),
           ListItem(
-            title: 'Logout',
+            title: l10n.logout,
             icon: Icons.logout,
             onTap: () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return CupertinoAlertDialog(
-                    title: const Text("Logout"),
+                    title: Text(l10n.logout),
                     actions: [
                       CupertinoDialogAction(
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: const Text(
-                          "Cancel",
-                          style: TextStyle(color: Colors.red),
+                        child: Text(
+                          l10n.cancel,
+                          style: const TextStyle(color: Colors.red),
                         ),
                       ),
                       CupertinoDialogAction(
@@ -107,12 +105,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   },
                                 );
                           },
-                          child: const Text(
-                            "Logout",
-                            style: TextStyle(color: Colors.blue),
+                          child: Text(
+                            l10n.logout,
+                            style: const TextStyle(color: Colors.blue),
                           )),
                     ],
-                    content: const Text("Are you sure, you want to logout?"),
+                    content: Text(l10n.logout_alert),
                   );
                 },
               );
@@ -120,56 +118,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ],
       ),
-    );
-  }
-
-  IconButton profileQRCode(BuildContext context) {
-    return IconButton(
-      icon: const Icon(
-        Icons.qr_code,
-        size: 27,
-      ),
-      onPressed: () {
-        showDialog(
-          builder: (context) => AlertDialog(
-            title: const Text(
-              'This your profile QR!',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            content: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(
-                    width: 200.0, // Adjust width and height as needed
-                    height: 200.0,
-                    child: Stack(
-                      children: [
-                        QrImageView(
-                          data: '1234567890',
-                          version: QrVersions.auto,
-                          size: 200.0,
-                          embeddedImage:
-                              const AssetImage('assets/images/logo.png'),
-                          embeddedImageStyle: const QrEmbeddedImageStyle(
-                            size: Size(30, 30),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 20.0),
-                  const Text(
-                    'scan here share your referail code to your friends',
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          context: context,
-        );
-      },
     );
   }
 

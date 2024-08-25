@@ -18,9 +18,9 @@ class AddressProvider with ChangeNotifier {
     name: "Current Location",
     phone: null,
     description: null,
-    address: "Russian Federation Blvd (110), Phnom Penh 120404",
-    latitude: "11.568121",
-    longitude: "104.889500",
+    address: "PhnomPenh Cambodia",
+    latitude: "11.5564",
+    longitude: "104.9282",
   );
   List<Address> _address = [];
   List<Address> get address => _address;

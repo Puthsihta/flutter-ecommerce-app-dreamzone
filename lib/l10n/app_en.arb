@@ -1,0 +1,421 @@
+{
+  "@@locale": "en",
+  "home": "Home",
+  "@home": {
+    "description": "Title text shown in the bottom tab home"
+  },
+  "shop": "Shops",
+  "@shop": {
+    "description": "Title text shown in the bottom tab shop"
+  },
+  "cart": "Carts",
+  "@cart": {
+    "description": "Title text shown in the bottom tab cart"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "description": "Title text shown in the bottom tab profile"
+  },
+  "categories": "Categories",
+  "@categories": {
+    "description": "Categories in home screen"
+  },
+  "promotion": "Promotion",
+  "@promotion": {
+    "description": "Promotion in home screen"
+  },
+  "collections": "Collections",
+  "@collections": {
+    "description": "Collections in home screen"
+  },
+  "best_sellings": "Best Sellings",
+  "@best_sellings": {
+    "description": "Best Sellings in home screen"
+  },
+  "more": "More",
+  "@more": {
+    "description": "More product or shop"
+  },
+  "discount": "Discount",
+  "@discount": {
+    "description": "Product discount"
+  },
+  "feature_shops": "Feature Shops",
+  "@feature_shops": {
+    "description": "Feature Shops in home screen"
+  },
+  "all_products": "All Products",
+  "@all_products": {
+    "description": "All Products in home screen"
+  },
+  "current_location": "Current Location",
+  "@current_location": {
+    "description": "Current Location user not select location"
+  },
+  "language": "Languages",
+  "@language": {
+    "description": "Use change select languages"
+  },
+  "english": "English",
+  "@english": {
+    "description": "Language Englist"
+  },
+  "khmer": "Khmer",
+  "@khmer": {
+    "description": "Language Khmer"
+  },
+  "address": "Address",
+  "@address": {
+    "description": "Address"
+  },
+  "address_info": "Where should we deliver?\nPlease select your delivry address",
+  "@address_info": {
+    "description": "address information"
+  },
+  "use_current_location": "Use current location",
+  "@use_current_location": {
+    "description": "Tittle use current location"
+  },
+  "base_on_gps_location": "Base on gps location",
+  "@base_on_gps_location": {
+    "description": "Description information"
+  },
+  "add_new_address": "Add new address",
+  "@add_new_address": {
+    "description": "Button Title Add New Address"
+  },
+  "delete_address": "Delete Address",
+  "@delete_address": {
+    "description": "Title Delete Address"
+  },
+  "delete_cart": "Delete Cart",
+  "@delete_cart": {
+    "description": "Title Delete Cart"
+  },
+  "delete_address_info": "Are you sure you want to delete \"{address_name}\" deleted.",
+  "@delete_address_info": {
+    "description": "Delete address information",
+    "placeholders": {
+      "address_name": {
+        "description": "Name of the address to be deleted"
+      }
+    }
+  },
+  "delete_cart_info": "Are you sure you want to delete \"{shop_name}\" from cart?",
+  "@delete_cart_info": {
+    "description": "Delete cart information",
+    "placeholders": {
+      "shop_name": {
+        "description": "Name of the shop to be deleted"
+      }
+    }
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel the request"
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Delete the request"
+  },
+  "create_address": "Create address",
+  "@create_address": {
+    "description": "Title of the address create"
+  },
+  "update_address": "Update address",
+  "@update_address": {
+    "description": "Title of the address update"
+  },
+  "your_location": "Your location",
+  "@your_location": {
+    "description": "text before select address from map"
+  },
+  "name": "Name",
+  "@name": {
+    "description": "Label of the create address"
+  },
+  "phone": "Phone",
+  "@phone": {
+    "description": "Label of the create address"
+  },
+  "enter_name": "Enter Received Name",
+  "@enter_name": {
+    "description": "Placeholder of the create address"
+  },
+  "enter_phone": "Enter Phone",
+  "@enter_phone": {
+    "description": "Placeholder of the create address"
+  },
+  "remark": "Remark",
+  "@remark": {
+    "description": "Label of the create address"
+  },
+  "enter_remark": "Enter remark",
+  "@enter_remark": {
+    "description": "Placeholder of the create address"
+  },
+  "save_location": "Save location",
+  "@save_location": {
+    "description": "Title of the button to save location address"
+  },
+  "create_address_fail": "Create address failure",
+  "@create_address_fail": {
+    "description": "Title pop up when creating address error"
+  },
+  "search_placeholder": "Search ...",
+  "@search_placeholder": {
+    "description": "Search Placeholder"
+  },
+  "update_adddress_fail": "Update address failure",
+  "@update_adddress_fail": {
+    "description": "Description of the update failure"
+  },
+  "update_location": "Update Location",
+  "@update_location": {
+    "description": "Button title for the update location"
+  },
+  "notification": "Notification",
+  "@notification": {
+    "description": "Notification title for the notification"
+  },
+  "no_notification": "No notification",
+  "@no_notification": {
+    "description": "No notification title for the notification"
+  },
+  "products": "Products",
+  "@products": {
+    "description": "Products title for the product"
+  },
+  "no_more_data": "No more data",
+  "@no_more_data": {
+    "description": "No more data load more data"
+  },
+  "empty": "Empty",
+  "@empty": {
+    "description": "Empty data"
+  },
+  "error_occured": "Error Occured!",
+  "@error_occured": {
+    "description": "Title of error"
+  },
+  "sthing_wrong": "Something went wrong.",
+  "@sthing_wrong": {
+    "description": "Description of error"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Button to retry"
+  },
+  "qty_in_cart": "Quantity in cart",
+  "@qty_in_cart": {
+    "description": "Text qty in product detail"
+  },
+  "store_profile": "Store Profile",
+  "@store_profile": {
+    "description": "Title of store profile in product detail"
+  },
+  "related_products": "Related Products",
+  "@related_products": {
+    "description": "Title of related products in product detail"
+  },
+  "add_to_cart": "Add to cart",
+  "@add_to_cart": {
+    "description": "Add to cart button in product detail"
+  },
+  "off": "OFF",
+  "@off": {
+    "description": "disccount off"
+  },
+  "cart_detail": "Cart Detail",
+  "@cart_detail": {
+    "description": "Cart Detail title app bar"
+  },
+  "popular_with_order": "Popular with order",
+  "@popular_with_order": {
+    "description": "Popular with order in cart detail"
+  },
+  "checkout": "Checkout",
+  "@checkout": {
+    "description": "Checkout button in cart detail"
+  },
+  "order_id": "Order ID",
+  "@order_id": {
+    "description": "Order ID in list order item"
+  },
+  "date": "Date",
+  "@date": {
+    "description": "Date in list order item"
+  },
+  "total": "Total",
+  "@total": {
+    "description": "Total in list order item"
+  },
+  "total_items": "Total Item",
+  "@total_items": {
+    "description": "Total Item in list order item"
+  },
+  "pending": "Pending",
+  "@pending": {
+    "description": "Status of order pending"
+  },
+  "confirm": "Confirm",
+  "@confirm": {
+    "description": "Status of order pending"
+  },
+  "deliverying": "Delivering",
+  "@deliverying": {
+    "description": "Status of order delivery"
+  },
+  "cancelled": "Cancelled",
+  "@cancelled": {
+    "description": "Status of order cancelled"
+  },
+  "complete": "Complete",
+  "@complete": {
+    "description": "Status of order complete"
+  },
+  "my_cart": "My Carts",
+  "@my_cart": {
+    "description": "My cart title tap"
+  },
+  "my_order": "My Order",
+  "@my_order": {
+    "description": "My Order title tap"
+  },
+  "province": "Province",
+  "@province": {
+    "description": "Provice title of shop"
+  },
+  "all_shops": "All Shops",
+  "@all_shops": {
+    "description": "Tittle of all shop nav bar"
+  },
+  "call_now": "Call Now",
+  "@call_now": {
+    "description": "Shop Detail call now"
+  },
+  "about_store": "About Store",
+  "@about_store": {
+    "description": "Shop Detail about store"
+  },
+  "order_details": "Order Details",
+  "@order_details": {
+    "description": "Title of order details nav bar"
+  },
+  "select_options": "Select Options",
+  "@select_options": {
+    "description": "Title of pop up options nav bar"
+  },
+  "order_infomation": "Order Information",
+  "@order_infomation": {
+    "description": "Title of order infomation order detail"
+  },
+  "customer_name": "Customer Name",
+  "@customer_name": {
+    "description": "label for customer name"
+  },
+  "contact_phone": "Contact Phone",
+  "@contact_phone": {
+    "description": "label for contact phone of customer"
+  },
+  "payment_method": "Pay Method",
+  "@payment_method": {
+    "description": "label for payment method of customer"
+  },
+  "subtotal": "Subtotal",
+  "@subtotal": {
+    "description": "lable subtotal of order"
+  },
+  "packing_fee": "Packaging fee",
+  "@packing_fee": {
+    "description": "label for packing fee of order"
+  },
+  "delivery_fee": "Delivery fee",
+  "@delivery_fee": {
+    "description": "label for delivery fee of order"
+  },
+  "free_delivery": "Free Delivery",
+  "@free_delivery": {
+    "description": "label for free delivery of order"
+  },
+  "total_payble": "Total Payble (incl. VAT)",
+  "@total_payble": {
+    "description": "label for total payble of order"
+  },
+  "cancel_order": "Cancel Order",
+  "@cancel_order": {
+    "description": "Cancel Order btn title oder detail"
+  },
+  "no": "No",
+  "@no": {
+    "description": "Alter title Reject"
+  },
+  "ok": "OK",
+  "@ok": {
+    "description": "Alter title Agree"
+  },
+  "cancel_order_alert": "Are you sure you wannt to cancel this order?",
+  "@cancel_order_alert": {
+    "description": "cancel order info alert"
+  },
+  "favorite": "Favorited",
+  "@favorite": {
+    "description": "lable favorite in profile"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "lable settings in profile"
+  },
+  "privacy_policy": "Privacy & Policy",
+  "@privacy_policy": {
+    "description": "lable privacy policy in profile"
+  },
+  "about_us": "About us",
+  "@about_us": {
+    "description": "label about us in profile"
+  },
+  "contact_us": "Contact Us",
+  "@contact_us": {
+    "description": "label contact us in profile"
+  },
+  "logout": "Logout",
+  "@logout": {
+    "description": "label log out in profile"
+  },
+  "edit_profile": "Edit Profile",
+  "@edit_profile": {
+    "description": "Titble App bar"
+  },
+  "camera": "Camera",
+  "@camera": {
+    "description": "lable camera in edit profile"
+  },
+  "gallery": "Gallery",
+  "@gallery": {
+    "description": "label gallery in edit profile"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "lable email in edit profile"
+  },
+  "enter_your_email": "Enter your email",
+  "@enter_your_email": {
+    "description": "Place holder email in edit profile"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "Save btn"
+  },
+  "logout_alert": "Are you sure, you want to logout?",
+  "@logout_alert": {
+    "description": "after logout info"
+  },
+  "support_by": "Support By",
+  "@support_by": {
+    "description": "lable support"
+  },
+  "social": "Socail",
+  "@social": {
+    "description": "lable social"
+  }
+}

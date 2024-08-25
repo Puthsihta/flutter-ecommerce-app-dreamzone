@@ -2,7 +2,11 @@ import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/constants/constants.dart';
 import 'package:dreamzone/data/models/order-detail.dart';
 import 'package:dreamzone/data/repos/order-_ist_repo.dart';
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/locator.dart';
+import 'package:dreamzone/providers/route_provider.dart';
+import 'package:dreamzone/providers/tab_provider.dart';
+import 'package:dreamzone/routes/routes.dart';
 import 'package:dreamzone/screens/order_detail/order_detail_controller.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/utils/index.dart';
@@ -27,183 +31,201 @@ class OrderDetailScreen extends StatefulWidget {
 class _OrderDetailScreenState extends State<OrderDetailScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: whiteSmoke,
-      appBar: AppBar(
-        backgroundColor: baseColor,
-        title: const Text("Order Detail"),
-        actions: [
-          IconButton(
-            onPressed: () {
-              showModalBottomSheet(
-                enableDrag: true,
-                useSafeArea: true,
-                context: context,
-                builder: (BuildContext context) {
-                  return Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10),
+    final l10n = context.l10n;
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: whiteSmoke,
+        appBar: AppBar(
+          backgroundColor: baseColor,
+          title: Text(l10n!.order_details),
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).popUntil(
+                  ModalRoute.withName(TabNavigationBar.routeName),
+                );
+                final routeProvider =
+                    Provider.of<RouteProvider>(context, listen: false);
+                final tabProvider =
+                    Provider.of<TabProvider>(context, listen: false);
+                routeProvider.setIndex(2); // card bottom tab
+                tabProvider.setIndex(1); // set to order tap
+              },
+              icon: const Icon(Icons.arrow_back_ios)),
+          actions: [
+            IconButton(
+              onPressed: () {
+                showModalBottomSheet(
+                  enableDrag: true,
+                  useSafeArea: true,
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10),
+                        ),
                       ),
-                    ),
-                    child: Wrap(
-                      children: <Widget>[
-                        Container(
-                          width: double.infinity,
-                          color: whiteSmoke,
-                          padding: const EdgeInsets.all(15),
-                          child: Text(
-                            "Select Options",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: titleColor,
+                      child: Wrap(
+                        children: <Widget>[
+                          Container(
+                            width: double.infinity,
+                            color: whiteSmoke,
+                            padding: const EdgeInsets.all(15),
+                            child: Text(
+                              l10n.select_options,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: titleColor,
+                              ),
                             ),
                           ),
-                        ),
-                        ListTile(
-                          leading: Icon(
-                            Icons.call,
-                            color: iconColor,
+                          ListTile(
+                            leading: Icon(
+                              Icons.call,
+                              color: iconColor,
+                            ),
+                            title: const Text('092389497'),
+                            onTap: () {
+                              // Handle delete action
+                              // _takePhoto();
+                              Navigator.pop(context);
+                            },
                           ),
-                          title: const Text('092389497'),
-                          onTap: () {
-                            // Handle delete action
-                            // _takePhoto();
-                            Navigator.pop(context);
-                          },
-                        ),
-                        ListTile(
-                          leading: Icon(
-                            Icons.call,
-                            color: iconColor,
+                          ListTile(
+                            leading: Icon(
+                              Icons.call,
+                              color: iconColor,
+                            ),
+                            title: const Text('092389497'),
+                            onTap: () {
+                              // Handle edit action
+                              // _getImageFromGallery();
+                              Navigator.pop(context);
+                            },
                           ),
-                          title: const Text('092389497'),
-                          onTap: () {
-                            // Handle edit action
-                            // _getImageFromGallery();
-                            Navigator.pop(context);
-                          },
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        )
-                      ],
-                    ),
-                  );
-                },
-              );
-            },
-            icon: const Icon(Icons.support_agent),
-          ),
-        ],
-      ),
-      body: ChangeNotifierProvider(
-        create: (context) =>
-            OrderDetailController(orderListRepo: locator<OrderListRepo>())
-              ..getOrderDetail(widget.argument.orderId),
-        child: Consumer<OrderDetailController>(
-            builder: (context, orderDetailController, child) {
-          if (orderDetailController.loading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return Stack(
-            children: [
-              Expanded(
-                child: ListView(
-                  children: [
-                    if (orderDetailController.orderDetail!.status !=
-                        OrderStatus.cancel)
-                      OrderTacking(orderDetailController.orderDetail),
-                    OrderInfo(orderDetailController.orderDetail),
-                    OrderProduct(orderDetailController.orderDetail),
-                    SizedBox(
-                      height: 12 + MediaQuery.of(context).padding.bottom,
-                    ),
-                  ],
-                ),
-              ),
-              if (orderDetailController.orderDetail!.status ==
-                  OrderStatus.pending)
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    padding: EdgeInsets.only(
-                      left: 25,
-                      right: 25,
-                      bottom: MediaQuery.of(context).padding.bottom,
-                      // vertical: 20,
-                    ),
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color.fromARGB(0, 255, 255, 255),
-                          Colors.white,
+                          const SizedBox(
+                            height: 30,
+                          )
                         ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
                       ),
-                    ),
-                    child: CustomButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return CupertinoAlertDialog(
-                              title: const Text("Cancel Order?"),
-                              actions: [
-                                CupertinoDialogAction(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text(
-                                    "No",
-                                    style: TextStyle(color: Colors.red),
-                                  ),
-                                ),
-                                CupertinoDialogAction(
+                    );
+                  },
+                );
+              },
+              icon: const Icon(Icons.support_agent),
+            ),
+          ],
+        ),
+        body: ChangeNotifierProvider(
+          create: (context) =>
+              OrderDetailController(orderListRepo: locator<OrderListRepo>())
+                ..getOrderDetail(widget.argument.orderId),
+          child: Consumer<OrderDetailController>(
+              builder: (context, orderDetailController, child) {
+            if (orderDetailController.loading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return Stack(
+              children: [
+                Expanded(
+                  child: ListView(
+                    children: [
+                      if (orderDetailController.orderDetail!.status !=
+                          OrderStatus.cancel)
+                        OrderTacking(orderDetailController.orderDetail),
+                      OrderInfo(orderDetailController.orderDetail),
+                      OrderProduct(orderDetailController.orderDetail),
+                      SizedBox(
+                        height: 12 + MediaQuery.of(context).padding.bottom,
+                      ),
+                    ],
+                  ),
+                ),
+                if (orderDetailController.orderDetail!.status ==
+                    OrderStatus.pending)
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      padding: EdgeInsets.only(
+                        left: 25,
+                        right: 25,
+                        bottom: MediaQuery.of(context).padding.bottom,
+                        // vertical: 20,
+                      ),
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color.fromARGB(0, 255, 255, 255),
+                            Colors.white,
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                      ),
+                      child: CustomButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return CupertinoAlertDialog(
+                                title: Text(l10n.cancel_order),
+                                actions: [
+                                  CupertinoDialogAction(
                                     onPressed: () {
                                       Navigator.of(context).pop();
-                                      orderDetailController.onCancelOrder(
-                                          widget.argument.orderId);
                                     },
-                                    child: const Text(
-                                      "Okie",
-                                      style: TextStyle(color: Colors.blue),
-                                    )),
-                              ],
-                              content: const Text(
-                                  "Are you sure you wannt to cancel this order?"),
-                            );
-                          },
-                        );
-                      },
-                      child: const Text(
-                        "Cancel Order",
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
+                                    child: Text(
+                                      l10n.no,
+                                      style: const TextStyle(color: Colors.red),
+                                    ),
+                                  ),
+                                  CupertinoDialogAction(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        orderDetailController.onCancelOrder(
+                                            widget.argument.orderId);
+                                      },
+                                      child: Text(
+                                        l10n.ok,
+                                        style:
+                                            const TextStyle(color: Colors.blue),
+                                      )),
+                                ],
+                                content: Text(l10n.cancel_order_alert),
+                              );
+                            },
+                          );
+                        },
+                        child: Text(
+                          l10n.cancel_order,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-            ],
-          );
-        }),
+              ],
+            );
+          }),
+        ),
       ),
     );
   }
 
   // ignore: non_constant_identifier_names
   Container OrderTacking(OrderDetail? orderDetail) {
+    final l10n = context.l10n;
     return Container(
       padding: const EdgeInsets.all(12),
       margin: const EdgeInsets.all(12),
@@ -222,7 +244,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                         orderDetail.status == OrderStatus.complete
                     ? true
                     : false,
-                title: "Pending",
+                title: l10n!.pending,
               ),
               VerticalLine(),
               StatusTitle(
@@ -231,7 +253,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                         orderDetail.status == OrderStatus.complete
                     ? true
                     : false,
-                title: "Confirm",
+                title: l10n.confirm,
               ),
               VerticalLine(),
               StatusTitle(
@@ -239,13 +261,13 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                         orderDetail.status == OrderStatus.complete
                     ? true
                     : false,
-                title: "Delivery",
+                title: l10n.deliverying,
               ),
               VerticalLine(),
               StatusTitle(
                 isCheck:
                     orderDetail.status == OrderStatus.complete ? true : false,
-                title: "Completed",
+                title: l10n.complete,
               ),
             ],
           ),
@@ -286,6 +308,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
 
   // ignore: non_constant_identifier_names
   Container OrderProduct(OrderDetail? orderDetail) {
+    final l10n = context.l10n;
     return Container(
       padding: const EdgeInsets.all(12),
       margin: const EdgeInsets.all(12),
@@ -298,7 +321,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Order ID",
+                l10n!.order_id,
                 style: TextStyle(
                   fontSize: 18,
                   color: titleColor,
@@ -357,7 +380,9 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                   ),
                   Flexible(
                     child: Text(
-                      orderDetail.address!.address!,
+                      orderDetail.address != null
+                          ? orderDetail.address!.address!
+                          : 'NA',
                       overflow: TextOverflow.ellipsis,
                       softWrap: false,
                       maxLines: 1,
@@ -392,7 +417,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Sub Total",
+                  l10n.subtotal,
                   style: TextStyle(
                     color: titleColor,
                     fontSize: 15,
@@ -417,7 +442,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Packing Fee",
+                  l10n.packing_fee,
                   style: TextStyle(
                     color: titleColor,
                     fontSize: 15,
@@ -441,7 +466,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Delivery Fee",
+                  l10n.delivery_fee,
                   style: TextStyle(
                     color: titleColor,
                     fontSize: 15,
@@ -451,7 +476,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                 Row(
                   children: [
                     Text(
-                      "(Free Delivery)",
+                      "(${l10n.free_delivery})",
                       style: TextStyle(
                         color: baseColor,
                         fontSize: 15,
@@ -478,7 +503,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Discount",
+                  l10n.discount,
                   style: TextStyle(
                     color: titleColor,
                     fontSize: 15,
@@ -506,7 +531,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Total Payble (incl. VAT)",
+                  l10n.total_payble,
                   style: TextStyle(
                     color: discoutColor,
                     fontSize: 15,
@@ -534,6 +559,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     int index,
     List<ProductOrderDetail>? product,
   ) {
+    final l10n = context.l10n;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -577,12 +603,13 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
               Row(
                 children: [
                   Text(
-                    "Discount : ",
+                    l10n!.discount,
                     style: TextStyle(
                       fontSize: 12,
                       color: descriptionColor,
                     ),
                   ),
+                  const Text(" : "),
                   Text(
                     "${product[index].product!.discount.toString()}%",
                     style: TextStyle(
@@ -648,6 +675,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
 
   // ignore: non_constant_identifier_names
   Container OrderInfo(OrderDetail? orderDetail) {
+    final l10n = context.l10n;
     return Container(
       padding: const EdgeInsets.all(12),
       margin: const EdgeInsets.all(12),
@@ -657,7 +685,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Order Information",
+            l10n!.order_infomation,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -669,7 +697,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Name",
+                l10n.customer_name,
                 style: TextStyle(
                   color: descriptionColor,
                   fontSize: 15,
@@ -688,7 +716,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Contact Phone",
+                l10n.contact_phone,
                 style: TextStyle(
                   color: descriptionColor,
                   fontSize: 15,
@@ -707,7 +735,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Payment Type",
+                l10n.payment_method,
                 style: TextStyle(
                   color: descriptionColor,
                   fontSize: 15,
@@ -727,7 +755,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Remark",
+                  l10n.remark,
                   style: TextStyle(
                     color: descriptionColor,
                     fontSize: 15,
@@ -749,7 +777,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
 }
 
 class StatusTitle extends StatelessWidget {
-  final String title;
+  final dynamic title;
   final bool isCheck;
   const StatusTitle({
     super.key,

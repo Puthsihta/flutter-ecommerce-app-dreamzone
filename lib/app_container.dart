@@ -1,4 +1,6 @@
 import 'package:dreamzone/constants/argument.dart';
+import 'package:dreamzone/l10n/l10n.dart';
+import 'package:dreamzone/providers/language_provider.dart';
 import 'package:dreamzone/providers/theme_provider.dart';
 import 'package:dreamzone/routes/routes.dart';
 import 'package:dreamzone/screens/address/address_form_screen.dart';
@@ -31,7 +33,6 @@ import 'package:dreamzone/screens/shop_detail/shop_detail_screen.dart';
 import 'package:dreamzone/screens/splash_screen.dart';
 import 'package:dreamzone/theme/dark_theme.dart';
 import 'package:dreamzone/theme/light_theme.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -41,6 +42,7 @@ class AppContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localeProvider = Provider.of<LocaleProvider>(context);
     return MaterialApp(
       builder: (context, child) => ResponsiveBreakpoints.builder(
         child: child!,
@@ -53,9 +55,9 @@ class AppContainer extends StatelessWidget {
       ),
       initialRoute: SplashView.routeName,
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: localeProvider.locale,
       theme: lightThemeData,
       darkTheme: darkThemeData,
       themeMode: context.watch<ThemeProvider>().themeMode,
@@ -71,7 +73,6 @@ class AppContainer extends StatelessWidget {
           SignUpScreen.routeName: const SignUpScreen(),
           HomeScreen.routeName: const HomeScreen(),
           ResetPasswordScreen.routeName: const ResetPasswordScreen(),
-          PaymentSuccesScreen.routeName: const PaymentSuccesScreen(),
           CategorieScreen.routeName: const CategorieScreen(),
           NotificationScreen.routeName: const NotificationScreen(),
           ProductFavoriteScreen.routeName: const ProductFavoriteScreen(),
@@ -140,6 +141,14 @@ class AppContainer extends StatelessWidget {
               builder: (context) {
                 final args = settings.arguments as ProductArgument;
                 return ProductScreen(argument: args);
+              },
+            );
+            break;
+          case PaymentSuccesScreen.routeName:
+            screen = MaterialPageRoute(
+              builder: (context) {
+                final args = settings.arguments as OrderSuccessArgument;
+                return PaymentSuccesScreen(argument: args);
               },
             );
             break;

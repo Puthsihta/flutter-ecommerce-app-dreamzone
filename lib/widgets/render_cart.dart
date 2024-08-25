@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/screens/check_out/order_product_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +28,8 @@ class RenderCartItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final cartProvider = context.watch<CartProvider>();
-    // print("cart : ${cart.shop}");
     return Container(
       margin: EdgeInsets.fromLTRB(15, index == 0 ? 15 : 0, 15, 15),
       padding: const EdgeInsets.all(10),
@@ -96,36 +97,34 @@ class RenderCartItem extends StatelessWidget {
               IconButton(
                 onPressed: () {
                   showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return CupertinoAlertDialog(
-                        title: const Text("Delete Cart?"),
-                        actions: [
-                          CupertinoDialogAction(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text(
-                              "Cancel",
-                              style: TextStyle(color: Colors.red),
-                            ),
-                          ),
-                          CupertinoDialogAction(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                cartProvider.onRemoveShop(
-                                    shopId: cart.shop!.id!);
-                              },
-                              child: const Text(
-                                "Delete",
-                                style: TextStyle(color: Colors.blue),
-                              )),
-                        ],
-                        content: Text(
-                            "Are you sure you wannt to delete shop ${cart.shop!.name!} from cart?"),
-                      );
-                    },
-                  );
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CupertinoAlertDialog(
+                            title: Text(l10n!.delete_cart),
+                            actions: [
+                              CupertinoDialogAction(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(
+                                  l10n.cancel,
+                                  style: const TextStyle(color: Colors.red),
+                                ),
+                              ),
+                              CupertinoDialogAction(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    cartProvider.onRemoveShop(
+                                        shopId: cart.shop!.id!);
+                                  },
+                                  child: Text(
+                                    l10n.delete,
+                                    style: const TextStyle(color: Colors.blue),
+                                  )),
+                            ],
+                            content:
+                                Text(l10n.delete_cart_info(cart.shop!.name!)));
+                      });
                 },
                 icon: Icon(
                   Icons.delete_outline,
@@ -136,12 +135,6 @@ class RenderCartItem extends StatelessWidget {
           ),
           ...cart.product.values.map(
             (item) {
-              // final discount = cart
-              //     .product[cart.product[item.product.id.toString()]!.product.id
-              //         .toString()]!
-              //     .discount;
-              print(
-                  "cart.product[cart.product[item.product.id.toString()]!.product.id.toString()]!.discount : ${cart.product[cart.product[item.product.id.toString()]!.product.id.toString()]!.discount}");
               return Column(
                 children: [
                   Padding(
@@ -213,12 +206,13 @@ class RenderCartItem extends StatelessWidget {
                               Row(
                                 children: [
                                   Text(
-                                    "Discout : ",
+                                    l10n!.discount,
                                     style: TextStyle(
                                       fontSize: 12,
                                       color: descriptionColor,
                                     ),
                                   ),
+                                  const Text(" "),
                                   Text(
                                     '${cart.product[cart.product[item.product.id.toString()]!.product.id.toString()]!.discount.toString()}%',
                                     style: TextStyle(
@@ -357,8 +351,8 @@ class RenderCartItem extends StatelessWidget {
                                                 builder:
                                                     (BuildContext context) {
                                                   return CupertinoAlertDialog(
-                                                    title: const Text(
-                                                      "Delete Cart?",
+                                                    title: Text(
+                                                      l10n!.delete_cart,
                                                     ),
                                                     actions: [
                                                       CupertinoDialogAction(
@@ -366,9 +360,10 @@ class RenderCartItem extends StatelessWidget {
                                                           Navigator.of(context)
                                                               .pop();
                                                         },
-                                                        child: const Text(
-                                                          "Cancel",
-                                                          style: TextStyle(
+                                                        child: Text(
+                                                          l10n.cancel,
+                                                          style:
+                                                              const TextStyle(
                                                             color: Colors.red,
                                                           ),
                                                         ),
@@ -394,16 +389,27 @@ class RenderCartItem extends StatelessWidget {
                                                                 .id!,
                                                           );
                                                         },
-                                                        child: const Text(
-                                                          "Delete",
-                                                          style: TextStyle(
+                                                        child: Text(
+                                                          l10n.delete,
+                                                          style:
+                                                              const TextStyle(
                                                             color: Colors.blue,
                                                           ),
                                                         ),
                                                       ),
                                                     ],
                                                     content: Text(
-                                                        "Are you sure you wannt to delete Product ${cart.product[cart.product[item.product.id.toString()]!.product.id.toString()]!.product.name!} from cart?"),
+                                                      l10n.delete_cart_info(cart
+                                                          .product[cart
+                                                              .product[item
+                                                                  .product.id
+                                                                  .toString()]!
+                                                              .product
+                                                              .id
+                                                              .toString()]!
+                                                          .product
+                                                          .name!),
+                                                    ),
                                                   );
                                                 },
                                               );
@@ -492,7 +498,7 @@ class RenderCartItem extends StatelessWidget {
                       );
                     },
                     child: Text(
-                        "Checkout ${currencyFormatter.format(cartProvider.getTotal(shopId: cart.shop!.id!))}"),
+                        "${l10n!.checkout} ${currencyFormatter.format(cartProvider.getTotal(shopId: cart.shop!.id!))}"),
                   ),
                 )
               ],

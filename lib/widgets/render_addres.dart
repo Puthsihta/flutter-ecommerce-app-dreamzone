@@ -1,5 +1,6 @@
 import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/data/models/address.dart';
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/screens/address/address_form_screen.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,6 +24,7 @@ class RenderAddress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return GestureDetector(
       onTap: () {
         onTap();
@@ -85,15 +87,15 @@ class RenderAddress extends StatelessWidget {
                       context: context,
                       builder: (BuildContext context) {
                         return CupertinoAlertDialog(
-                          title: const Text("Delete Cart?"),
+                          title: Text(l10n!.delete_address),
                           actions: [
                             CupertinoDialogAction(
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: const Text(
-                                "Cancel",
-                                style: TextStyle(color: Colors.red),
+                              child: Text(
+                                l10n.cancel,
+                                style: const TextStyle(color: Colors.red),
                               ),
                             ),
                             CupertinoDialogAction(
@@ -101,13 +103,14 @@ class RenderAddress extends StatelessWidget {
                                   Navigator.of(context).pop();
                                   onDelete();
                                 },
-                                child: const Text(
-                                  "Delete",
-                                  style: TextStyle(color: Colors.blue),
+                                child: Text(
+                                  l10n.delete,
+                                  style: const TextStyle(color: Colors.blue),
                                 )),
                           ],
                           content: Text(
-                              "Are you sure you wannt to delete ${address[index].name!} from list?"),
+                            l10n.delete_address_info(address[index].name!),
+                          ),
                         );
                       },
                     );

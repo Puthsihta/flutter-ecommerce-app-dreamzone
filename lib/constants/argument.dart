@@ -2,6 +2,7 @@
 import 'package:dreamzone/data/models/address.dart';
 import 'package:dreamzone/data/models/cart.dart';
 import 'package:dreamzone/data/models/product.dart';
+import 'package:dreamzone/data/models/requests/create_address.dart';
 import 'package:dreamzone/data/models/shop.dart';
 
 class OrderDetailArgument {
@@ -66,7 +67,7 @@ class AddressFromArgument {
 }
 
 class UpdateLocationArgument {
-  Address? address;
+  AddressMap? address;
 
   UpdateLocationArgument({
     this.address,
@@ -87,5 +88,12 @@ class OrderProductArgument {
 
   OrderProductArgument({
     required this.cart,
+  });
+}
+
+class OrderSuccessArgument {
+  int orderId;
+  OrderSuccessArgument({
+    required this.orderId,
   });
 }

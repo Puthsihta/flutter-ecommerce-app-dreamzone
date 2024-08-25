@@ -4,6 +4,7 @@ import 'package:dreamzone/data/repos/order-_ist_repo.dart';
 import 'package:dreamzone/locator.dart';
 import 'package:dreamzone/screens/order/my_order_controller.dart';
 import 'package:dreamzone/screens/order_detail/order_detail_screen.dart';
+import 'package:dreamzone/widgets/butoom_loading.dart';
 import 'package:dreamzone/widgets/fetch_error.dart';
 import 'package:dreamzone/widgets/no_item.dart';
 import 'package:dreamzone/widgets/render_order_item.dart';
@@ -18,48 +19,57 @@ class MyOrders extends StatefulWidget {
 }
 
 class _MyOrdersState extends State<MyOrders> {
-  late MyOrderController orderListController;
+  late MyOrderController _orderListController;
   final scrollController = ScrollController();
-  double boundaryOffset = 0.8;
-
-  void scrollListener() {
-    scrollController.addListener(() {
-      final nextPageTrigger = 0.8 * scrollController.position.maxScrollExtent;
-      if (scrollController.position.pixels > nextPageTrigger) {
-        orderListController.onFetchNextPage();
-      }
-    });
-  }
 
   @override
   void initState() {
-    scrollListener();
     super.initState();
+    scrollController.addListener(_onScroll);
   }
 
   @override
   void dispose() {
-    // Dispose the controller when the widget is disposed
-    scrollController.dispose();
+    scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
     super.dispose();
+  }
+
+  void _onScroll() {
+    if (_isBottom) {
+      _orderListController.getOrderList();
+    }
+  }
+
+  bool get _isBottom {
+    if (!scrollController.hasClients) return false;
+    final maxScroll = scrollController.position.maxScrollExtent;
+    final currentScroll = scrollController.offset;
+    return currentScroll >= (maxScroll * 0.9);
   }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) =>
-          MyOrderController(orderListRepo: locator<OrderListRepo>())
-            ..onGetOrderList(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) =>
+              MyOrderController(orderListRepo: locator<OrderListRepo>())
+                ..getOrderList(),
+        ),
+      ],
       child: Consumer<MyOrderController>(
           builder: (context, orderListController, child) {
-        if (orderListController.loadingInitial) {
+        _orderListController = orderListController;
+        if (orderListController.status == HomeStatus.initial) {
           return const Center(child: CircularProgressIndicator());
         }
-        if (orderListController.error != null) {
+        if (orderListController.status == HomeStatus.error) {
           return SizedBox(
             child: FetchError(
               errorMessage: orderListController.error.toString(),
-              onRetry: () => orderListController.onGetOrderList(),
+              onRetry: () => orderListController.getOrderList(),
             ),
           );
         }
@@ -69,31 +79,18 @@ class _MyOrdersState extends State<MyOrders> {
           );
         }
         return RefreshIndicator(
-          onRefresh: () => orderListController.onGetOrderList(refresh: true),
+          onRefresh: () => orderListController.getOrderList(refresh: true),
           child: ListView.builder(
-              itemCount: orderListController.orderLists.length,
-              itemBuilder: (context, index) {
-                if (index == orderListController.orderLists.length) {
-                  if (orderListController.loadingFetchNext) {
-                    return const SizedBox(
-                      height: 100,
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  }
-                  if (!orderListController.hasNextPage) {
-                    return const SizedBox(
-                      height: 100,
-                      child: Center(
-                        child: Text("No more data"),
-                      ),
-                    );
-                  }
-                  return const SizedBox();
-                }
-                return renderOrderItem(context, index, orderListController);
-              }),
+            controller: scrollController,
+            itemCount: orderListController.hasReachedMax
+                ? orderListController.orderLists.length + 1
+                : orderListController.orderLists.length,
+            itemBuilder: (context, index) {
+              return index >= orderListController.orderLists.length
+                  ? const BottomLoader()
+                  : renderOrderItem(context, index, orderListController);
+            },
+          ),
         );
       }),
     );

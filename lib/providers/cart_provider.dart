@@ -185,7 +185,7 @@ class CartProvider extends ChangeNotifier {
         cart = cartRespone;
       }
     } catch (e) {
-      print("\n\nerror get cartRespone: ${e}");
+      print("\n\n error get cartRespone: ${e}");
     }
   }
 }

@@ -1,5 +1,4 @@
 import 'package:dreamzone/app_container.dart';
-import 'package:dreamzone/constants/locales.dart';
 import 'package:dreamzone/data/repos/address_repo.dart';
 import 'package:dreamzone/data/repos/auth_repo.dart';
 import 'package:dreamzone/data/repos/home_repo.dart';
@@ -9,9 +8,11 @@ import 'package:dreamzone/providers/address_provider.dart';
 import 'package:dreamzone/providers/auth_provider.dart';
 import 'package:dreamzone/providers/cart_provider.dart';
 import 'package:dreamzone/providers/home_provider.dart';
+import 'package:dreamzone/providers/language_provider.dart';
+import 'package:dreamzone/providers/route_provider.dart';
+import 'package:dreamzone/providers/tab_provider.dart';
 import 'package:dreamzone/providers/theme_provider.dart';
 import 'package:dreamzone/providers/user_provider.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,19 +21,14 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
+  // await EasyLocalization.ensureInitialized();
 
   await dotenv.load(fileName: ".env");
 
   setupLocator();
 
   runApp(
-    EasyLocalization(
-      path: 'assets/translations',
-      fallbackLocale: Locales.en,
-      supportedLocales: const [Locales.en, Locales.km],
-      child: const DreamzoneApp(),
-    ),
+    const DreamzoneApp(),
   );
 }
 
@@ -116,6 +112,15 @@ class _DreamzoneAppState extends State<DreamzoneApp> {
           ),
           ChangeNotifierProvider<CartProvider>(
             create: (context) => CartProvider(),
+          ),
+          ChangeNotifierProvider<LocaleProvider>(
+            create: (context) => LocaleProvider(),
+          ),
+          ChangeNotifierProvider<RouteProvider>(
+            create: (context) => RouteProvider(),
+          ),
+          ChangeNotifierProvider<TabProvider>(
+            create: (context) => TabProvider(),
           ),
         ],
         child: const AppContainer(),

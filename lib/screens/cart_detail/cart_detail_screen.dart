@@ -1,6 +1,7 @@
 import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/data/models/cart.dart';
 import 'package:dreamzone/data/models/product.dart';
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/providers/cart_provider.dart';
 import 'package:dreamzone/screens/check_out/order_product_screen.dart';
 import 'package:dreamzone/screens/product_detail/product_detail_screen.dart';
@@ -23,6 +24,7 @@ class CartDetailScreen extends StatefulWidget {
 class _CartDetailScreenState extends State<CartDetailScreen> {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final cartProvider = context.watch<CartProvider>();
     final carts = cartProvider.cart;
     final cartInShop = carts!.cart[widget.argument.shop!.id.toString()];
@@ -35,7 +37,7 @@ class _CartDetailScreenState extends State<CartDetailScreen> {
       backgroundColor: whiteSmoke,
       appBar: AppBar(
         backgroundColor: baseColor,
-        title: const Text("Cart Detail"),
+        title: Text(l10n!.cart_detail),
       ),
       body: Stack(
         children: [
@@ -72,7 +74,7 @@ class _CartDetailScreenState extends State<CartDetailScreen> {
                                 width: 10,
                               ),
                               Text(
-                                "Popular with order",
+                                l10n.popular_with_order,
                                 style: TextStyle(
                                   color: titleColor,
                                   fontSize: 18,
@@ -136,7 +138,7 @@ class _CartDetailScreenState extends State<CartDetailScreen> {
                   );
                 },
                 child: Text(
-                    "Checkout ${currencyFormatter.format(cartProvider.getTotal(shopId: widget.argument.shop!.id!))}"),
+                    "${l10n.checkout} ${currencyFormatter.format(cartProvider.getTotal(shopId: widget.argument.shop!.id!))}"),
               ),
             ),
           )

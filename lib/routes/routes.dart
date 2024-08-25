@@ -1,5 +1,7 @@
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/providers/auth_provider.dart';
 import 'package:dreamzone/providers/cart_provider.dart';
+import 'package:dreamzone/providers/route_provider.dart';
 import 'package:dreamzone/screens/auth/signin/signin_screen.dart';
 import 'package:dreamzone/screens/cart/cart_screen.dart';
 import 'package:dreamzone/screens/home/home_screen.dart';
@@ -20,35 +22,26 @@ class TabNavigationBar extends StatefulWidget {
 }
 
 class _TabNavigationBarState extends State<TabNavigationBar> {
-  int _selectedIndex = 0;
-
   @override
   void initState() {
     super.initState();
-    _onItemTapped(widget.index);
   }
 
-  void _onItemTapped(int index) {
-    final authProvider = context.read<AuthProvider>();
-    setState(
-      () {
-        if (authProvider.isLoggedIn || index == 1 || index == 0) {
-          _selectedIndex = index;
-        } else {
-          // Navigate to login screen if not logged in
-          Navigator.pushNamed(context, SignInScreen.routeName);
-        }
-      },
-    );
+  @override
+  void dispose() {
+    print("Route Disposing");
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final routeProvider = Provider.of<RouteProvider>(context, listen: true);
+    final l10n = context.l10n;
     final cartProvider = context.watch<CartProvider>();
     final cart = cartProvider.cart;
     return Scaffold(
       body: IndexedStack(
-        index: _selectedIndex,
+        index: routeProvider.seleteIndex,
         children: const [
           HomeScreen(),
           ShopScreen(),
@@ -58,13 +51,13 @@ class _TabNavigationBarState extends State<TabNavigationBar> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.home),
+            label: l10n!.home,
           ),
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.shop),
-            label: 'Shop',
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.shop),
+            label: l10n.shop,
           ),
           BottomNavigationBarItem(
             icon: cart!.cart.isEmpty
@@ -80,19 +73,26 @@ class _TabNavigationBarState extends State<TabNavigationBar> {
                       Icons.shopping_cart,
                     ),
                   ),
-            label: 'Cart',
+            label: l10n.cart,
           ),
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Profile',
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.settings),
+            label: l10n.profile,
           ),
         ],
-        currentIndex: _selectedIndex,
+        currentIndex: routeProvider.seleteIndex,
         elevation: 1,
         backgroundColor: baseColor,
         type: BottomNavigationBarType.fixed,
         selectedItemColor: secondColor,
-        onTap: _onItemTapped,
+        onTap: (index) {
+          final authProvider = context.read<AuthProvider>();
+          if (authProvider.isLoggedIn || index == 1 || index == 0) {
+            routeProvider.setIndex(index);
+          } else {
+            Navigator.pushNamed(context, SignInScreen.routeName);
+          }
+        },
       ),
     );
   }

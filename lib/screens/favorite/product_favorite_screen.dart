@@ -1,5 +1,6 @@
 import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/data/repos/product_repo.dart';
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/locator.dart';
 import 'package:dreamzone/screens/product_detail/product_detail_screen.dart';
 import 'package:dreamzone/screens/favorite/product_favorite_controller.dart';
@@ -47,11 +48,12 @@ class _ProductFavoriteScreenState extends State<ProductFavoriteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       backgroundColor: whiteSmoke,
       appBar: AppBar(
         backgroundColor: baseColor,
-        title: const Text("Favorite"),
+        title: Text(l10n!.favorite),
       ),
       body: ChangeNotifierProvider(
         create: (context) =>

@@ -1,6 +1,7 @@
 import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/data/models/address.dart';
 import 'package:dreamzone/data/repos/address_repo.dart';
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/locator.dart';
 import 'package:dreamzone/providers/address_provider.dart';
 import 'package:dreamzone/providers/auth_provider.dart';
@@ -24,6 +25,8 @@ class AddressScreen extends StatefulWidget {
 class _AddressScreenState extends State<AddressScreen> {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final authProvider = context.read<AuthProvider>();
     // final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
@@ -44,7 +47,7 @@ class _AddressScreenState extends State<AddressScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Where should we deliver?\nPlease select your delivery address",
+              l10n!.address_info,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -67,8 +70,8 @@ class _AddressScreenState extends State<AddressScreen> {
                       description: null,
                       address:
                           "Russian Federation Blvd (110), Phnom Penh 120404",
-                      latitude: "11.568121",
-                      longitude: "104.889500",
+                      latitude: "11.5564",
+                      longitude: "104.9282",
                     ),
                   );
                   Navigator.pop(context);
@@ -91,7 +94,7 @@ class _AddressScreenState extends State<AddressScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Use My Current Location",
+                            l10n.use_current_location,
                             style: TextStyle(
                               color: titleColor,
                               fontSize: 16,
@@ -99,7 +102,7 @@ class _AddressScreenState extends State<AddressScreen> {
                             ),
                           ),
                           Text(
-                            "Base on GPS Location",
+                            l10n.base_on_gps_location,
                             style: TextStyle(
                               color: descriptionColor,
                               fontSize: 12,
@@ -128,6 +131,11 @@ class _AddressScreenState extends State<AddressScreen> {
                   if (addressController.loading) {
                     return const Center(
                       child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (!authProvider.isLoggedIn) {
+                    return const SizedBox(
+                      child: NoItem(),
                     );
                   }
                   if (addressController.error != null) {
@@ -181,7 +189,7 @@ class _AddressScreenState extends State<AddressScreen> {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      "Add New Address",
+                      l10n.add_new_address,
                       style: TextStyle(
                         color: titleColor,
                       ),

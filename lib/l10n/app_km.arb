@@ -1,0 +1,421 @@
+{
+  "@@locale": "km",
+  "home": "ទំព័រដើម",
+  "@home": {
+    "description": "Title text shown in the bottom tab home"
+  },
+  "shop": "ហាង",
+  "@shop": {
+    "description": "Title text shown in the bottom tab shop"
+  },
+  "cart": "កន្រ្តក់",
+  "@cart": {
+    "description": "Title text shown in the bottom tab cart"
+  },
+  "profile": "អំពីអ្នក",
+  "@profile": {
+    "description": "Title text shown in the bottom tab profile"
+  },
+  "categories": "បណ្តុំ",
+  "@categories": {
+    "description": "Categories in home screen"
+  },
+  "promotion": "ការបញ្ចុះតម្លៃ",
+  "@promotion": {
+    "description": "Promotion in home screen"
+  },
+  "collections": "ប្រមូលផ្តុំ",
+  "@collections": {
+    "description": "Collections in home screen"
+  },
+  "best_sellings": "ទំនិញល្អ",
+  "@best_sellings": {
+    "description": "Best Sellings in home screen"
+  },
+  "more": "មើលថែម",
+  "@more": {
+    "description": "More product or shop"
+  },
+  "discount": "បញ្ចុះតម្លៃ",
+  "@discount": {
+    "description": "Product discount"
+  },
+  "feature_shops": "ហាងដែលណែនាំ",
+  "@feature_shops": {
+    "description": "Feature Shops in home screen"
+  },
+  "all_products": "ផលិតផងទាំងអស់",
+  "@all_products": {
+    "description": "All Products in home screen"
+  },
+  "current_location": "ទីតាំងរបស់អ្នក",
+  "@current_location": {
+    "description": "Current Location user not select location"
+  },
+  "language": "ភាសា",
+  "@language": {
+    "description": "Use change select languages"
+  },
+  "english": "អង់គ្លេស",
+  "@english": {
+    "description": "Language Englist"
+  },
+  "khmer": "ខ្មែរ",
+  "@khmer": {
+    "description": "Language Khmer"
+  },
+  "address": "អាស័យដ្ឋាន",
+  "@address": {
+    "description": "Address"
+  },
+  "address_info": "តើយើងគួរដឹកជញ្ជូននៅឯណា?\nសូមជ្រើសរើសអាសយដ្ឋានដឹកជញ្ជូនរបស់អ្នក។",
+  "@address_info": {
+    "description": "address information"
+  },
+  "use_current_location": "ប្រើទីតាំងបច្ចុប្បន្ន",
+  "@use_current_location": {
+    "description": "Tittle use current location"
+  },
+  "base_on_gps_location": "ផ្អែកលើទីតាំង GPS",
+  "@base_on_gps_location": {
+    "description": "Description information"
+  },
+  "add_new_address": "បន្ថែមអាសយដ្ឋានថ្មី",
+  "@add_new_address": {
+    "description": "Button Title Add New Address"
+  },
+  "delete_address": "លុបអាសយដ្ឋាន",
+  "@delete_address": {
+    "description": "Title Delete Address"
+  },
+  "delete_cart": "លុបចេញពីកន្រ្តក់",
+  "@delete_cart": {
+    "description": "Title Delete Cart"
+  },
+  "delete_address_info": "តើអ្នកប្រាកដថាចង់លុប \"{address_name}\" ចេញ?",
+  "@delete_address_info": {
+    "description": "Delete address information",
+    "placeholders": {
+      "address_name": {
+        "description": "Name of the address to be deleted"
+      }
+    }
+  },
+  "delete_cart_info": "តើអ្នកប្រាកដថាចង់លុប \"{shop_name}\" ចេញពីកន្ត្រក់ឬ?",
+  "@delete_cart_info": {
+    "description": "Delete cart information",
+    "placeholders": {
+      "shop_name": {
+        "description": "Name of the shop to be deleted"
+      }
+    }
+  },
+  "cancel": "បោះបង់",
+  "@cancel": {
+    "description": "Cancel the request"
+  },
+  "delete": "លុប",
+  "@delete": {
+    "description": "Delete the request"
+  },
+  "create_address": "បង្កើតអាសយដ្ឋានថ្មី",
+  "@create_address": {
+    "description": "Title of the address create"
+  },
+  "update_address": "កែប្រែអាសយដ្ឋាន",
+  "@update_address": {
+    "description": "Title of the address update"
+  },
+  "your_location": "ទីតាំងរបស់អ្នក",
+  "@your_location": {
+    "description": "text before select address from map"
+  },
+  "name": "ឈ្មោះអ្នកទទួល",
+  "@name": {
+    "description": "Label of the create address"
+  },
+  "phone": "លេខទូួរស័ព្ទ",
+  "@phone": {
+    "description": "Label of the create address"
+  },
+  "enter_name": "បញ្ចូលឈ្មោះអ្នកទទួល",
+  "@enter_name": {
+    "description": "Placeholder of the create address"
+  },
+  "enter_phone": "បញ្ចូលលេខទូរស័ព្ទ",
+  "@enter_phone": {
+    "description": "Placeholder of the create address"
+  },
+  "remark": "ចំណាំ",
+  "@remark": {
+    "description": "Label of the create address"
+  },
+  "enter_remark": "បញ្ចូលការចំណាំ",
+  "@enter_remark": {
+    "description": "Placeholder of the create address"
+  },
+  "save_location": "រក្សាទុក",
+  "@save_location": {
+    "description": "Title of the button to save location address"
+  },
+  "create_address_fail": "មិនអាចបង្កើតអាសយដ្ឋានបាន",
+  "@create_address_fail": {
+    "description": "Title pop up when creating address error"
+  },
+  "search_placeholder": "ស្វែងរក ...",
+  "@search_placeholder": {
+    "description": "Search Placeholder"
+  },
+  "update_adddress_fail": "មិនអាចកែប្រែអាសយដ្ឋានបាន",
+  "@update_adddress_fail": {
+    "description": "Description of the update failure"
+  },
+  "update_location": "កែប្រែទីតាំង",
+  "@update_location": {
+    "description": "Button title for the update location"
+  },
+  "notification": "សេចក្តីជូនដំណើង",
+  "@notification": {
+    "description": "Notification title for the notification"
+  },
+  "no_notification": "គ្មានដំណឹង",
+  "@no_notification": {
+    "description": "No notification title for the notification"
+  },
+  "products": "ទំនិញ",
+  "@products": {
+    "description": "Products title for the product"
+  },
+  "no_more_data": "មិនមានទៀតទ",
+  "@no_more_data": {
+    "description": "No more data load more data"
+  },
+  "empty": "មិនមាន",
+  "@empty": {
+    "description": "Empty data"
+  },
+  "error_occured": "កំហុសបានកើតឡើង",
+  "@error_occured": {
+    "description": "Title of error"
+  },
+  "sthing_wrong": "មានអ្វីមួយខុសប្រក្រតី",
+  "@sthing_wrong": {
+    "description": "Description of error"
+  },
+  "retry": "ព្យាយាមម្តងទៀត",
+  "@retry": {
+    "description": "Button to retry"
+  },
+  "qty_in_cart": "បរិមាណនៅក្នុងកន្រ្តក់",
+  "@qty_in_cart": {
+    "description": "Text qty in product detail"
+  },
+  "store_profile": "អំពីហាង",
+  "@store_profile": {
+    "description": "Title of store profile in product detail"
+  },
+  "related_products": "ទំទិញផ្សេងទៀត",
+  "@related_products": {
+    "description": "Title of related products in product detail"
+  },
+  "add_to_cart": "ដាក់កន្រ្តក់",
+  "@add_to_cart": {
+    "description": "Add to cart button in product detail"
+  },
+  "off": "បញ្ចុះតម្លៃ",
+  "@off": {
+    "description": "disccount off"
+  },
+  "cart_detail": "កន្រ្តក់",
+  "@cart_detail": {
+    "description": "Cart Detail title app bar"
+  },
+  "popular_with_order": "ទំនិញបន្ថែម",
+  "@popular_with_order": {
+    "description": "Popular with order in cart detail"
+  },
+  "checkout": "ទិញ",
+  "@checkout": {
+    "description": "Checkout button in cart detail"
+  },
+  "order_id": "លេខសំគាល់",
+  "@order_id": {
+    "description": "Order ID in list order item"
+  },
+  "date": "កាលបរិច្ឆេត",
+  "@date": {
+    "description": "Date in list order item"
+  },
+  "total": "តម្លៃ",
+  "@total": {
+    "description": "Total in list order item"
+  },
+  "total_items": "ចំនួន",
+  "@total_items": {
+    "description": "Total Item in list order item"
+  },
+  "pending": "កំពុងរង់ចាំ",
+  "@pending": {
+    "description": "Status of order pending"
+  },
+  "confirm": "បានទទួល",
+  "@confirm": {
+    "description": "Status of order pending"
+  },
+  "deliverying": "ដឹកជញ្ជូន",
+  "@deliverying": {
+    "description": "Status of order delivery"
+  },
+  "cancelled": "បោះបង់",
+  "@cancelled": {
+    "description": "Status of order cancelled"
+  },
+  "complete": "រួចរាល់",
+  "@complete": {
+    "description": "Status of order complete"
+  },
+  "my_cart": "កន្រ្តក់",
+  "@my_cart": {
+    "description": "My cart title tap"
+  },
+  "my_order": "ទិញ",
+  "@my_order": {
+    "description": "My Order title tap"
+  },
+  "province": "ខេត្ត",
+  "@province": {
+    "description": "Provice title of shop"
+  },
+  "all_shops": "ហាងទាំងអស់",
+  "@all_shops": {
+    "description": "Tittle of all shop nav bar"
+  },
+  "call_now": "ហៅ",
+  "@call_now": {
+    "description": "Shop Detail call now"
+  },
+  "about_store": "អំពីហាង",
+  "@about_store": {
+    "description": "Shop Detail about store"
+  },
+  "order_details": "អំពីការទិញ",
+  "@order_details": {
+    "description": "Title of order details nav bar"
+  },
+  "select_options": "ជ្រើសរើស",
+  "@select_options": {
+    "description": "Title of pop up options nav bar"
+  },
+  "order_infomation": "អំពីការទិញ",
+  "@order_infomation": {
+    "description": "Title of order infomation order detail"
+  },
+  "customer_name": "ឈ្មោះ",
+  "@customer_name": {
+    "description": "label for customer name"
+  },
+  "contact_phone": "លេខទូរស័ព្ទ",
+  "@contact_phone": {
+    "description": "label for contact phone of customer"
+  },
+  "payment_method": "បង់លុយ",
+  "@payment_method": {
+    "description": "label for payment method of customer"
+  },
+  "subtotal": "តម្លៃសរុប",
+  "@subtotal": {
+    "description": "lable subtotal of order"
+  },
+  "packing_fee": "សេវាខ្ជប់",
+  "@packing_fee": {
+    "description": "label for packing fee of order"
+  },
+  "delivery_fee": "សេវាដឹក",
+  "@delivery_fee": {
+    "description": "label for delivery fee of order"
+  },
+  "free_delivery": "មិនយកសេវាដឹក",
+  "@free_delivery": {
+    "description": "label for free delivery of order"
+  },
+  "total_payble": "តម្លៃសរុប (រួមទាំងពន្ធ)",
+  "@total_payble": {
+    "description": "label for total payble of order"
+  },
+  "cancel_order": "បោះបង់ការទិញ",
+  "@cancel_order": {
+    "description": "Cancel Order btn title oder detail"
+  },
+  "no": "ទេ",
+  "@no": {
+    "description": "Alter title Reject"
+  },
+  "ok": "យល់ព្រម",
+  "@ok": {
+    "description": "Alter title Agree"
+  },
+  "cancel_order_alert": "តើអ្នកប្រាកដថាចង់បោះបង់ចោលការបញ្ជាទិញនេះទេ?",
+  "@cancel_order_alert": {
+    "description": "cancel order info alert"
+  },
+  "favorite": "ចំណូលចិត្ត",
+  "@favorite": {
+    "description": "lable favorite in profile"
+  },
+  "settings": "ការកំណត់",
+  "@settings": {
+    "description": "lable settings in profile"
+  },
+  "privacy_policy": "គោលការណ៍ឯកជនភាព",
+  "@privacy_policy": {
+    "description": "lable privacy policy in profile"
+  },
+  "about_us": "អំពីយើង",
+  "@about_us": {
+    "description": "label about us in profile"
+  },
+  "contact_us": "ទំនាក់ទំនងយើង",
+  "@contact_us": {
+    "description": "label contact us in profile"
+  },
+  "logout": "ចាកចេញ",
+  "@logout": {
+    "description": "label log out in profile"
+  },
+  "edit_profile": "កែប្រែ",
+  "@edit_profile": {
+    "description": "Titble App bar"
+  },
+  "camera": "ថតរូប",
+  "@camera": {
+    "description": "lable camera in edit profile"
+  },
+  "gallery": "យករូប",
+  "@gallery": {
+    "description": "label gallery in edit profile"
+  },
+  "email": "អ៉ីម៉ែល",
+  "@email": {
+    "description": "lable email in edit profile"
+  },
+  "enter_your_email": "សូមបញ្ចូលអ៉ីម៉ែល",
+  "@enter_your_email": {
+    "description": "Place holder email in edit profile"
+  },
+  "save": "រក្សាទុក",
+  "@save": {
+    "description": "Save btn"
+  },
+  "logout_alert": "តើ​អ្នក​ប្រាកដ​ជា​ចង់​ចេញ?",
+  "@logout_alert": {
+    "description": "after logout info"
+  },
+  "support_by": "គាំទ្រដោយ",
+  "@support_by": {
+    "description": "lable support"
+  },
+  "social": "បណ្តាញសង្គម",
+  "@social": {
+    "description": "lable social"
+  }
+}

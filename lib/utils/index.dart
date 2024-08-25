@@ -1,4 +1,5 @@
 import 'package:dreamzone/constants/constants.dart';
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:intl/intl.dart';
 
 final currencyFormatter = NumberFormat.currency(
@@ -19,18 +20,18 @@ List<dynamic> objectToArray(object) {
   return array;
 }
 
-String checkOrderStatus(int orderStatus) {
+String checkOrderStatus(int orderStatus, AppLocalizations? l10n) {
   switch (orderStatus) {
     case OrderStatus.pending:
-      return "Pending";
+      return l10n!.pending;
     case OrderStatus.confirm:
-      return "Confirm";
+      return l10n!.confirm;
     case OrderStatus.delivery:
-      return "Delivering";
+      return l10n!.deliverying;
     case OrderStatus.cancel:
-      return "Cancelled";
+      return l10n!.cancel;
     case OrderStatus.complete:
-      return "Complete";
+      return l10n!.complete;
   }
   return "";
 }

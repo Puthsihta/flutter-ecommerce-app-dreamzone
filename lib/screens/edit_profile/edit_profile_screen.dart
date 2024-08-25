@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dreamzone/constants/constants.dart';
 import 'package:dreamzone/data/models/requests/update_profile.dart';
 import 'package:dreamzone/data/repos/user_repo.dart';
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/locator.dart';
 import 'package:dreamzone/providers/user_provider.dart';
 import 'package:dreamzone/screens/edit_profile/edit_profile_controller.dart';
@@ -63,11 +64,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       backgroundColor: whiteSmoke,
       appBar: AppBar(
         backgroundColor: baseColor,
-        title: const Text("Edit Profile"),
+        title: Text(l10n!.edit_profile),
       ),
       body: ChangeNotifierProvider<EditProfileController>(
         create: (context) => EditProfileController(
@@ -78,7 +80,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               barrierDismissible: true,
               context: context,
               builder: (context) => AlertDialog.adaptive(
-                title: const Text("Updated Fail"),
+                title: Text(l10n.error_occured),
                 content: Text(message.toString()),
               ),
             )
@@ -142,7 +144,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           Container(
                                             padding: const EdgeInsets.all(15),
                                             child: Text(
-                                              "Select Options",
+                                              l10n.select_options,
                                               style: TextStyle(
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.bold,
@@ -154,7 +156,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                               Icons.camera_alt,
                                               color: iconColor,
                                             ),
-                                            title: const Text('Camera'),
+                                            title: Text(l10n.camera),
                                             onTap: () {
                                               // Handle delete action
                                               _takePhoto();
@@ -166,7 +168,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                               Icons.image,
                                               color: iconColor,
                                             ),
-                                            title: const Text('Gallery'),
+                                            title: Text(l10n.gallery),
                                             onTap: () {
                                               // Handle edit action
                                               _getImageFromGallery();
@@ -216,8 +218,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 child: Column(
                   children: [
                     CustomTextInput(
-                      label: 'Name',
-                      hintText: 'Enter your name',
+                      label: l10n.name,
+                      hintText: l10n.enter_name,
                       controller: name,
                       prefixIcon: Icon(
                         Icons.person,
@@ -228,8 +230,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                     const SizedBox(height: 15),
                     CustomTextInput(
-                      label: 'Email',
-                      hintText: 'Enter your email',
+                      label: l10n.email,
+                      hintText: l10n.enter_your_email,
                       controller: email,
                       prefixIcon: Icon(
                         Icons.email,
@@ -260,9 +262,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 color: Colors.white,
                               ),
                             )
-                          : const Text(
-                              "Save",
-                              style: TextStyle(
+                          : Text(
+                              l10n.save,
+                              style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
                               ),

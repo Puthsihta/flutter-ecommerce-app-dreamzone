@@ -36,7 +36,7 @@ class Cart {
       jsonMap[key] = value.toJson();
     });
 
-    return cart.toString();
+    return jsonEncode(jsonMap);
   }
 
   Map<String, dynamic> toMap() {

@@ -1,6 +1,7 @@
 import 'package:dreamzone/providers/address_provider.dart';
 import 'package:dreamzone/providers/auth_provider.dart';
 import 'package:dreamzone/providers/cart_provider.dart';
+import 'package:dreamzone/providers/language_provider.dart';
 import 'package:dreamzone/providers/theme_provider.dart';
 import 'package:dreamzone/providers/user_provider.dart';
 import 'package:dreamzone/routes/routes.dart';
@@ -28,6 +29,7 @@ class _SplashViewState extends State<SplashView> {
     final userProvider = context.read<UserProvider>();
     final cartProvider = context.read<CartProvider>();
     final addressProvider = context.read<AddressProvider>();
+    final langProvider = context.read<LocaleProvider>();
 
     await themeProvider.ensureInitialization();
     await authProvider.ensureInitialization();
@@ -35,6 +37,7 @@ class _SplashViewState extends State<SplashView> {
     // await cartProvider.clearCart();
     await cartProvider.ensureInitialization();
     await addressProvider.ensureInitialization();
+    await langProvider.ensureInitialization();
 
     Future.delayed(
       const Duration(milliseconds: 500),

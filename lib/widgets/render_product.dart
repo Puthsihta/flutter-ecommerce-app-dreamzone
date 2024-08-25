@@ -1,4 +1,5 @@
 import 'package:dreamzone/data/models/product.dart';
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/utils/index.dart';
 import 'package:dreamzone/widgets/transparent_image.dart';
@@ -20,6 +21,7 @@ class RenderProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final int discount =
         products[index].follow_shop_discount ?? products[index].discount!;
     return GestureDetector(
@@ -114,10 +116,11 @@ class RenderProduct extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              "Discout : ",
+                              l10n!.discount,
                               style: TextStyle(
                                   fontSize: 12, color: descriptionColor),
                             ),
+                            const Text(" : "),
                             Text(
                               '$discount%',
                               style: TextStyle(

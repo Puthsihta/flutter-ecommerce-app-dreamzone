@@ -2,6 +2,7 @@ import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/data/models/product_detail.dart';
 import 'package:dreamzone/data/models/shop.dart';
 import 'package:dreamzone/data/repos/product_detail_repo.dart';
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/locator.dart';
 import 'package:dreamzone/providers/auth_provider.dart';
 import 'package:dreamzone/providers/cart_provider.dart';
@@ -31,6 +32,7 @@ class ProductDetailScreen extends StatefulWidget {
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final cartProvider = context.watch<CartProvider>();
     final cart = cartProvider.cart;
     final theme = Theme.of(context);
@@ -140,7 +142,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                         width: 5,
                                       ),
                                       Text(
-                                        "$discount% OFF",
+                                        "$discount% ${l10n!.off}",
                                         style: TextStyle(
                                           color: discoutColor,
                                           fontSize: 15,
@@ -256,7 +258,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Quantity in Cart : ",
+                                    l10n!.qty_in_cart,
                                     style: theme.textTheme.bodyLarge,
                                   ),
                                   Container(
@@ -362,7 +364,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     ),
                                     const SizedBox(width: 8),
                                     Text(
-                                      'Add to Cart',
+                                      l10n!.add_to_cart,
                                       style: TextStyle(
                                         fontSize: 15,
                                         color: titleColor,
@@ -396,7 +398,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Store Profile",
+                                l10n!.store_profile,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: titleColor,
@@ -490,7 +492,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   );
                                 },
                                 child: Text(
-                                  "More",
+                                  l10n.more,
                                   style: TextStyle(
                                     color: greenColor,
                                   ),
@@ -526,7 +528,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Related Products",
+                              l10n.related_products,
                               style: TextStyle(
                                 fontSize: 18,
                                 color: titleColor,
@@ -543,7 +545,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 );
                               },
                               child: Text(
-                                "More",
+                                l10n.more,
                                 style: TextStyle(
                                   fontSize: 18,
                                   color: greenColor,
@@ -562,9 +564,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
                 sliver: SliverGrid(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 15,
-                      mainAxisExtent: 290),
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 15,
+                    mainAxisExtent: 290,
+                  ),
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
                       return renderProduct(context, index,

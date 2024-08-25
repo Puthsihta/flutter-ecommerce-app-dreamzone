@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/data/models/cart.dart';
 import 'package:dreamzone/data/models/requests/order_request.dart';
@@ -6,8 +8,10 @@ import 'package:dreamzone/data/repos/payment_method_repo.dart';
 import 'package:dreamzone/locator.dart';
 import 'package:dreamzone/providers/address_provider.dart';
 import 'package:dreamzone/providers/cart_provider.dart';
+import 'package:dreamzone/screens/address/address_form_screen.dart';
 import 'package:dreamzone/screens/check_out/order_product_controller.dart';
 import 'package:dreamzone/screens/payments/payment_controller.dart';
+import 'package:dreamzone/screens/payments/payment_sucess_screen.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/utils/index.dart';
 import 'package:dreamzone/widgets/custom_button.dart';
@@ -31,6 +35,46 @@ class OrderProductScreen extends StatefulWidget {
 
 class _OrderProductScreenState extends State<OrderProductScreen> {
   late TextEditingController remark = TextEditingController();
+  final Completer<GoogleMapController> mapController =
+      Completer<GoogleMapController>();
+  // late Marker _marker;
+  late AddressProvider addressProvider;
+  late ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _scrollController = ScrollController();
+
+    // Scroll to selected address index on startup
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollToSelectedAddress();
+    });
+  }
+
+  void _scrollToSelectedAddress() {
+    final selectedIndex = addressProvider.address.indexWhere(
+      (address) => address == addressProvider.selectAddress,
+    );
+
+    if (selectedIndex != -1) {
+      _scrollController.animateTo(
+        selectedIndex * 100.0, // Adjust this value based on your item width
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  // @override
+  // void didUpdateWidget(covariant AddressListView oldWidget) {
+  //   super.didUpdateWidget(oldWidget);
+  //   if (addressProvider.selectAddress !=
+  //       oldWidget.addressProvider.selectAddress) {
+  //     _scrollToSelectedAddress();
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -68,13 +112,15 @@ class _OrderProductScreenState extends State<OrderProductScreen> {
                   ),
                 );
               },
-              onOrderSuccess: () {
-                print("Order successfully");
+              onOrderSuccess: (orderId) {
                 final cartProvider =
                     Provider.of<CartProvider>(context, listen: false);
                 cartProvider.onRemoveShop(
                     shopId: widget.argument.cart.shop!.id!);
-                Navigator.pushNamed(context, '/order/payment-success');
+                Navigator.of(context).pushNamed(
+                  PaymentSuccesScreen.routeName,
+                  arguments: OrderSuccessArgument(orderId: orderId),
+                );
               },
             ),
           ),
@@ -89,389 +135,439 @@ class _OrderProductScreenState extends State<OrderProductScreen> {
             orderController,
             child,
           ) {
+            addressProvider = addressController;
             if (paymentMethodController.loading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
+            final latitude =
+                double.parse(addressController.selectAddress.latitude!);
+            final longitude =
+                double.parse(addressController.selectAddress.longitude!);
             return Stack(
               children: [
-                Expanded(
-                  child: ListView(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        margin: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Delivery Address",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
+                ListView(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      margin: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Delivery Address",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(top: 10),
+                            height: 150,
+                            color: Colors.white,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: GoogleMap(
+                                onMapCreated: (GoogleMapController controller) {
+                                  mapController.complete(controller);
+                                },
+                                initialCameraPosition: CameraPosition(
+                                  target: LatLng(
+                                    latitude,
+                                    longitude,
+                                  ), // Set your initial location
+                                  zoom: 14,
+                                ),
+                                markers: Set<Marker>.of({
+                                  Marker(
+                                    markerId: MarkerId(
+                                      latitude.toString(),
+                                    ),
+                                    position: LatLng(
+                                      latitude,
+                                      longitude,
+                                    ),
+                                    infoWindow: const InfoWindow(
+                                      title: 'Your Location',
+                                    ),
+                                  ),
+                                }),
+                                myLocationEnabled: false,
+                                myLocationButtonEnabled: false,
+                                scrollGesturesEnabled: false,
+                                zoomGesturesEnabled: false,
                               ),
                             ),
-                            Container(
-                              padding: const EdgeInsets.only(top: 10),
-                              height: 150,
-                              color: Colors.white,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: GoogleMap(
-                                  initialCameraPosition: const CameraPosition(
-                                    target: LatLng(37.7749,
-                                        -122.4194), // Set your initial location
-                                    zoom: 10,
-                                  ),
-                                  // onTap: (argument) {
-                                  //   Navigator.of(context).pushNamed(
-                                  //     UpdateLocationScreen.routeName,
-                                  //     arguments: UpdateLocationArgument(),
-                                  //   );
-                                  // },
-                                  myLocationEnabled: false,
-                                  myLocationButtonEnabled: false,
-                                  onMapCreated:
-                                      (GoogleMapController controller) {
-                                    // You can perform additional map setup here if needed
+                          ),
+                          Stack(
+                            children: [
+                              Container(
+                                color: Colors.white,
+                                margin: const EdgeInsets.only(top: 10),
+                                height: 100,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  shrinkWrap: true,
+                                  controller: _scrollController,
+                                  padding: const EdgeInsets.only(
+                                      right: (100 / 2) + 10),
+                                  itemCount: addressController.address.length,
+                                  itemBuilder: (context, index) {
+                                    return renderAddress(
+                                      context,
+                                      index,
+                                      addressController.address,
+                                      addressController,
+                                    );
                                   },
                                 ),
                               ),
-                            ),
-                            Container(
-                              color: Colors.white,
-                              margin: const EdgeInsets.only(top: 10),
-                              height: 100,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                shrinkWrap: true,
-                                // physics: const NeverScrollableScrollPhysics(),
-                                itemCount: addressController.address.length,
-                                itemBuilder: (context, index) {
-                                  return renderAddress(
-                                    context,
-                                    index,
-                                    addressController.address,
-                                    addressController,
-                                  );
-                                },
+                              Positioned(
+                                top: 10,
+                                right: 0,
+                                bottom: 0,
+                                child: Container(
+                                    width: 100,
+                                    decoration: const BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Color.fromARGB(0, 255, 255, 255),
+                                          Colors.white,
+                                        ],
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                      ),
+                                      // color: Colors.red,
+                                    ),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context).pushNamed(
+                                          AddressFromScreen.routeName,
+                                          arguments: AddressFromArgument(
+                                              isCreat: true),
+                                        );
+                                      },
+                                      child: Container(
+                                        margin: const EdgeInsets.only(
+                                          top: 25,
+                                          right: 10,
+                                          bottom: 25,
+                                          left: 40,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: whiteSmoke,
+                                          borderRadius:
+                                              BorderRadius.circular(25 * 3),
+                                          border: Border.all(
+                                              width: 1, color: Colors.white),
+                                        ),
+                                        child: const Icon(Icons.add),
+                                      ),
+                                    )),
                               ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
+                        ],
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        margin: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Payment Methods",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
-                            ),
-                            ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: paymentMethodController
-                                  .paymenthMethod!.length,
-                              itemBuilder: (context, index) {
-                                return renderPaymentMethod(
-                                  context,
-                                  index,
-                                  paymentMethodController,
-                                );
-                              },
-                            ),
-                          ],
-                        ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      margin: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        margin: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Order Summary",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Payment Methods",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                          ),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount:
+                                paymentMethodController.paymenthMethod!.length,
+                            itemBuilder: (context, index) {
+                              return renderPaymentMethod(
+                                context,
+                                index,
+                                paymentMethodController,
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      margin: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Order Summary",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                          ),
+                          const Divider(
+                            height: 20,
+                          ),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: widget.argument.cart.shop!.logo_image !=
+                                        null
+                                    ? TransparentImage(
+                                        url: widget
+                                            .argument.cart.shop!.logo_image!,
+                                      )
+                                    : Image.asset("assets/images/logo.png"),
                               ),
-                            ),
-                            const Divider(
-                              height: 20,
-                            ),
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: widget
-                                              .argument.cart.shop!.logo_image !=
-                                          null
-                                      ? TransparentImage(
-                                          url: widget
-                                              .argument.cart.shop!.logo_image!,
-                                        )
-                                      : Image.asset("assets/images/logo.png"),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "${widget.argument.cart.shop!.name}",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: titleColor,
                                 ),
-                                const SizedBox(
-                                  width: 10,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount:
+                                widget.argument.cart.product.values.length,
+                            itemBuilder: (context, index) {
+                              return renderProduct(
+                                context,
+                                index,
+                                widget.argument.cart.product.values,
+                              );
+                            },
+                          ),
+                          const Divider(
+                            height: 20,
+                            indent: 100,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Sub Total",
+                                  style: TextStyle(
+                                    color: titleColor,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                                 Text(
-                                  "${widget.argument.cart.shop!.name}",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: titleColor,
+                                  currencyFormatter.format(
+                                    cartProvider.getSubTotalPrice(
+                                        shopId: widget.argument.cart.shop!.id!),
                                   ),
-                                ),
+                                  style: TextStyle(
+                                    color: titleColor,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                )
                               ],
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount:
-                                  widget.argument.cart.product.values.length,
-                              itemBuilder: (context, index) {
-                                return renderProduct(
-                                  context,
-                                  index,
-                                  widget.argument.cart.product.values,
-                                );
-                              },
-                            ),
-                            const Divider(
-                              height: 20,
-                              indent: 100,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Sub Total",
-                                    style: TextStyle(
-                                      color: titleColor,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Packing Fee",
+                                  style: TextStyle(
+                                    color: titleColor,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
                                   ),
-                                  Text(
-                                    currencyFormatter.format(
-                                      cartProvider.getSubTotalPrice(
-                                          shopId:
-                                              widget.argument.cart.shop!.id!),
-                                    ),
-                                    style: TextStyle(
-                                      color: titleColor,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Packing Fee",
-                                    style: TextStyle(
-                                      color: titleColor,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                ),
+                                Text(
+                                  currencyFormatter.format(0),
+                                  style: TextStyle(
+                                    color: titleColor,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
                                   ),
-                                  Text(
-                                    currencyFormatter.format(0),
-                                    style: TextStyle(
-                                      color: titleColor,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  )
-                                ],
-                              ),
+                                )
+                              ],
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Delivery Fee",
-                                    style: TextStyle(
-                                      color: titleColor,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Delivery Fee",
+                                  style: TextStyle(
+                                    color: titleColor,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
                                   ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "(Free Delivery)",
-                                        style: TextStyle(
-                                          color: baseColor,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "(Free Delivery)",
+                                      style: TextStyle(
+                                        color: baseColor,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
                                       ),
-                                      const SizedBox(width: 5),
-                                      Text(
-                                        currencyFormatter.format(0),
-                                        style: TextStyle(
-                                          color: baseColor,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      currencyFormatter.format(0),
+                                      style: TextStyle(
+                                        color: baseColor,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
                                       ),
-                                    ],
-                                  )
-                                ],
-                              ),
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Discount",
-                                    style: TextStyle(
-                                      color: titleColor,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Text(
-                                    currencyFormatter.format(
-                                      cartProvider.getTotalDiscount(
-                                          shopId:
-                                              widget.argument.cart.shop!.id!),
-                                    ),
-                                    style: TextStyle(
-                                      color: discoutColor,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            const Divider(
-                              height: 20,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Total Payble (incl. VAT)",
-                                    style: TextStyle(
-                                      color: discoutColor,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Text(
-                                    currencyFormatter.format(
-                                      cartProvider.getTotal(
-                                          shopId:
-                                              widget.argument.cart.shop!.id!),
-                                    ),
-                                    style: TextStyle(
-                                      color: discoutColor,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        margin: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Order Remark",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
-                            ),
-                            TextField(
-                              controller: remark,
-                              maxLines: null,
-                              cursorColor: placeHolderColor,
-                              style: TextStyle(color: titleColor, fontSize: 15),
-                              decoration: InputDecoration(
-                                labelText: "Remark",
-                                hintText: 'Noted something here ...',
-                                labelStyle: const TextStyle(
-                                  color: Colors.grey, // Color when not focused
-                                ),
-                                focusedBorder: const UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.lightBlue,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Discount",
+                                  style: TextStyle(
+                                    color: titleColor,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
-                                prefixIcon: Icon(
-                                  Icons.edit,
-                                  color: placeHolderColor,
-                                  size: 25,
+                                Text(
+                                  currencyFormatter.format(
+                                    cartProvider.getTotalDiscount(
+                                        shopId: widget.argument.cart.shop!.id!),
+                                  ),
+                                  style: TextStyle(
+                                    color: discoutColor,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          const Divider(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Total Payble (incl. VAT)",
+                                  style: TextStyle(
+                                    color: discoutColor,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                Text(
+                                  currencyFormatter.format(
+                                    cartProvider.getTotal(
+                                        shopId: widget.argument.cart.shop!.id!),
+                                  ),
+                                  style: TextStyle(
+                                    color: discoutColor,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      margin: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Order Remark",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                          ),
+                          TextField(
+                            controller: remark,
+                            maxLines: null,
+                            cursorColor: placeHolderColor,
+                            style: TextStyle(color: titleColor, fontSize: 15),
+                            decoration: InputDecoration(
+                              labelText: "Remark",
+                              hintText: 'Noted something here ...',
+                              labelStyle: const TextStyle(
+                                color: Colors.grey, // Color when not focused
+                              ),
+                              focusedBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.lightBlue,
                                 ),
                               ),
+                              prefixIcon: Icon(
+                                Icons.edit,
+                                color: placeHolderColor,
+                                size: 25,
+                              ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        height: 12 + MediaQuery.of(context).padding.bottom,
-                      ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      height: 12 + MediaQuery.of(context).padding.bottom,
+                    ),
+                  ],
                 ),
                 if (!isKeyboardVisible)
                   Positioned(
@@ -580,8 +676,22 @@ class _OrderProductScreenState extends State<OrderProductScreen> {
       address: address,
       index: index,
       selectedAddress: addressProvider.selectAddress,
-      onTap: () {
+      onTap: () async {
         addressProvider.setSelectedAddress(address[index]);
+        final GoogleMapController controller = await mapController.future;
+        LatLng newPosition = LatLng(
+          double.parse(addressProvider.selectAddress.latitude!),
+          double.parse(addressProvider.selectAddress.longitude!),
+        );
+        // _moveMarker(newPosition);
+        controller.animateCamera(
+          CameraUpdate.newLatLngZoom(
+            newPosition,
+            14.0,
+          ),
+        );
+        // Scroll to the selected address
+        _scrollToSelectedAddress();
       },
     );
   }

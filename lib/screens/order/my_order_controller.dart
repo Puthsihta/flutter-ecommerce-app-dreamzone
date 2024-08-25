@@ -3,6 +3,8 @@ import 'package:dreamzone/data/models/order.dart';
 import 'package:dreamzone/data/repos/order-_ist_repo.dart';
 import 'package:flutter/material.dart';
 
+enum HomeStatus { initial, success, error }
+
 class MyOrderController extends ChangeNotifier {
   final OrderListRepo orderListRepo;
 
@@ -17,10 +19,17 @@ class MyOrderController extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool _loading = true;
-  bool get loading => _loading;
-  set loading(bool newValue) {
-    _loading = newValue;
+  HomeStatus _status = HomeStatus.initial;
+  HomeStatus get status => _status;
+  set status(HomeStatus newValue) {
+    _status = newValue;
+    notifyListeners();
+  }
+
+  bool _hasReachedMax = false;
+  bool get hasReachedMax => _hasReachedMax;
+  set hasReachedMax(bool newValue) {
+    _hasReachedMax = newValue;
     notifyListeners();
   }
 
@@ -31,72 +40,29 @@ class MyOrderController extends ChangeNotifier {
     notifyListeners();
   }
 
-  int _page = 1;
-  int get page => _page;
-  set page(int value) {
-    _page = value;
-    notifyListeners();
-  }
+  late int _perPage;
 
-  bool _hasNextPage = false;
-  bool get hasNextPage => _hasNextPage;
-  set hasNextPage(bool value) {
-    _hasNextPage = value;
-    notifyListeners();
-  }
-
-  bool get loadingFetchNext => page > 1 && loading;
-  bool get loadingInitial => page == 1 && loading;
-
-  Future<void> onGetOrderList({
-    bool refresh = false,
-  }) async {
-    if (error != null) {
-      error = null;
-    }
+  Future<void> getOrderList({bool refresh = false}) async {
     try {
-      if (!refresh) {
-        loading = true;
-      }
-      page = 1;
-      final response = await orderListRepo.getOrderList(
-        page: 1,
-      );
-      _orderLists = response.data;
-      if (response.data.isNotEmpty) {
-        _hasNextPage = true;
-      }
-      notifyListeners();
-    } catch (e) {
-      _error = CustomException(e.toString());
-      notifyListeners();
-    } finally {
-      loading = false;
-    }
-  }
-
-  Future<void> onFetchNextPage() async {
-    if (!hasNextPage || loadingFetchNext) return;
-
-    try {
-      _loading = true;
-      _page = page + 1;
-      notifyListeners();
-
-      final response = await orderListRepo.getOrderList();
-
-      if (response.data.isEmpty) {
-        hasNextPage = false;
+      if (_status == HomeStatus.initial || refresh == true) {
+        final respone = await orderListRepo.getOrderList(page: 1);
+        status = HomeStatus.success;
+        orderLists = respone.data;
+        hasReachedMax = respone.data.length == respone.pagination.limit!;
+        _perPage = respone.pagination.limit!;
       } else {
-        orderLists = [...orderLists, ...response.data];
+        if (hasReachedMax == false) return;
+        int page = (_orderLists.length / _perPage).ceil();
+        final respone = await orderListRepo.getOrderList(page: page + 1);
+        status = HomeStatus.success;
+        if (_orderLists.length < respone.pagination.total!) {
+          orderLists = [..._orderLists, ...respone.data];
+          hasReachedMax = respone.data.length == respone.pagination.limit!;
+        }
       }
     } catch (e) {
-      _error = CustomException(e.toString());
-      _page = 1;
-      _hasNextPage = false;
-      notifyListeners();
-    } finally {
-      loading = false;
+      status = HomeStatus.error;
+      error = CustomException(e.toString());
     }
   }
 }

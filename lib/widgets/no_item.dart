@@ -1,3 +1,4 @@
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/theme/spacing.dart';
 import 'package:flutter/material.dart';
 
@@ -6,6 +7,7 @@ class NoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -15,7 +17,7 @@ class NoItem extends StatelessWidget {
             width: 200,
           ),
           const SizedBox(height: Spacing.s),
-          const Text("Empty")
+          Text(l10n!.empty)
         ],
       ),
     );

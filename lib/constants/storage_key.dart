@@ -6,4 +6,5 @@ abstract class StorageKeys {
   static const PAYMENT_KEY = "payment";
   static const CART_KEY = "cart";
   static const ADDRESS = "address";
+  static const LANG = "language";
 }

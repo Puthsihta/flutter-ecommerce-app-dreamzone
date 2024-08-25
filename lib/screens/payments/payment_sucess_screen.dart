@@ -1,12 +1,20 @@
+import 'package:dreamzone/constants/argument.dart';
+import 'package:dreamzone/screens/order_detail/order_detail_screen.dart';
 import 'package:dreamzone/theme/colors.dart';
 import 'package:dreamzone/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-class PaymentSuccesScreen extends StatelessWidget {
+class PaymentSuccesScreen extends StatefulWidget {
   static const routeName = "/order/payment-success";
-  const PaymentSuccesScreen({super.key});
+  final OrderSuccessArgument argument;
+  const PaymentSuccesScreen({super.key, required this.argument});
 
+  @override
+  State<PaymentSuccesScreen> createState() => _PaymentSuccesScreenState();
+}
+
+class _PaymentSuccesScreenState extends State<PaymentSuccesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +55,11 @@ class PaymentSuccesScreen extends StatelessWidget {
                 ),
                 child: CustomButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    final int orderId = widget.argument.orderId;
+                    Navigator.of(context).pushNamed(
+                      OrderDetailScreen.routeName,
+                      arguments: OrderDetailArgument(orderId),
+                    );
                   },
                   child: const Text(
                     "Confirm",

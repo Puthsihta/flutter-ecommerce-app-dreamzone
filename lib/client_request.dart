@@ -33,11 +33,11 @@ class ClientRequest {
   }
 
   ClientRequest() {
-    if (kDebugMode) {
-      // dio.interceptors.add(
-      //   LogInterceptor(requestBody: true, responseBody: true),
-      // );
-    }
+    // if (kDebugMode) {
+    //   dio.interceptors.add(
+    //     LogInterceptor(requestBody: true, responseBody: true),
+    //   );
+    // }
 
     dio.options.baseUrl = AppEnv.baseUrl;
     dio.interceptors.add(CustomInterceptor());

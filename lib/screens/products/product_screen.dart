@@ -1,5 +1,6 @@
 import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/data/repos/product_repo.dart';
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/locator.dart';
 import 'package:dreamzone/screens/products/product_controller.dart';
 import 'package:dreamzone/screens/product_detail/product_detail_screen.dart';
@@ -78,11 +79,12 @@ class _ProductScreenState extends State<ProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       backgroundColor: whiteSmoke,
       appBar: AppBar(
         backgroundColor: baseColor,
-        title: Text(widget.argument.name ?? 'Products'),
+        title: Text(widget.argument.name ?? l10n!.products),
         actions: [
           IconButton(
             icon: const Icon(
@@ -99,13 +101,14 @@ class _ProductScreenState extends State<ProductScreen> {
       ),
       body: Column(
         children: [
-          if (showSearchBar || widget.argument.name == "Search")
+          if (showSearchBar || widget.argument.name == l10n!.search_placeholder)
             Container(
               color: baseColor,
               padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
               child: TextField(
                 controller: searchController,
-                autofocus: widget.argument.name == "Search" || showSearchBar
+                autofocus: widget.argument.name == l10n!.search_placeholder ||
+                        showSearchBar
                     ? true
                     : false,
                 decoration: InputDecoration(
@@ -139,7 +142,7 @@ class _ProductScreenState extends State<ProductScreen> {
                       ),
                     ),
                   ),
-                  hintText: 'Search...',
+                  hintText: l10n.search_placeholder,
                   filled: true,
                   fillColor: Colors.white,
                   border: const OutlineInputBorder(),
@@ -219,10 +222,10 @@ class _ProductScreenState extends State<ProductScreen> {
                                         ),
                                       )
                                     : !viewController.hasNextPage
-                                        ? const SizedBox(
+                                        ? SizedBox(
                                             height: 100,
                                             child: Center(
-                                              child: Text("No more data"),
+                                              child: Text(l10n.no_more_data),
                                             ),
                                           )
                                         : const SizedBox(),

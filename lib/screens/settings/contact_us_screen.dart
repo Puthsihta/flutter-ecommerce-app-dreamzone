@@ -1,8 +1,10 @@
 import 'package:dreamzone/constants/constants.dart';
 import 'package:dreamzone/data/repos/setting_repo.dart';
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/locator.dart';
 import 'package:dreamzone/screens/settings/contact_us_controller.dart';
 import 'package:dreamzone/theme/colors.dart';
+import 'package:dreamzone/widgets/fetch_error.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,11 +15,12 @@ class ContactUsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       backgroundColor: whiteSmoke,
       appBar: AppBar(
         backgroundColor: baseColor,
-        title: const Text("Contact Us"),
+        title: Text(l10n!.contact_us),
       ),
       body: SafeArea(
         child: Column(
@@ -49,10 +52,17 @@ class ContactUsScreen extends StatelessWidget {
                           ..getContactUs(),
                     child: Consumer<ContactusController>(
                         builder: (context, viewController, child) {
-                      print("viewController : ${viewController.contactUsData}");
                       if (viewController.loading) {
                         return const Center(
                           child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (viewController.error != null) {
+                        return SizedBox(
+                          child: FetchError(
+                            errorMessage: viewController.error.toString(),
+                            onRetry: () => {viewController.getContactUs()},
+                          ),
                         );
                       }
                       return Container(
@@ -61,7 +71,7 @@ class ContactUsScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Support By ",
+                              l10n.support_by,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 18,
@@ -143,7 +153,7 @@ class ContactUsScreen extends StatelessWidget {
                               height: 10,
                             ),
                             Text(
-                              "Socail",
+                              l10n.social,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 18,

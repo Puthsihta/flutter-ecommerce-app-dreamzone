@@ -1,8 +1,10 @@
 import 'package:dreamzone/constants/constants.dart';
 import 'package:dreamzone/data/repos/setting_repo.dart';
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/locator.dart';
 import 'package:dreamzone/screens/settings/setting_controller.dart';
 import 'package:dreamzone/theme/colors.dart';
+import 'package:dreamzone/widgets/fetch_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
@@ -13,11 +15,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       backgroundColor: whiteSmoke,
       appBar: AppBar(
         backgroundColor: baseColor,
-        title: const Text("Privacy Policy"),
+        title: Text(l10n!.privacy_policy),
       ),
       body: SingleChildScrollView(
         child: ChangeNotifierProvider(
@@ -28,6 +31,14 @@ class PrivacyPolicyScreen extends StatelessWidget {
               builder: (context, viewController, child) {
             if (viewController.loading) {
               return const Center(child: CircularProgressIndicator());
+            }
+            if (viewController.error != null) {
+              return SizedBox(
+                child: FetchError(
+                  errorMessage: viewController.error.toString(),
+                  onRetry: () => {viewController.getSetting("privacy_policy")},
+                ),
+              );
             }
             return Container(
               padding: marginAll,

@@ -91,3 +91,15 @@ class RequestCreatAddress {
         longitude.hashCode;
   }
 }
+
+class AddressMap {
+  String address;
+  double latitude;
+  double longitude;
+
+  AddressMap({
+    required this.address,
+    required this.latitude,
+    required this.longitude,
+  });
+}

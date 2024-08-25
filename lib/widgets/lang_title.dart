@@ -1,63 +1,45 @@
-import 'package:dreamzone/theme/colors.dart';
+import 'package:dreamzone/l10n/l10n.dart';
+import 'package:dreamzone/providers/language_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class LangeTitle extends StatefulWidget {
-  final String langValue;
-  final Function onChangeLanguage;
+class LangeTitle extends StatelessWidget {
   const LangeTitle({
     super.key,
-    required this.langValue,
-    required this.onChangeLanguage,
   });
 
   @override
-  State<LangeTitle> createState() => _LangeTitleState();
-}
-
-class _LangeTitleState extends State<LangeTitle> {
-  bool is_selected = false;
-  late String selectedValue = "English";
-
-  @override
-  void initState() {
-    setState(() {
-      selectedValue = widget.langValue;
-    });
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final localeProvider = Provider.of<LocaleProvider>(context);
+    final l10n = context.l10n; // Assuming you have this extension
+    final currentLocale = Localizations.localeOf(context);
+
     return AlertDialog(
-      title: const Text(
-        'Languages!',
+      title: Text(
+        l10n!.language,
         textAlign: TextAlign.center,
-        style: TextStyle(fontWeight: FontWeight.bold),
+        style: const TextStyle(fontWeight: FontWeight.bold),
       ),
       content: SingleChildScrollView(
         child: Column(
           children: [
             _listTile(
-              language: 'English',
+              language: l10n.english,
               image: 'assets/images/flags/uk.png',
               onTap: () {
-                widget.onChangeLanguage("English");
-                setState(() {
-                  selectedValue = "English";
-                });
+                Navigator.of(context).pop();
+                localeProvider.setLocale(const Locale('en'));
               },
-              selectedLanuage: selectedValue,
+              selectedLanuage: currentLocale.languageCode == 'en',
             ),
             _listTile(
-              language: 'Khmer',
+              language: l10n.khmer,
               image: 'assets/images/flags/km.png',
               onTap: () {
-                widget.onChangeLanguage("Khmer");
-                setState(() {
-                  selectedValue = "Khmer";
-                });
+                Navigator.of(context).pop();
+                localeProvider.setLocale(const Locale('km'));
               },
-              selectedLanuage: selectedValue,
+              selectedLanuage: currentLocale.languageCode == 'km',
             ),
           ],
         ),
@@ -69,27 +51,26 @@ class _LangeTitleState extends State<LangeTitle> {
     required String language,
     required String image,
     Function()? onTap,
-    required String selectedLanuage,
+    required bool selectedLanuage,
   }) {
     return ListTile(
-        title: Text(
-          language,
-          style: TextStyle(
-            fontSize: 15,
-            color: titleColor,
-          ),
+      title: Text(
+        language,
+        style: const TextStyle(
+          fontSize: 15,
+          // Set the title color or other properties as needed
         ),
-        leading: CircleAvatar(
-          backgroundImage: AssetImage(image),
-          radius: 15,
-        ),
-        trailing: Icon(
-          language == selectedLanuage
-              ? Icons.radio_button_on
-              : Icons.radio_button_off,
-          color: iconColor,
-          size: 25,
-        ), // Arrow icon at the right
-        onTap: onTap);
+      ),
+      leading: CircleAvatar(
+        backgroundImage: AssetImage(image),
+        radius: 15,
+      ),
+      trailing: Icon(
+        selectedLanuage ? Icons.radio_button_on : Icons.radio_button_off,
+        // Set the icon color or other properties as needed
+        size: 25,
+      ),
+      onTap: onTap,
+    );
   }
 }

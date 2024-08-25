@@ -1,10 +1,11 @@
 import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/data/repos/home_repo.dart';
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/locator.dart';
 import 'package:dreamzone/providers/address_provider.dart';
 import 'package:dreamzone/providers/auth_provider.dart';
 import 'package:dreamzone/providers/home_provider.dart';
-import 'package:dreamzone/routes/routes.dart';
+import 'package:dreamzone/providers/route_provider.dart';
 import 'package:dreamzone/screens/home/home_controller.dart';
 import 'package:dreamzone/screens/product_detail/product_detail_screen.dart';
 import 'package:dreamzone/screens/products/product_screen.dart';
@@ -34,11 +35,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final ScrollController scrollController = ScrollController();
 
-  var language = "Dart";
-  late String selectedValue = "English";
-
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final addressProvider = Provider.of<AddressProvider>(context, listen: true);
     return ChangeNotifierProvider(
         create: (context) => HomeScreenController(
@@ -69,39 +68,42 @@ class _HomeScreenState extends State<HomeScreen> {
                   SliverList(
                     delegate: SliverChildListDelegate(
                       [
-                        ImageSlide(
-                          banner: viewController.homeData!.banner,
-                        ),
-                        categories(),
-                        Container(
+                        if (viewController.homeData!.banner.isNotEmpty)
+                          ImageSlide(
+                            banner: viewController.homeData!.banner,
+                          ),
+                        categories(context),
+                        if (viewController.homeData!.bestSalling.isNotEmpty)
+                          Container(
                             margin: const EdgeInsets.fromLTRB(15, 20, 15, 10),
                             child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    "Best Selling",
-                                    style: TextStyle(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  l10n!.best_sellings,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed(
+                                      ProductScreen.routeName,
+                                      arguments: ProductArgument(),
+                                    );
+                                  },
+                                  child: Text(
+                                    l10n.more,
+                                    style: const TextStyle(
                                       fontSize: 18,
-                                      fontWeight: FontWeight.bold,
+                                      color: Colors.green,
                                     ),
                                   ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).pushNamed(
-                                        ProductScreen.routeName,
-                                        arguments: ProductArgument(),
-                                      );
-                                    },
-                                    child: const Text(
-                                      "More",
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.green,
-                                      ),
-                                    ),
-                                  ),
-                                ])),
+                                ),
+                              ],
+                            ),
+                          ),
                       ],
                     ),
                   ),
@@ -126,55 +128,63 @@ class _HomeScreenState extends State<HomeScreen> {
                   SliverList(
                     delegate: SliverChildListDelegate(
                       [
-                        Container(
-                          margin: const EdgeInsets.all(15),
-                          child: const Text(
-                            "Feature Shops",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                        if (viewController.homeData!.featuresShop.isNotEmpty)
+                          Container(
+                            margin: const EdgeInsets.all(15),
+                            child: Text(
+                              l10n!.feature_shops,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 150,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount:
-                                viewController.homeData!.featuresShop.length,
-                            itemBuilder: (context, index) {
-                              return renderFeatureShop(context, index,
-                                  viewController.homeData!.featuresShop);
-                            },
+                        if (viewController.homeData!.featuresShop.isNotEmpty)
+                          SizedBox(
+                            height: 150,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount:
+                                  viewController.homeData!.featuresShop.length,
+                              itemBuilder: (context, index) {
+                                return renderFeatureShop(
+                                  context,
+                                  index,
+                                  viewController.homeData!.featuresShop,
+                                );
+                              },
+                            ),
+                          ),
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(15, 20, 15, 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                l10n!.all_products,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pushNamed(
+                                    ProductScreen.routeName,
+                                    arguments: ProductArgument(),
+                                  );
+                                },
+                                child: Text(
+                                  l10n.more,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        Container(
-                            margin: const EdgeInsets.fromLTRB(15, 20, 15, 10),
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    "All Products",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).pushNamed(
-                                        ProductScreen.routeName,
-                                        arguments: ProductArgument(),
-                                      );
-                                    },
-                                    child: const Text(
-                                      "More",
-                                      style: TextStyle(
-                                          fontSize: 18, color: Colors.green),
-                                    ),
-                                  ),
-                                ])),
                       ],
                     ),
                   ),
@@ -250,48 +260,44 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Container categories() {
+  Container categories(BuildContext context) {
+    final l10n = context.l10n;
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 15),
+      margin: const EdgeInsets.only(left: 15, right: 15, top: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           HomeIcon(
             image: 'assets/images/home/categories.png',
-            title: "Categories",
+            title: l10n!.categories,
             onTap: () {
               Navigator.pushNamed(context, '/categories');
             },
           ),
           HomeIcon(
             image: 'assets/images/home/shop.png',
-            title: "Shops",
+            title: l10n.shop,
             onTap: () {
-              Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                  builder: (context) => const TabNavigationBar(
-                    index: 1,
-                  ),
-                ),
-                (Route<dynamic> route) => false,
-              );
+              final routeProvider =
+                  Provider.of<RouteProvider>(context, listen: false);
+              routeProvider.setIndex(1); // shop bottom tab
             },
           ),
           HomeIcon(
             image: 'assets/images/home/offer.png',
-            title: "Promotions",
+            title: l10n.promotion,
             onTap: () {
               Navigator.pushNamed(context, '/product/special');
             },
           ),
           HomeIcon(
             image: 'assets/images/home/data.png',
-            title: "Collections",
+            title: l10n.collections,
             onTap: () {
               Navigator.of(context).pushNamed(
                 ProductScreen.routeName,
                 arguments: ProductArgument(
-                  name: "Cellections",
+                  name: l10n.collections,
                 ),
               );
             },
@@ -302,6 +308,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   AppBar appBar(AddressProvider addressProvider) {
+    final currentLocale = Localizations.localeOf(context);
     return AppBar(
       backgroundColor: baseColor,
       title: Row(
@@ -344,17 +351,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: GestureDetector(
                     onTap: () {
                       showDialog(
-                        builder: (context) => LangeTitle(
-                          langValue: selectedValue,
-                          onChangeLanguage: (value) {
-                            selectedValue = value;
-                          },
-                        ),
+                        builder: (context) => const LangeTitle(),
                         context: context,
                       );
                     },
                     child: Image.asset(
-                      'assets/images/flags/uk.png',
+                      currentLocale.languageCode == 'en'
+                          ? 'assets/images/flags/uk.png'
+                          : 'assets/images/flags/km.png',
                       fit: BoxFit.cover,
                       height: 25,
                     ),
@@ -363,10 +367,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 IconButton(
                   icon: const Icon(Icons.search),
                   onPressed: () {
+                    final l10n = context.l10n;
                     Navigator.of(context).pushNamed(
                       ProductScreen.routeName,
                       arguments: ProductArgument(
-                        name: "Search",
+                        name: l10n!.search_placeholder,
                       ),
                     );
                   },

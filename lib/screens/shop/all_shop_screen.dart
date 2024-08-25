@@ -1,5 +1,6 @@
 import 'package:dreamzone/constants/argument.dart';
 import 'package:dreamzone/data/repos/all_shop_repo.dart';
+import 'package:dreamzone/l10n/l10n.dart';
 import 'package:dreamzone/locator.dart';
 import 'package:dreamzone/screens/shop/all_shop_contoller.dart';
 import 'package:dreamzone/screens/shop_detail/shop_detail_screen.dart';
@@ -71,11 +72,12 @@ class _AllShopScreenState extends State<AllShopScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       backgroundColor: whiteSmoke,
       appBar: AppBar(
         backgroundColor: baseColor,
-        title: Text(widget.argument.name ?? "All Shop"),
+        title: Text(widget.argument.name ?? l10n!.all_shops),
         actions: [
           IconButton(
             icon: const Icon(
@@ -92,15 +94,16 @@ class _AllShopScreenState extends State<AllShopScreen> {
       ),
       body: Column(
         children: [
-          if (showSearchBar || widget.argument.name == "Search")
+          if (showSearchBar || widget.argument.name == l10n!.all_shops)
             Container(
               color: baseColor,
               padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
               child: TextField(
                 controller: searchController,
-                autofocus: widget.argument.name == "Search" || showSearchBar
-                    ? true
-                    : false,
+                autofocus:
+                    widget.argument.name == l10n!.all_shops || showSearchBar
+                        ? true
+                        : false,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -132,7 +135,7 @@ class _AllShopScreenState extends State<AllShopScreen> {
                       ),
                     ),
                   ),
-                  hintText: 'Search...',
+                  hintText: l10n.search_placeholder,
                   filled: true,
                   fillColor: Colors.white,
                   border: const OutlineInputBorder(),
@@ -213,10 +216,10 @@ class _AllShopScreenState extends State<AllShopScreen> {
                                         ),
                                       )
                                     : !viewController.hasNextPage
-                                        ? const SizedBox(
+                                        ? SizedBox(
                                             height: 100,
                                             child: Center(
-                                              child: Text("No more data"),
+                                              child: Text(l10n.no_more_data),
                                             ),
                                           )
                                         : const SizedBox(),
